@@ -1,0 +1,103 @@
+﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="frontendtry.MainPage"
+             Title="Settings"
+             BackgroundColor="#E5F0C4">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="10" Spacing="15">
+
+            <Label Text="SETTINGS"
+                   FontSize="20"
+                   FontAttributes="Bold"
+                   TextColor="#5C4C2B"
+                   HorizontalOptions="Center"
+                   Margin="0,10"/>
+
+            <Frame BackgroundColor="#D8E6B6" CornerRadius="10" Padding="15">
+                <VerticalStackLayout Spacing="15">
+
+                    <HorizontalStackLayout Spacing="10">
+                        <Frame WidthRequest="60" HeightRequest="60" CornerRadius="30" BackgroundColor="#C1B7A1"/>
+                        <VerticalStackLayout>
+                            <Label Text="Username Placeholder" FontAttributes="Bold" FontSize="14"/>
+                            <Label Text="UID(unsure?)" FontSize="12" TextColor="Gray"/>
+                            <Button Text="Change Username"
+                                    BackgroundColor="#8B6F4E" 
+                                    TextColor="White"
+                                    Padding="5,2"/>
+                        </VerticalStackLayout>
+                    </HorizontalStackLayout>
+
+
+                    <VerticalStackLayout>
+                        <Label Text="Email" FontAttributes="Bold"/>
+                        <Label Text="example.google@gmail.com" TextColor="Gray"/>
+                        <Button Text="Change Email"
+                                BackgroundColor="#8B6F4E" 
+                                TextColor="White"
+                                Padding="5,2"/>
+                    </VerticalStackLayout>
+
+
+                    <VerticalStackLayout>
+                        <Label Text="Password" FontAttributes="Bold"/>
+                        <Entry Text="************" IsPassword="True" IsEnabled="False"/>
+                        <Button Text="Change Password"
+                                BackgroundColor="#8B6F4E" 
+                                TextColor="White"
+                                Padding="5,2"/>
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout>
+                        <Label Text="Phone number (2FA)" FontAttributes="Bold"/>
+                        <Label Text="+0901 234 5678" TextColor="Gray"/>
+                        <Button Text="Change Phone Number"
+                                BackgroundColor="#8B6F4E" 
+                                TextColor="White"
+                                Padding="5,2"/>
+                    </VerticalStackLayout>
+
+                    <Button Text="Log-out"
+                            BackgroundColor="#E57373" 
+                            TextColor="White" 
+                            Padding="8"/>
+                </VerticalStackLayout>
+            </Frame>
+
+            <Frame BackgroundColor="#D8E6B6" CornerRadius="10" Padding="15">
+                <VerticalStackLayout>
+                    <Label Text="Settings" FontAttributes="Bold" FontSize="16" Margin="0,0,0,10"/>
+
+                    <HorizontalStackLayout Spacing="10" VerticalOptions="CenterAndExpand">
+                        <Label Text="Dark Mode" VerticalOptions="Center"/>
+                        <Switch IsToggled="False"/>
+                    </HorizontalStackLayout>
+
+                    <HorizontalStackLayout Spacing="10" Margin="0,10,0,0">
+                        <Label Text="Push Notifications" VerticalOptions="Center"/>
+                        <Switch IsToggled="False"/>
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+            </Frame>
+
+            <Frame BackgroundColor="#D8E6B6" CornerRadius="10" Padding="15">
+                <VerticalStackLayout>
+                    <Label Text="Information" FontAttributes="Bold" FontSize="16" Margin="0,0,0,10"/>
+
+                    <HorizontalStackLayout Spacing="10" Margin="0,5">
+                        <Label Text="App Version" VerticalOptions="Center"/>
+                        <Label Text="v0.1" TextColor="Gray"/>
+                    </HorizontalStackLayout>
+
+                    <HorizontalStackLayout Spacing="10" Margin="0,5">
+                        <Label Text="Support" VerticalOptions="Center"/>
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+            </Frame>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
+
+ 
