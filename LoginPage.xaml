@@ -18,7 +18,7 @@
                 <Label Text="Email"
                        FontAttributes="Bold"
                        TextColor="#333333" />
-                <Entry Placeholder="Value"
+                <Entry Placeholder="Email address"
                        BackgroundColor="#F0F8F0"
                        x:Name="EmailEntry"
                        ReturnType="Next"
@@ -29,7 +29,7 @@
                 <Label Text="Password"
                        FontAttributes="Bold"
                        TextColor="#333333" />
-                <Entry Placeholder="Value"
+                <Entry Placeholder="Password"
                        IsPassword="True"
                        BackgroundColor="#F0F8F0"
                        x:Name="PasswordEntry"
