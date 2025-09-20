@@ -9,16 +9,32 @@
             InitializeComponent();
         }
 
-        private void OnCounterClicked(object? sender, EventArgs e)
+        private void OnCountClicked(object sender, EventArgs e)
         {
             count++;
 
             if (count == 1)
-                CounterBtn.Text = $"Clicked {count} time";
+                counter.Text = $"Clicked {count} time";
             else
-                CounterBtn.Text = $"Clicked {count} times";
+                counter.Text = $"Clicked {count} times";
+        }
 
-            SemanticScreenReader.Announce(CounterBtn.Text);
+        private void OnLoginClicked(object sender, EventArgs e)
+        {
+            string username = usernameEntry.Text;
+            string password = passwordEntry.Text;
+
+            if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
+            {
+                DisplayAlert("Error", "Please enter username and password", "OK");
+                return;
+            }
+
+            // Simple fake check (replace with real logic later)
+            if (username == "admin" && password == "1234")
+                DisplayAlert("Success", "Login successful!", "OK");
+            else
+                DisplayAlert("Failed", "Invalid username or password", "OK");
         }
     }
 }

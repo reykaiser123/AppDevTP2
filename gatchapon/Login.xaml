@@ -1,36 +1,54 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="gatchapon.MainPage">
+             x:Class="gatchapon.Login"
+             Title="Login Page">
 
     <ScrollView>
-        <VerticalStackLayout
-            Padding="30,0"
-            Spacing="25">
-            <Image
-                Source="dotnet_bot.png"
-                HeightRequest="185"
-                Aspect="AspectFit"
-                SemanticProperties.Description="dot net bot in a hovercraft number nine" />
+        <VerticalStackLayout Padding="30" Spacing="20">
 
-            <Label
-                Text="Hello, World!"
-                Style="{StaticResource Headline}"
-                SemanticProperties.HeadingLevel="Level1" />
+            <!-- Page Title -->
+            <Label 
+                Text="Welcome, please log in"
+                FontSize="24"
+                FontAttributes="Bold"
+                HorizontalOptions="Center" />
 
-            <Label
-                Text="Welcome to &#10;.NET Multi-platform App UI"
-                Style="{StaticResource SubHeadline}"
-                SemanticProperties.HeadingLevel="Level2"
-                SemanticProperties.Description="Welcome to dot net Multi platform App U I" />
+            <!-- Username -->
+            <Entry 
+                x:Name="usernameEntry"
+                Placeholder="Username"
+                Keyboard="Default" />
 
-            <Button
-                x:Name="CounterBtn"
-                Text="Click me" 
-                SemanticProperties.Hint="Counts the number of times you click"
-                Clicked="OnCounterClicked"
+            <!-- Password -->
+            <Entry 
+                x:Name="passwordEntry"
+                Placeholder="Password"
+                IsPassword="True" />
+
+            <!-- Login Button -->
+            <Button 
+                Text="Login"
+                Clicked="OnLoginClicked"
+                BackgroundColor="#512BD4"
+                TextColor="White"
+                CornerRadius="10"
                 HorizontalOptions="Fill" />
+
+            <!-- Counter Button -->
+            <Button 
+                Text="Click me"
+                Clicked="OnCountClicked"
+                HorizontalOptions="Fill" />
+
+            <!-- Counter Label -->
+            <Label 
+                x:Name="counter"
+                Text="Clicked 0 times"
+                FontSize="18"
+                HorizontalOptions="Center" />
+
         </VerticalStackLayout>
     </ScrollView>
-
 </ContentPage>
+

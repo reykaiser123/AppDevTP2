@@ -7,8 +7,13 @@
     Title="gatchapon">
 
     <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
+        Title="Login"
+        Route="Login">
+        <ShellContent.ContentTemplate>
+            <DataTemplate>
+                <local:Login />
+            </DataTemplate>
+        </ShellContent.ContentTemplate>
+    </ShellContent>
 
 </Shell>
