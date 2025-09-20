@@ -1,3 +1,5 @@
+using System.Threading.Tasks;
+
 namespace LoginPage
 {
     public partial class Login : ContentPage
@@ -8,9 +10,9 @@ namespace LoginPage
             InitializeComponent();
         }
 
-        private void OnCounterClicked(object? sender, EventArgs e)
+        private async Task OnSignIn(object? sender, EventArgs e)
         {
-
+            await Shell.Current.GoToAsync("ProfileSetting");
         }
     }
 }

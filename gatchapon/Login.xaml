@@ -3,52 +3,54 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="gatchapon.Login">
 
-<Grid VerticalOptions="CenterAndExpand" Padding="20">
+	<Grid VerticalOptions="CenterAndExpand" Padding="20">
 
-    <Frame CornerRadius="20"
-               HasShadow="True"
-               BackgroundColor="#B5C9A3"
-               Padding="20"
-               HorizontalOptions="FillAndExpand"
-               VerticalOptions="Center">
+		<Frame CornerRadius="20"
+				   HasShadow="True"
+				   BackgroundColor="#B5C9A3"
+				   Padding="20"
+				   HorizontalOptions="FillAndExpand"
+				   VerticalOptions="Center">
 
-        <VerticalStackLayout Spacing="15">
+			<VerticalStackLayout Spacing="15">
 
-            <Label Text="Email"
-                       FontAttributes="Bold"
-                       TextColor="#333333" />
-            <Entry Placeholder="Email address"
-                       BackgroundColor="#F0F8F0"
-                       x:Name="EmailEntry"
-                       ReturnType="Next"
-                       Keyboard="Email"
-                       ClearButtonVisibility="WhileEditing"
+				<Label Text="Email"
+						   FontAttributes="Bold"
+						   TextColor="#333333" />
+				<Entry Placeholder="Email address"
+						   BackgroundColor="#F0F8F0"
+						   x:Name="EmailEntry"
+						   ReturnType="Next"
+						   Keyboard="Email"
+						   ClearButtonVisibility="WhileEditing"
                        />
 
-            <Label Text="Password"
-                       FontAttributes="Bold"
-                       TextColor="#333333" />
-            <Entry Placeholder="Password"
-                       IsPassword="True"
-                       BackgroundColor="#F0F8F0"
-                       x:Name="PasswordEntry"
-                       ClearButtonVisibility="WhileEditing" />
+				<Label Text="Password"
+						   FontAttributes="Bold"
+						   TextColor="#333333" />
+				<Entry Placeholder="Password"
+						   IsPassword="True"
+						   BackgroundColor="#F0F8F0"
+						   x:Name="PasswordEntry"
+						   ClearButtonVisibility="WhileEditing" />
 
-            <Button Text="Sign In"
-                        BackgroundColor="#73605D"
-                        TextColor="White"
-                        CornerRadius="10"
-                        HorizontalOptions="FillAndExpand"
-                        FontAttributes="Bold" />
+				<Button Text="Sign In"
+							BackgroundColor="#73605D"
+							TextColor="White"
+							CornerRadius="10"
+							HorizontalOptions="FillAndExpand"
+							FontAttributes="Bold"
+						clicked="OnSignIn"
+						/>
 
-            <Label Text="Forgot password?"
-                       HorizontalOptions="Start"
-                       TextColor="#333333"
-                       FontAttributes="Bold">
-            </Label>
+				<Label Text="Forgot password?"
+						   HorizontalOptions="Start"
+						   TextColor="#333333"
+						   FontAttributes="Bold">
+				</Label>
 
-        </VerticalStackLayout>
-    </Frame>
-</Grid>
+			</VerticalStackLayout>
+		</Frame>
+	</Grid>
 
-n
+</ContentPage>
