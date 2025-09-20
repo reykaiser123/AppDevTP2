@@ -8,7 +8,8 @@
 
     <ShellContent
         Title="Login"
-        Route="Login">
+        Route="Login"
+        Shell.NavBarIsVisible="False">
         <ShellContent.ContentTemplate>
             <DataTemplate>
                 <local:Login />

@@ -5,7 +5,7 @@
         public App()
         {
             InitializeComponent();
-          //  MainPage = new Login();
+          
         }
 
         protected override Window CreateWindow(IActivationState? activationState)

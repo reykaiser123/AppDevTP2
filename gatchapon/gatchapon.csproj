@@ -73,7 +73,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="Dashboard.xaml">
+	  <MauiXaml Update="Login.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>
