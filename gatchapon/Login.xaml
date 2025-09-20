@@ -1,54 +1,52 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="gatchapon.Login"
-             Title="Login Page">
+             x:Class="gatchapon.Login">
 
-    <ScrollView>
-        <VerticalStackLayout Padding="30" Spacing="20">
+    <Grid VerticalOptions="CenterAndExpand" Padding="20">
 
-            <!-- Page Title -->
-            <Label 
-                Text="Welcome, please log in"
-                FontSize="24"
-                FontAttributes="Bold"
-                HorizontalOptions="Center" />
+        <Frame CornerRadius="20"
+               HasShadow="True"
+               BackgroundColor="#B5C9A3"
+               Padding="20"
+               HorizontalOptions="FillAndExpand"
+               VerticalOptions="Center">
 
-            <!-- Username -->
-            <Entry 
-                x:Name="usernameEntry"
-                Placeholder="Username"
-                Keyboard="Default" />
+            <VerticalStackLayout Spacing="15">
 
-            <!-- Password -->
-            <Entry 
-                x:Name="passwordEntry"
-                Placeholder="Password"
-                IsPassword="True" />
+                <Label Text="Email"
+                       FontAttributes="Bold"
+                       TextColor="#333333" />
+                <Entry Placeholder="Email address"
+                       BackgroundColor="#F0F8F0"
+                       x:Name="EmailEntry"
+                       ReturnType="Next"
+                       Keyboard="Email"
+                       ClearButtonVisibility="WhileEditing"
+                       />
 
-            <!-- Login Button -->
-            <Button 
-                Text="Login"
-                Clicked="OnLoginClicked"
-                BackgroundColor="#512BD4"
-                TextColor="White"
-                CornerRadius="10"
-                HorizontalOptions="Fill" />
+                <Label Text="Password"
+                       FontAttributes="Bold"
+                       TextColor="#333333" />
+                <Entry Placeholder="Password"
+                       IsPassword="True"
+                       BackgroundColor="#F0F8F0"
+                       x:Name="PasswordEntry"
+                       ClearButtonVisibility="WhileEditing" />
 
-            <!-- Counter Button -->
-            <Button 
-                Text="Click me"
-                Clicked="OnCountClicked"
-                HorizontalOptions="Fill" />
+                <Button Text="Sign In"
+                        BackgroundColor="#73605D"
+                        TextColor="White"
+                        CornerRadius="10"
+                        HorizontalOptions="FillAndExpand"
+                        FontAttributes="Bold" />
 
-            <!-- Counter Label -->
-            <Label 
-                x:Name="counter"
-                Text="Clicked 0 times"
-                FontSize="18"
-                HorizontalOptions="Center" />
+                <Label Text="Forgot password?"
+                       HorizontalOptions="Start"
+                       TextColor="#333333"
+                       FontAttributes="Bold">
+                </Label>
 
-        </VerticalStackLayout>
-    </ScrollView>
-</ContentPage>
-
+            </VerticalStackLayout>
+        </Frame>
+    </Grid>
