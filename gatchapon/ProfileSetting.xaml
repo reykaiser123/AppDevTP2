@@ -61,7 +61,9 @@
                     <Button Text="Log-out"
                             BackgroundColor="#E57373" 
                             TextColor="White" 
-                            Padding="8"/>
+                            Padding="8"
+							clicked="OnLogout"
+							/>
                 </VerticalStackLayout>
             </Frame>
 

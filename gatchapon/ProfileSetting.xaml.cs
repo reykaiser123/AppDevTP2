@@ -6,4 +6,9 @@ public partial class ProfileSetting : ContentPage
 	{
 		InitializeComponent();
 	}
+
+	public void OnlogoutClicked(object? sender, EventArgs e)
+	{
+		Shell.Current.GoToAsync("Login");
+    }
 }
