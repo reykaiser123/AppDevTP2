@@ -1,52 +1,58 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="gatchapon.Login">
+             x:Class="gatchapon.Login"
+             BackgroundColor="#ADC179">
 
-    <Grid VerticalOptions="CenterAndExpand" Padding="20">
+    <Grid VerticalOptions="Center" Padding="20">
 
-        <Frame CornerRadius="20"
-               HasShadow="True"
-               BackgroundColor="#B5C9A3"
-               Padding="20"
-               HorizontalOptions="FillAndExpand"
-               VerticalOptions="Center">
+        <Border StrokeShape="RoundRectangle 20"
+                StrokeThickness="0"
+                BackgroundColor="#DDE5B6"
+                Padding="20"
+                HorizontalOptions="Fill"
+                VerticalOptions="Center"
+                Shadow="Default">
 
             <VerticalStackLayout Spacing="15">
 
                 <Label Text="Email"
                        FontAttributes="Bold"
                        TextColor="#333333" />
-                <Entry Placeholder="Email address"
-                       BackgroundColor="#F0F8F0"
-                       x:Name="EmailEntry"
+                <Entry x:Name="emailEntry"
+                       Placeholder="Email address"
+                       BackgroundColor="#F0EAD2"
                        ReturnType="Next"
                        Keyboard="Email"
-                       ClearButtonVisibility="WhileEditing"
-                       />
+                       ClearButtonVisibility="WhileEditing" />
 
                 <Label Text="Password"
                        FontAttributes="Bold"
                        TextColor="#333333" />
-                <Entry Placeholder="Password"
+                <Entry x:Name="passwordEntry"
+                       Placeholder="Password"
                        IsPassword="True"
-                       BackgroundColor="#F0F8F0"
-                       x:Name="PasswordEntry"
+                       BackgroundColor="#F0EAD2"
                        ClearButtonVisibility="WhileEditing" />
 
                 <Button Text="Sign In"
-                        BackgroundColor="#73605D"
-                        TextColor="White"
+                        BackgroundColor="#6C584D"
+                        TextColor="#F0EAD2"
                         CornerRadius="10"
-                        HorizontalOptions="FillAndExpand"
-                        FontAttributes="Bold" />
+                        HorizontalOptions="Fill"
+                        FontAttributes="Bold"
+                        Clicked="Signin"/>
 
                 <Label Text="Forgot password?"
                        HorizontalOptions="Start"
-                       TextColor="#333333"
+                       TextColor="Blue"
                        FontAttributes="Bold">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="ForgotPass"/>
+                    </Label.GestureRecognizers>
                 </Label>
 
             </VerticalStackLayout>
-        </Frame>
+        </Border>
     </Grid>
+</ContentPage>
