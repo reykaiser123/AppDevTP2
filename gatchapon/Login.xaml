@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="gatchapon.MainPage">
+             x:Class="gatchapon.Login">
 
     <ScrollView>
         <VerticalStackLayout
@@ -24,13 +24,43 @@
                 SemanticProperties.HeadingLevel="Level2"
                 SemanticProperties.Description="Welcome to dot net Multi platform App U I" />
 
-            <Button
-                x:Name="CounterBtn"
-                Text="Click me" 
-                SemanticProperties.Hint="Counts the number of times you click"
-                Clicked="OnCounterClicked"
-                HorizontalOptions="Fill" />
-        </VerticalStackLayout>
-    </ScrollView>
+				<Label Text="Email"
+						   FontAttributes="Bold"
+						   TextColor="#333333" />
+				<Entry Placeholder="Email address"
+						   BackgroundColor="#F0F8F0"
+						   x:Name="EmailEntry"
+						   ReturnType="Next"
+						   Keyboard="Email"
+						   ClearButtonVisibility="WhileEditing"
+                       />
+
+				<Label Text="Password"
+						   FontAttributes="Bold"
+						   TextColor="#333333" />
+                <Entry Placeholder="Password"
+						   IsPassword="True"
+						   BackgroundColor="#F0F8F0"
+						   x:Name="PasswordEntry"
+						   ClearButtonVisibility="WhileEditing" />
+
+                <Button Text="Sign In"
+							BackgroundColor="#73605D"
+							TextColor="White"
+							CornerRadius="10"
+							HorizontalOptions="FillAndExpand"
+							FontAttributes="Bold"
+                        	Clicked="OnSignInClicked"
+						/>
+
+                <Label Text="Forgot password?"
+						   HorizontalOptions="Start"
+						   TextColor="#333333"
+						   FontAttributes="Bold">
+				</Label>
+
+			</VerticalStackLayout>
+		</Frame>
+	</Grid>
 
 </ContentPage>
