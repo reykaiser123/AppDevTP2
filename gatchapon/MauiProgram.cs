@@ -17,6 +17,8 @@ namespace gatchapon
 
 #if DEBUG
     		builder.Logging.AddDebug();
+
+            builder.Services.AddTransient<Login>();
 #endif
 
             return builder.Build();

@@ -1,25 +1,25 @@
 ﻿
-namespace gatchapon
+namespace gatchapon;
+
+public partial class Login : ContentPage
 {
-    public partial class Login : ContentPage
+    public Login()
     {
-        int count = 0;
+        InitializeComponent();
+    }
 
-        public Login()
+    private async void OnSignInClicked(object? sender, EventArgs e)
+    {
+
+        if (EmailEntry.Text == "admin" && PasswordEntry.Text =="admin")
         {
-            InitializeComponent();
+           await Shell.Current.GoToAsync("ProfileSetting");
         }
 
-        private void OnCounterClicked(object? sender, EventArgs e)
+        else
         {
-            count++;
-
-            if (count == 1)
-                CounterBtn.Text = $"Clicked {count} time";
-            else
-                CounterBtn.Text = $"Clicked {count} times";
-
-            SemanticScreenReader.Announce(CounterBtn.Text);
+            await DisplayAlert("Login Failed", "Invalid email or password.", "OK");
         }
+
     }
 }
