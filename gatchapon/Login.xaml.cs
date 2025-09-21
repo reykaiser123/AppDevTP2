@@ -26,7 +26,7 @@ namespace gatchapon
         }
         private async void Forgot(object sender, EventArgs e)
         {
-            await Shell.Current.GoToAsync("ForgotPass");
+            await Shell.Current.GoToAsync("///ForgotPass");
         }
         private async void Createhere(object sender, EventArgs e)
         {
