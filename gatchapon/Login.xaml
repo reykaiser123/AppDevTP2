@@ -22,6 +22,7 @@
                 <Entry x:Name="emailEntry"
                        Placeholder="Email address"
                        BackgroundColor="#F0EAD2"
+                       TextColor="Black"
                        ReturnType="Next"
                        Keyboard="Email"
                        ClearButtonVisibility="WhileEditing" />
@@ -33,6 +34,7 @@
                        Placeholder="Password"
                        IsPassword="True"
                        BackgroundColor="#F0EAD2"
+                       TextColor="Black"
                        ClearButtonVisibility="WhileEditing" />
 
                 <Label Text="Forgot password?"
