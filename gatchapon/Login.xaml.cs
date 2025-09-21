@@ -10,7 +10,7 @@ namespace gatchapon
         {
             InitializeComponent();
         }
-        private void Signin(object sender, EventArgs e)
+        private void Logsbtn(object sender, EventArgs e)
         {
             String username = emailEntry.Text;
             String password = passwordEntry.Text;
@@ -24,11 +24,14 @@ namespace gatchapon
             else
                 DisplayAlert("Error", "Invalid username or password", "OK");
         }
-        private void ForgotPass(object sender, EventArgs e)
+        private async void Forgot(object sender, EventArgs e)
         {
-            DisplayAlert("Info", "Forgot password clicked", "OK");
+            await Shell.Current.GoToAsync("ForgotPass");
         }
-
+        private async void Createhere(object sender, EventArgs e)
+        {
+            await Shell.Current.GoToAsync("Register");
+        }
 
 
     }

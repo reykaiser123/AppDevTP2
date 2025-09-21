@@ -6,6 +6,7 @@
     xmlns:local="clr-namespace:gatchapon"
     Title="gatchapon">
 
+  
     <ShellContent
         Title="Login"
         Route="Login"
@@ -13,6 +14,30 @@
         <ShellContent.ContentTemplate>
             <DataTemplate>
                 <local:Login />
+            </DataTemplate>
+        </ShellContent.ContentTemplate>
+    </ShellContent>
+    
+
+    <ShellContent
+        Title="Register"
+        Route="Register"
+        Shell.NavBarIsVisible="False">
+        <ShellContent.ContentTemplate>
+            <DataTemplate>
+                <local:Register />
+            </DataTemplate>
+        </ShellContent.ContentTemplate>
+    </ShellContent>
+
+   
+    <ShellContent
+        Title="Forgot Password"
+        Route="ForgotPass"
+        Shell.NavBarIsVisible="False">
+        <ShellContent.ContentTemplate>
+            <DataTemplate>
+                <local:ForgotPass />
             </DataTemplate>
         </ShellContent.ContentTemplate>
     </ShellContent>

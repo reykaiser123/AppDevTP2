@@ -64,7 +64,7 @@
 	</ItemGroup>
 	
 	<ItemGroup>
-	  <MauiSplashScreen Include="Resources\Splash\taskatonsplash.svg" BaseSize="128,128" Color="ADC179"/>
+	  <MauiSplashScreen Include="Resources\Splash\taskatonsplash.svg" BaseSize="128,128" Color="ADC179" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -73,7 +73,13 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Update="ForgotPass.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Login.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Register.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>
