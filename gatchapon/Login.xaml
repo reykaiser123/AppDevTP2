@@ -12,7 +12,7 @@
                 Padding="20"
                 HorizontalOptions="Fill"
                 VerticalOptions="Center"
-                Shadow="Default">
+                >
 
             <VerticalStackLayout Spacing="30">
 
