@@ -64,17 +64,4 @@
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.5" />
 	</ItemGroup>
 
-<ItemGroup>
-    <MauiXaml Update="ProfileSetting.xaml" />
-    <Compile Update="Login.xaml.cs">
-        <DependentUpon>Login.xaml</DependentUpon>
-    </Compile>
-</ItemGroup>
-
-<ItemGroup>
-    <MauiXaml Update="Login.xaml">
-        <Generator>MSBuild:Compile</Generator>
-    </MauiXaml>
-</ItemGroup>
-
 </Project>

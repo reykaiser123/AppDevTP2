@@ -3,52 +3,80 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="gatchapon.Login">
 
-<Grid VerticalOptions="CenterAndExpand" Padding="20">
+    <Grid Padding="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
 
-    <Frame CornerRadius="20"
-               HasShadow="True"
-               BackgroundColor="#B5C9A3"
-               Padding="20"
-               HorizontalOptions="FillAndExpand"
-               VerticalOptions="Center">
+        <Frame BackgroundColor="#B5C9A3"    
+           CornerRadius="20"
+           HasShadow="True"
+           Padding="20"
+           VerticalOptions="Center"
+           Grid.Row="1">
+            <VerticalStackLayout Spacing="15">
 
-        <VerticalStackLayout Spacing="15">
+                <Label Text="Email"
+                   TextColor="#333333"
+                   FontAttributes="Bold" />
+                <Border StrokeThickness="0"
+                    BackgroundColor="#F0F8F0"
+                    Padding="10"
+                    HeightRequest="55"
+                    StrokeShape="RoundRectangle 5">
+                    <Entry Placeholder="Enter Email"
+                       PlaceholderColor="Gray"
+                       TextColor="Black"
+                       VerticalOptions="Center"/>
+                </Border>
 
-            <Label Text="Email"
-                       FontAttributes="Bold"
-                       TextColor="#333333" />
-            <Entry Placeholder="Email address"
-                       BackgroundColor="#F0F8F0"
-                       x:Name="EmailEntry"
-                       ReturnType="Next"
-                       Keyboard="Email"
-                       ClearButtonVisibility="WhileEditing"
-                       />
-
-            <Label Text="Password"
-                       FontAttributes="Bold"
-                       TextColor="#333333" />
-            <Entry Placeholder="Password"
+                <Label Text="Password"
+                   TextColor="#333333"
+                   FontAttributes="Bold" />
+                <Border StrokeThickness="0"
+                    BackgroundColor="#F0F8F0"
+                    Padding="10"
+                    HeightRequest="55"
+                    StrokeShape="RoundRectangle 5">
+                    <Entry Placeholder="Enter Password"
                        IsPassword="True"
-                       BackgroundColor="#F0F8F0"
-                       x:Name="PasswordEntry"
-                       ClearButtonVisibility="WhileEditing" />
+                       PlaceholderColor="Gray"
+                       TextColor="Black"
+                       VerticalOptions="Center"/>
+                </Border>
 
-            <Button Text="Sign In"
-                        BackgroundColor="#73605D"
-                        TextColor="White"
-                        CornerRadius="10"
-                        HorizontalOptions="FillAndExpand"
-                        FontAttributes="Bold" />
-
-            <Label Text="Forgot password?"
-                       HorizontalOptions="Start"
+                <Grid ColumnDefinitions="*,Auto">
+                    <HorizontalStackLayout Spacing="5" Grid.Column="0">
+                        <CheckBox Color="#333333" />
+                        <Label Text="Remember Me"
+                           VerticalOptions="Center"
+                           TextColor="#333333"/>
+                    </HorizontalStackLayout>
+                    <Label Text="Forgot password?"
+                       TextDecorations="Underline"
                        TextColor="#333333"
-                       FontAttributes="Bold">
-            </Label>
+                       FontAttributes="Bold"
+                       HorizontalOptions="End"
+                       VerticalOptions="Center"
+                       Grid.Column="1"/>
+                </Grid>
 
-        </VerticalStackLayout>
-    </Frame>
-</Grid>
+                <Button Text="Login"
+                    BackgroundColor="#73605D"
+                    TextColor="White"
+                    CornerRadius="10"
+                    HeightRequest="50"
+                    Margin="0,10,0,0"/>
 
-n
+                <HorizontalStackLayout HorizontalOptions="Center" Spacing="5">
+                    <Label Text="Don't have an account?" TextColor="#333333"/>
+                    <Label Text="Click here"
+                       TextDecorations="Underline"
+                       TextColor="#333333"/>
+                </HorizontalStackLayout>
+
+            </VerticalStackLayout>
+        </Frame>
+    </Grid>
+</ContentPage>
