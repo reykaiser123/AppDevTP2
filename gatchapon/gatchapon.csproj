@@ -64,6 +64,7 @@
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.5" />
 	</ItemGroup>
 
+<<<<<<< HEAD
 	<ItemGroup>
 	  <MauiXaml Update="Characters.xaml">
 	    <Generator>MSBuild:Compile</Generator>
@@ -72,5 +73,19 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>
+=======
+<ItemGroup>
+    <MauiXaml Update="ProfileSetting.xaml" />
+    <Compile Update="Login.xaml.cs">
+        <DependentUpon>Login.xaml</DependentUpon>
+    </Compile>
+</ItemGroup>
+
+<ItemGroup>
+    <MauiXaml Update="Login.xaml">
+        <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
+</ItemGroup>
+>>>>>>> 3be6263e57a3c8902f63274bff871055c188f04f
 
 </Project>
