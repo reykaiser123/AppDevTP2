@@ -1,9 +1,8 @@
-namespace LoginPage
+namespace gatchapon
 {
-    public partial class Login : ContentPage
+    public partial class Register : ContentPage
     {
-
-        public Login()
+        public Register()
         {
             InitializeComponent();
         }
@@ -14,4 +13,3 @@ namespace LoginPage
         }
     }
 }
-    
