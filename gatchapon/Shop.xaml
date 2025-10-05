@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="gatchapon.Shop"
+             Title="Shop"
+             BackgroundColor="#ADC179">
+
+    <Grid RowDefinitions="Auto, *, Auto">
+
+        <Border Grid.Row="0" BackgroundColor="#ADC179" StrokeShape="RoundRectangle 0,0,10,10" Padding="10">
+            <Grid RowDefinitions="Auto, Auto" ColumnDefinitions="30, *, 30">
+
+                <BoxView Grid.Row="0" Grid.Column="0" Color="White" WidthRequest="30" HeightRequest="30" CornerRadius="5" HorizontalOptions="Start" VerticalOptions="Center" Margin="0,0,10,0" />
+                <Label Grid.Row="0" Grid.Column="1" Text="SHOP" FontSize="20" TextColor="White" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center" />
+                <HorizontalStackLayout Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Spacing="10" HorizontalOptions="End" Margin="0,5,0,0">
+
+                    <Border BackgroundColor="#6C584D" StrokeShape="RoundRectangle 10" Padding="5" >
+                        <HorizontalStackLayout Spacing="5">
+                            <BoxView Color="#FFFFFFB2" WidthRequest="20" HeightRequest="20" CornerRadius="10" />
+                            <Label Text="9999999" TextColor="White" FontSize="16" VerticalOptions="Center" />
+                        </HorizontalStackLayout>
+                    </Border>
+
+                    <Border BackgroundColor="#6C584D" StrokeShape="RoundRectangle 10" Padding="5">
+                        <HorizontalStackLayout Spacing="5">
+                            <BoxView Color="#FFFFFFB2" WidthRequest="20" HeightRequest="20" CornerRadius="10" />
+                            <Label Text="9999999" TextColor="White" FontSize="16" VerticalOptions="Center" />
+                        </HorizontalStackLayout>
+                    </Border>
+                </HorizontalStackLayout>
+            </Grid>
+        </Border>
+
+        <ScrollView Grid.Row="1" BackgroundColor="#ADC179" Padding="15">
+            <VerticalStackLayout Spacing="15" HorizontalOptions="Fill">
+
+                <HorizontalStackLayout Spacing="15" HorizontalOptions="CenterAndExpand">
+
+                    <Border BackgroundColor="#DDE5B6" StrokeShape="RoundRectangle 10" Padding="10" WidthRequest="160" HeightRequest="210">
+                        <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="10">
+                            <BoxView Color="#F0EAD2" WidthRequest="90" HeightRequest="90" CornerRadius="10" />
+                            <Label Text="Streak Saver" FontSize="18" TextColor="#333333" FontAttributes="Bold" HorizontalTextAlignment="Center" />
+                            <HorizontalStackLayout Spacing="5" HorizontalOptions="Center">
+
+                                <BoxView Color="#FFFFFFB2" WidthRequest="18" HeightRequest="18" CornerRadius="9" />
+                                <Label Text="1000" FontSize="16" TextColor="#333333" />
+
+                            </HorizontalStackLayout>
+                        </VerticalStackLayout>
+                    </Border>
+
+                    <Border BackgroundColor="#DDE5B6" StrokeShape="RoundRectangle 10" Padding="10" WidthRequest="160" HeightRequest="210">
+                        <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="10">
+                            <BoxView Color="#F0EAD2" WidthRequest="90" HeightRequest="90" CornerRadius="10" />
+                            <Label Text="2x Boost (3day)" FontSize="18" TextColor="#333333" FontAttributes="Bold" HorizontalTextAlignment="Center" />
+                            <HorizontalStackLayout Spacing="5" HorizontalOptions="Center">
+
+                                <BoxView Color="#FFFFFFB2" WidthRequest="18" HeightRequest="18" CornerRadius="9" />
+                                <Label Text="50" FontSize="16" TextColor="#333333" />
+
+                            </HorizontalStackLayout>
+                        </VerticalStackLayout>
+                    </Border>
+                </HorizontalStackLayout>
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <Grid Grid.Row="2" BackgroundColor="#ADC179" HeightRequest="10" />
+    </Grid>
+</ContentPage>
