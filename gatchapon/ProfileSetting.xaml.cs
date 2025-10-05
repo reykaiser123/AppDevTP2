@@ -1,3 +1,5 @@
+using System.Threading.Tasks;
+
 namespace gatchapon;
 
 public partial class ProfileSetting : ContentPage
