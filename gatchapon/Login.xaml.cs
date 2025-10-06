@@ -19,32 +19,19 @@ namespace gatchapon
                 DisplayAlert("Error", "Please enter username and password", "OK");
                 return;
             }
-            if (username == "admin" && password == "1234")
+            else if (username == "admin" && password == "1234")
             {
                 DisplayAlert("Success", "Login Successful", "OK");
                 await Shell.Current.GoToAsync("//Dashboard");
 
-                //Application.Current.MainPage = new NavigationPage(new Dashboard());
             }
-
-    private async void OnSignInClicked(object? sender, EventArgs e)
-    {
-
-        if (EmailEntry.Text == "admin" && PasswordEntry.Text =="admin")
-        {
-           await Shell.Current.GoToAsync("ProfileSetting");
-        }
-
-        else
-        {
-            await DisplayAlert("Login Failed", "Invalid email or password.", "OK");
-        }
 
             else
             {
-                DisplayAlert("Error", "Invalid username or password", "OK");
+                await DisplayAlert("Login Failed", "Invalid email or password.", "OK");
             }
-                
+
+
         }
         private async void Createhere(object sender, EventArgs e)
         {
