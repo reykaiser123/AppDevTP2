@@ -11,7 +11,14 @@
     <ShellContent
         Title="Home"
         ContentTemplate="{DataTemplate local:Login}"
-        Route="Login" />
+        Route="Login" 
+        Shell.NavBarIsVisible="False"
+        Shell.FlyoutBehavior="Disabled"/>
+    <ShellContent
+        Route="Dashboard"
+        ContentTemplate="{DataTemplate local:Dashboard}"
+        Shell.NavBarIsVisible="False"
+        Shell.FlyoutBehavior="Disabled"/>
 
 </Shell>
     

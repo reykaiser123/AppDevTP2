@@ -22,9 +22,9 @@ namespace gatchapon
             if (username == "admin" && password == "1234")
             {
                 DisplayAlert("Success", "Login Successful", "OK");
-                await Shell.Current.GoToAsync("Dashboard");
+                await Shell.Current.GoToAsync("//Dashboard");
 
-                Application.Current.MainPage = new NavigationPage(new Dashboard());
+                //Application.Current.MainPage = new NavigationPage(new Dashboard());
             }
 
             else
@@ -33,13 +33,14 @@ namespace gatchapon
             }
                 
         }
-        private async void Forgot(object sender, EventArgs e)
-        {
-            await Shell.Current.GoToAsync("///ForgotPass");
-        }
         private async void Createhere(object sender, EventArgs e)
         {
             await Shell.Current.GoToAsync("Register");
+        }
+        private async void onForgotPassBTN(object sender, EventArgs e)
+        {
+            
+            await Shell.Current.GoToAsync("/ForgotPass");
         }
 
 

@@ -14,7 +14,7 @@
                 VerticalOptions="Center"
                 >
 
-            <VerticalStackLayout Spacing="30">
+            <VerticalStackLayout Spacing="23">
 
                 <Label Text="Email"
                        FontAttributes="Bold"
@@ -40,9 +40,10 @@
                 <Label Text="Forgot password?"
                        HorizontalOptions="Start"
                        TextColor="blue"
-                       FontAttributes="Bold">
+                       FontAttributes="Bold"
+                       >
                     <Label.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="Forgot"/>
+                        <TapGestureRecognizer Tapped="onForgotPassBTN"/>
                     </Label.GestureRecognizers>
                 </Label>
                 

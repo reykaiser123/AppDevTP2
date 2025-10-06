@@ -1,52 +1,58 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="gatchapon.Register">
-    <Grid Padding="20">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
+             x:Class="gatchapon.Register"
+             BackgroundColor="#ADC179">
 
-        <Frame BackgroundColor="#C0D3A6"
-           CornerRadius="20"
-           Padding="20"
-           VerticalOptions="Center"
-           Grid.Row="1">
-            <VerticalStackLayout Spacing="15">
+    <Grid VerticalOptions="Center" Padding="20">
 
-                <Label Text="Email" TextColor="Black"/>
+        <Border StrokeShape="RoundRectangle 20"
+            StrokeThickness="0"
+            BackgroundColor="#DDE5B6"
+            Padding="20"
+            HorizontalOptions="Fill"
+            VerticalOptions="Center"
+            >
+
+            <VerticalStackLayout Spacing="10">
+
+
+                <Label Text="Email" TextColor="Black"
+                       FontAttributes="Bold"/>
                 <Border StrokeThickness="0"
                   BackgroundColor="#E7E8D6"
                   Padding="10"
                   HeightRequest="60"
                   StrokeShape="RoundRectangle 10">
                     <Entry Placeholder="Enter Email"
+                           x:Name="emailEntryReg"
                       PlaceholderColor="Gray"
                       TextColor="Black"
                       VerticalOptions="Center"/>
                 </Border>
 
-                <Label Text="Password" TextColor="Black"/>
+                <Label Text="Password" TextColor="Black" FontAttributes="Bold"/>
                 <Border StrokeThickness="0"
                     BackgroundColor="#E7E8D6"
                     Padding="10"
                     HeightRequest="60"
                     StrokeShape="RoundRectangle 10">
                     <Entry Placeholder="Enter Password"
+                           x:Name="passwordEntryReg"
                         IsPassword="True"
                         PlaceholderColor="Gray"
                         TextColor="Black"
                         VerticalOptions="Center"/>
                 </Border>
 
-                <Label Text="Confirm Password" TextColor="Black"/>
+                <Label Text="Confirm Password" TextColor="Black" FontAttributes="Bold"/>
                 <Border StrokeThickness="0"
                        BackgroundColor="#E7E8D6"
                        Padding="10"
                        HeightRequest="60"
                        StrokeShape="RoundRectangle 10">
                     <Entry Placeholder="Confirm Password"
+                           x:Name="confirmPass"
                            IsPassword="True"
                            PlaceholderColor="Gray"
                            TextColor="Black"
@@ -54,6 +60,8 @@
                 </Border>
 
                 <Button Text="Register"
+                        FontAttributes="Bold"
+                        FontSize="18"
                         BackgroundColor="#8A7A6A"
                         TextColor="White"
                         CornerRadius="10"
@@ -62,6 +70,6 @@
                         />
 
             </VerticalStackLayout>
-        </Frame>
+        </Border>
     </Grid>
 </ContentPage>

@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="gatchapon.Dashboard"
              NavigationPage.HasNavigationBar="False"
+             BackgroundColor="#ADC179"
              Title="Dashboard">
 	<ScrollView>
 		<VerticalStackLayout Padding="15" Spacing="20">
@@ -50,7 +51,7 @@
 
 
 			<!-- Tasks Today-->
-			<Border BackgroundColor="#c3d89b"
+			<Border BackgroundColor="#DDE5B6"
         StrokeShape="RoundRectangle 10"
         Padding="18">
 				<VerticalStackLayout Spacing="14">
@@ -186,78 +187,86 @@
 
 
 			<!-- Bottom menu container -->
-			<Border BackgroundColor="#DDE5B6"
-                    StrokeShape="RoundRectangle 10"
-                    Padding="12">
-				<Border>
-					<HorizontalStackLayout HorizontalOptions="Center"
-                                           Spacing="12">
+            <Border BackgroundColor="#DDE5B6"
+                    StrokeShape="RoundRectangle 10">
 
-						<!-- menu buttons -->
-						<Button Text="Check-In"
-                                ImageSource="checkin.png"
-                                ContentLayout="Left,8"
-                                BackgroundColor="#f9f8e7"
-                                CornerRadius="20"
-                                Padding="14,6"
-                                HeightRequest="46"
-                                FontAttributes="Bold"
-                                TextColor="#6C584D"/>
+                <ScrollView 
+                                 Orientation="Horizontal"
+                                 BackgroundColor="#D3D3D3"
+                                 HeightRequest="90"
+                                >
+                    <HorizontalStackLayout 
+                                Spacing="5"
+                                Padding="10"
+                                HorizontalOptions="Center"
+                                VerticalOptions="Center">
 
-						<Button Text="Tasks"
-                                ImageSource="checkbox.png"
-                                ContentLayout="Left,8"
-                                BackgroundColor="#f9f8e7"
-                                CornerRadius="20"
-                                Padding="14,6"
-                                HeightRequest="46"
-                                FontAttributes="Bold"
-                                TextColor="#6C584D"/>
+                        <Button 
+                                        x:Name="CheckIn"
+                                        Text="Check-In"
+                                        BackgroundColor="#6C584D"
+                                        CornerRadius="30"
+                                         WidthRequest="100"
+                                        HeightRequest="30"
+                                        FontAttributes="Bold"
+                                        TextColor="#F0EAD2" />
 
-						<Button Text="News"
-                                ImageSource="news.png"
-                                ContentLayout="Left,8"
-                                BackgroundColor="#f9f8e7"
-                                CornerRadius="20"
-                                Padding="14,6"
-                                HeightRequest="46"
-                                FontAttributes="Bold"
-                                TextColor="#6C584D"/>
+                        <Button 
+                                        x:Name="Task"
+                                        Text="Tasks"
+                                        BackgroundColor="#6C584D"
+                                        CornerRadius="20"
+                                        WidthRequest="100"
+                                        HeightRequest="30"
+                                        FontAttributes="Bold"
+                                        TextColor="#F0EAD2"  />
 
-						<Button Text="Shop"
-                                ImageSource="shop1.png"
-                                ContentLayout="Left,8"
-                                BackgroundColor="#f9f8e7"
-                                CornerRadius="20"
-                                Padding="14,6"
-                                HeightRequest="46"
-                                FontAttributes="Bold"
-                                TextColor="#6C584D"/>
+                        <Button
+                                        x:Name="News"
+                                        Text="News"
+                                        BackgroundColor="#6C584D"
+                                        CornerRadius="20"
+                                         WidthRequest="100"
+                                        HeightRequest="30"
+                                        FontAttributes="Bold"
+                                        TextColor="#F0EAD2"  />
 
-						<Button Text="Quest"
-                                ImageSource="badge.png"
-                                ContentLayout="Left,8"
-                                BackgroundColor="#f9f8e7"
-                                CornerRadius="20"
-                                Padding="14,6"
-                                HeightRequest="46"
-                                FontAttributes="Bold"
-                                TextColor="#6C584D"/>
+                        <Button 
+                                        x:Name="Shop"
+                                         Text="Shop"
+                                        BackgroundColor="#6C584D"
+                                        CornerRadius="20"
+                                         WidthRequest="100"
+                                        HeightRequest="30"
+                                        FontAttributes="Bold"
+                                        TextColor="#F0EAD2"
+                                        Clicked="OnclickedShop" 
+                            />
 
-						<Button Text="Characters"
-                                ImageSource="characters.png"
-                                ContentLayout="Left,8"
-                                BackgroundColor="#f9f8e7"
-                                CornerRadius="20"
-                                Padding="14,6"
-                                HeightRequest="46"
-                                FontAttributes="Bold"
-                                TextColor="#6C584D"/>
+                        <Button 
+                                        x:Name="Quest"
+                                        Text="Quest"
+                                        BackgroundColor="#6C584D"
+                                        CornerRadius="20"
+                                        WidthRequest="100"
+                                        HeightRequest="30"
+                                        FontAttributes="Bold"
+                                        TextColor="#F0EAD2" />
 
-
-					</HorizontalStackLayout>
-				</Border>
-			</Border>
+                        <Button
+                                        x:Name="Profile"
+                                        Text="profile"
+                                        BackgroundColor="#6C584D"
+                                        CornerRadius="20"
+                                         WidthRequest="100"
+                                        HeightRequest="30"
+                                        FontAttributes="Bold"
+                                        TextColor="#F0EAD2" 
+                                        Clicked="OnclickedProfile"
+                            />
+                    </HorizontalStackLayout>
+                </ScrollView>
+            </Border>
 
 			<!-- Current Banner  -->
 			<Border BackgroundColor="#DDE5B6"
