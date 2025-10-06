@@ -9,10 +9,8 @@ public partial class ProfileSetting : ContentPage
 		InitializeComponent();
 	}
 
-	public async void OnLogout(object? sender, EventArgs e)
+	public void OnLogout(object? sender, EventArgs e)
 	{
-        await Shell.Current.GoToAsync("//Login");
-
-
+		Shell.Current.GoToAsync("Login");
     }
 }

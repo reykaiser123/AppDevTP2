@@ -2,11 +2,298 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="gatchapon.Dashboard"
+             NavigationPage.HasNavigationBar="False"
+             BackgroundColor="#ADC179"
              Title="Dashboard">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+	<ScrollView>
+		<VerticalStackLayout Padding="15" Spacing="20">
+
+			<!-- Top Bar -->
+			<Grid ColumnDefinitions="Auto,*,Auto" Padding="5" VerticalOptions="Start">
+				<!-- Menu  -->
+				<Border StrokeShape="Ellipse"
+            HeightRequest="36"
+            WidthRequest="36"
+            BackgroundColor="#c3d89b"
+            VerticalOptions="Center"
+            HorizontalOptions="Start">
+					<ImageButton Source="menu1.png"
+                     BackgroundColor="Transparent"
+                     Aspect="AspectFit"
+                     HeightRequest="28"
+                     WidthRequest="28"/>
+				</Border>
+
+				<!-- Title -->
+				<Label Grid.Column="1"
+           Text="DASHBOARD"
+           FontSize="22"
+           FontAttributes="Bold"
+           HorizontalOptions="Center"
+           VerticalOptions="Center"
+           TextColor="#6C584D"/>
+
+				<!-- Profile  -->
+				<Border Grid.Column="2"
+            StrokeShape="Ellipse"
+            HeightRequest="36"
+            WidthRequest="36"
+            BackgroundColor="#433832"
+            VerticalOptions="Center"
+            HorizontalOptions="End">
+					<ImageButton Source="profile.png"
+                     BackgroundColor="Transparent"
+                     Aspect="AspectFit"
+                     HeightRequest="28"
+                     WidthRequest="28"/>
+				</Border>
+			</Grid>
+
+
+			<!-- Tasks Today-->
+			<Border BackgroundColor="#DDE5B6"
+        StrokeShape="RoundRectangle 10"
+        Padding="18">
+				<VerticalStackLayout Spacing="14">
+
+					<Label Text="Tasks Today"
+               FontSize="20"
+               FontAttributes="Bold"
+               HorizontalOptions="Center"
+               TextColor="#6C584D"/>
+
+					<!-- Task list with inner frames for each task -->
+					<VerticalStackLayout Spacing="10">
+
+						<!-- Task 1 -->
+						<Border BackgroundColor="#f5f1d6"
+                    StrokeShape="RoundRectangle 12"
+                    Stroke="#d1c9a6"
+                    StrokeThickness="1"
+                    Padding="0">
+							<Grid Padding="12" ColumnDefinitions="*,Auto">
+								<Label Text="Pogi sige na"
+                           FontSize="16"
+                           VerticalOptions="Center"
+                           TextColor="#6C584D"
+                           HorizontalOptions="StartAndExpand"/>
+								<Image Grid.Column="1"
+                           Source="check.png"
+                           WidthRequest="24"
+                           HeightRequest="24"
+                           VerticalOptions="Center"/>
+							</Grid>
+							<Border.GestureRecognizers>
+								<TapGestureRecognizer />
+							</Border.GestureRecognizers>
+						</Border>
+
+						<!-- Task 2 -->
+						<Border BackgroundColor="#f5f1d6"
+                    StrokeShape="RoundRectangle 12"
+                    Stroke="#d1c9a6"
+                    StrokeThickness="1"
+                    Padding="0">
+							<Grid Padding="12" ColumnDefinitions="*,Auto">
+								<Label Text="Pogi sige na"
+                           FontSize="16"
+                           VerticalOptions="Center"
+                           TextColor="#6C584D"
+                           HorizontalOptions="StartAndExpand"/>
+								<Image Grid.Column="1"
+                           Source="check.png"
+                           WidthRequest="24"
+                           HeightRequest="24"
+                           VerticalOptions="Center"/>
+							</Grid>
+							<Border.GestureRecognizers>
+								<TapGestureRecognizer />
+							</Border.GestureRecognizers>
+						</Border>
+
+						<!-- Task 3 -->
+						<Border BackgroundColor="#f5f1d6"
+                    StrokeShape="RoundRectangle 12"
+                    Stroke="#d1c9a6"
+                    StrokeThickness="1"
+                    Padding="0">
+							<Grid Padding="12" ColumnDefinitions="*,Auto">
+								<Label Text="Pogi sige na"
+                           FontSize="16"
+                           VerticalOptions="Center"
+                           TextColor="#6C584D"
+                           HorizontalOptions="StartAndExpand"/>
+								<Image Grid.Column="1"
+                           Source="check.png"
+                           WidthRequest="24"
+                           HeightRequest="24"
+                           VerticalOptions="Center"/>
+							</Grid>
+							<Border.GestureRecognizers>
+								<TapGestureRecognizer />
+							</Border.GestureRecognizers>
+						</Border>
+
+						<!-- Task 4 -->
+						<Border BackgroundColor="#f5f1d6"
+                    StrokeShape="RoundRectangle 12"
+                    Stroke="#d1c9a6"
+                    StrokeThickness="1"
+                    Padding="0">
+							<Grid Padding="12" ColumnDefinitions="*,Auto">
+								<Label Text="Pogi sige na"
+                           FontSize="16"
+                           VerticalOptions="Center"
+                           TextColor="#6C584D"
+                           HorizontalOptions="StartAndExpand"/>
+								<Image Grid.Column="1"
+                           Source="check.png"
+                           WidthRequest="24"
+                           HeightRequest="24"
+                           VerticalOptions="Center"/>
+							</Grid>
+							<Border.GestureRecognizers>
+								<TapGestureRecognizer />
+							</Border.GestureRecognizers>
+						</Border>
+
+						<!-- Task 5 -->
+						<Border BackgroundColor="#f5f1d6"
+                    StrokeShape="RoundRectangle 12"
+                    Stroke="#d1c9a6"
+                    StrokeThickness="1"
+                    Padding="0">
+							<Grid Padding="12" ColumnDefinitions="*,Auto">
+								<Label Text="Pogi sige na"
+                           FontSize="16"
+                           VerticalOptions="Center"
+                           TextColor="#6C584D"
+                           HorizontalOptions="StartAndExpand"/>
+								<Image Grid.Column="1"
+                           Source="check.png"
+                           WidthRequest="24"
+                           HeightRequest="24"
+                           VerticalOptions="Center"/>
+							</Grid>
+							<Border.GestureRecognizers>
+								<TapGestureRecognizer />
+							</Border.GestureRecognizers>
+						</Border>
+
+					</VerticalStackLayout>
+				</VerticalStackLayout>
+			</Border>
+
+
+
+			<!-- Bottom menu container -->
+            <Border BackgroundColor="#DDE5B6"
+                    StrokeShape="RoundRectangle 10">
+
+                <ScrollView 
+                                 Orientation="Horizontal"
+                                 BackgroundColor="#D3D3D3"
+                                 HeightRequest="90"
+                                >
+                    <HorizontalStackLayout 
+                                Spacing="5"
+                                Padding="10"
+                                HorizontalOptions="Center"
+                                VerticalOptions="Center">
+
+                        <Button 
+                                        x:Name="CheckIn"
+                                        Text="Check-In"
+                                        BackgroundColor="#6C584D"
+                                        CornerRadius="30"
+                                         WidthRequest="100"
+                                        HeightRequest="30"
+                                        FontAttributes="Bold"
+                                        TextColor="#F0EAD2" />
+
+                        <Button 
+                                        x:Name="Task"
+                                        Text="Tasks"
+                                        BackgroundColor="#6C584D"
+                                        CornerRadius="20"
+                                        WidthRequest="100"
+                                        HeightRequest="30"
+                                        FontAttributes="Bold"
+                                        TextColor="#F0EAD2"  />
+
+                        <Button
+                                        x:Name="News"
+                                        Text="News"
+                                        BackgroundColor="#6C584D"
+                                        CornerRadius="20"
+                                         WidthRequest="100"
+                                        HeightRequest="30"
+                                        FontAttributes="Bold"
+                                        TextColor="#F0EAD2"  />
+
+                        <Button 
+                                        x:Name="Shop"
+                                         Text="Shop"
+                                        BackgroundColor="#6C584D"
+                                        CornerRadius="20"
+                                         WidthRequest="100"
+                                        HeightRequest="30"
+                                        FontAttributes="Bold"
+                                        TextColor="#F0EAD2"
+                                        Clicked="OnclickedShop" 
+                            />
+
+                        <Button 
+                                        x:Name="Quest"
+                                        Text="Quest"
+                                        BackgroundColor="#6C584D"
+                                        CornerRadius="20"
+                                        WidthRequest="100"
+                                        HeightRequest="30"
+                                        FontAttributes="Bold"
+                                        TextColor="#F0EAD2" />
+
+                        <Button
+                                        x:Name="Profile"
+                                        Text="profile"
+                                        BackgroundColor="#6C584D"
+                                        CornerRadius="20"
+                                         WidthRequest="100"
+                                        HeightRequest="30"
+                                        FontAttributes="Bold"
+                                        TextColor="#F0EAD2" 
+                                        Clicked="OnclickedProfile"
+                            />
+                    </HorizontalStackLayout>
+                </ScrollView>
+            </Border>
+
+			<!-- Current Banner  -->
+			<Border BackgroundColor="#DDE5B6"
+                    StrokeShape="RoundRectangle 20"
+                    Padding="14">
+				<VerticalStackLayout Spacing="12">
+					<Label Text="Current Banner"
+                           FontSize="20"
+                           FontAttributes="Bold"
+                           HorizontalOptions="Center"
+                           TextColor="#6C584D"/>
+
+					<!-- banner inner area -->
+					<Border BackgroundColor="#f5f1d6"
+                            Stroke="#efe9d0"
+                            StrokeThickness="1"
+                            StrokeShape="RoundRectangle 12"
+                            Padding="6">
+						<Image Source="banner.png"
+                               Aspect="AspectFill"
+                               HeightRequest="160"
+                               HorizontalOptions="Fill" />
+					</Border>
+				</VerticalStackLayout>
+			</Border>
+
+		</VerticalStackLayout>
+	</ScrollView>
+
 </ContentPage>
