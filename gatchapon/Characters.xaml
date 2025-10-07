@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="gatchapon.Characters"
+             BackgroundColor="#444444"
+             Title="Characters">
+
+    <Grid Padding="0" RowDefinitions="Auto,*">
+        
+        <StackLayout BackgroundColor="#C6D87C" Padding="10,20" Grid.Row="0">
+            
+            <Grid ColumnDefinitions="Auto,*,Auto" VerticalOptions="Center">
+                <Image Source="menu_icon.png" HeightRequest="24" WidthRequest="24" Grid.Column="0"/>
+
+                <Label Text="CHARACTERS"
+                       Grid.Column="1"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center"
+                       FontSize="20"
+                       FontAttributes="Bold"
+                       TextColor="White"/>
+
+                <BoxView WidthRequest="24" HeightRequest="24" Grid.Column="2" Opacity="0"/>
+                
+            </Grid>
+
+            
+            <Frame BackgroundColor="White"
+                   CornerRadius="20"
+                   HasShadow="False"
+                   Padding="10,5"
+                   Margin="0,15,0,0">
+                <Grid ColumnDefinitions="Auto,*">
+                    <Image Source="filter_icon.png" HeightRequest="20" WidthRequest="20" Grid.Column="0"/>
+                    <SearchBar Placeholder="Search Characters"
+                               Grid.Column="1"
+                               BackgroundColor="Transparent"
+                               PlaceholderColor="Gray"
+                               TextColor="Black"/>
+                </Grid>
+            </Frame>
+        </StackLayout>
+
+        
+        <ScrollView Grid.Row="1" BackgroundColor="#C6D87C">
+            <CollectionView ItemsLayout="HorizontalList" Margin="15">
+                <CollectionView.ItemsSource>
+                    <x:Array Type="{x:Type x:String}">
+                        <x:String>Reynold</x:String>
+                        <x:String>Oswell</x:String>
+                        <x:String>Mell</x:String>
+                    </x:Array>
+                </CollectionView.ItemsSource>
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame WidthRequest="100"
+                               HeightRequest="140"
+                               Padding="5"
+                               Margin="10"
+                               BackgroundColor="White"
+                               CornerRadius="15"
+                               HasShadow="True">
+                            <StackLayout>
+                                
+                                <Image Source="character_placeholder.png"
+                                       HeightRequest="80"
+                                       Aspect="AspectFill"/>
+
+                                
+                                <Label Text="{Binding .}"
+                                       FontSize="14"
+                                       FontAttributes="Bold"
+                                       HorizontalOptions="Center"
+                                       VerticalOptions="End"
+                                       TextColor="Black"/>
+                            </StackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </ScrollView>
+    </Grid>
+</ContentPage>

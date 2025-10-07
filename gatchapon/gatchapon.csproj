@@ -72,16 +72,10 @@
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.5" />
 	</ItemGroup>
 
-	<ItemGroup>
-	  <MauiXaml Update="ForgotPass.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Login.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Register.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	</ItemGroup>
+<ItemGroup>
+    <MauiXaml Update="Login.xaml">
+        <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
+</ItemGroup>
 
 </Project>
