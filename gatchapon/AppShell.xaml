@@ -17,29 +17,18 @@
             </DataTemplate>
         </ShellContent.ContentTemplate>
     </ShellContent>
-    
 
     <ShellContent
-        Title="Register"
-        Route="Register"
-        Shell.NavBarIsVisible="False">
+    Title="dashboard"
+    Route="dashboard"
+    Shell.NavBarIsVisible="False">
         <ShellContent.ContentTemplate>
             <DataTemplate>
-                <local:Register />
+                <local:Dashboard />
             </DataTemplate>
         </ShellContent.ContentTemplate>
     </ShellContent>
 
-   
-    <ShellContent
-        Title="Forgot Password"
-        Route="ForgotPass"
-        Shell.NavBarIsVisible="False">
-        <ShellContent.ContentTemplate>
-            <DataTemplate>
-                <local:ForgotPass />
-            </DataTemplate>
-        </ShellContent.ContentTemplate>
-    </ShellContent>
 
 </Shell>
+    

@@ -1,16 +1,16 @@
 ﻿using Microsoft.Maui.Controls;
 using System;
+using System.Threading.Tasks;
 namespace gatchapon
 {
     public partial class Login : ContentPage
     {
 
-
         public Login()
         {
             InitializeComponent();
         }
-        private void Logsbtn(object sender, EventArgs e)
+        private async void Logsbtn(object sender, EventArgs e)
         {
             String username = emailEntry.Text;
             String password = passwordEntry.Text;
@@ -20,9 +20,18 @@ namespace gatchapon
                 return;
             }
             if (username == "admin" && password == "1234")
+            {
                 DisplayAlert("Success", "Login Successful", "OK");
+                await Shell.Current.GoToAsync("Dashboard");
+
+                Application.Current.MainPage = new NavigationPage(new Dashboard());
+            }
+
             else
+            {
                 DisplayAlert("Error", "Invalid username or password", "OK");
+            }
+                
         }
         private async void Forgot(object sender, EventArgs e)
         {
