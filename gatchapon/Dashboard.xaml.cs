@@ -22,4 +22,13 @@ public partial class Dashboard : ContentPage
     {
         await Shell.Current.GoToAsync("ProfileSetting");
     }
+
+    private void TapGestureRecognizer_Tapped(object sender, TappedEventArgs e)
+    {
+
+    }
+    private async void OnBannerTapped(object sender, EventArgs e)
+    {
+        await Shell.Current.GoToAsync("GachaBanner");
+    }
 }

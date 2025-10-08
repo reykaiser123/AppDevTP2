@@ -285,10 +285,18 @@
                             StrokeThickness="1"
                             StrokeShape="RoundRectangle 12"
                             Padding="6">
-						<Image Source="banner.png"
+                        <Image Source="taskaton.png"
                                Aspect="AspectFill"
                                HeightRequest="160"
-                               HorizontalOptions="Fill" />
+                               HorizontalOptions="FillAndExpand"
+                               VerticalOptions="FillAndExpand"
+                               >
+
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnBannerTapped"/>
+                            </Image.GestureRecognizers>
+                            
+                        </Image>
 					</Border>
 				</VerticalStackLayout>
 			</Border>
