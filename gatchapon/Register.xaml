@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="gatchapon.Register"
+             BackgroundColor="#ADC179"
              xmlns:local="clr-namespace:gatchapon">
     <Grid Padding="20">
         <Grid.RowDefinitions>
@@ -9,11 +10,12 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <Frame BackgroundColor="#C0D3A6"
-           CornerRadius="20"
-           Padding="20"
-           VerticalOptions="Center"
-           Grid.Row="1">
+        <Border
+                BackgroundColor="#C0D3A6"
+                Padding="20"
+                VerticalOptions="Center"
+                Grid.Row="1"
+                StrokeShape="RoundRectangle 20">
             <VerticalStackLayout Spacing="15">
 
                 <Label Text="Email" TextColor="Black"/>
@@ -22,10 +24,11 @@
                   Padding="10"
                   HeightRequest="60"
                   StrokeShape="RoundRectangle 10">
-                    <Entry Placeholder="Enter Email"
-                      PlaceholderColor="Gray"
-                      TextColor="Black"
-                      VerticalOptions="Center"/>
+                    <Entry  x:Name="emailEntryReg"
+                            Placeholder="Enter Email"
+                            PlaceholderColor="Gray"
+                            TextColor="Black"
+                            VerticalOptions="Center"/>
                 </Border>
 
                 <Label Text="Password" TextColor="Black"/>
@@ -34,11 +37,12 @@
                     Padding="10"
                     HeightRequest="60"
                     StrokeShape="RoundRectangle 10">
-                    <Entry Placeholder="Enter Password"
-                        IsPassword="True"
-                        PlaceholderColor="Gray"
-                        TextColor="Black"
-                        VerticalOptions="Center"/>
+                    <Entry x:Name="passwordEntryReg"
+                            Placeholder="Enter Password"
+                            IsPassword="True"
+                            PlaceholderColor="Gray"
+                            TextColor="Black"
+                            VerticalOptions="Center"/>
                 </Border>
 
                 <Label Text="Confirm Password" TextColor="Black"/>
@@ -47,7 +51,8 @@
                        Padding="10"
                        HeightRequest="60"
                        StrokeShape="RoundRectangle 10">
-                    <Entry Placeholder="Confirm Password"
+                    <Entry x:Name="confirmPass"
+                           Placeholder="Confirm Password"
                            IsPassword="True"
                            PlaceholderColor="Gray"
                            TextColor="Black"
@@ -63,6 +68,6 @@
                         />
 
             </VerticalStackLayout>
-        </Frame>
+        </Border>
     </Grid>
 </ContentPage>

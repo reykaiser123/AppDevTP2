@@ -40,12 +40,15 @@
             BackgroundColor="#433832"
             VerticalOptions="Center"
             HorizontalOptions="End">
-					<ImageButton Source="profile.png"
-                     BackgroundColor="Transparent"
-                     Aspect="AspectFit"
-                     HeightRequest="28"
-                     WidthRequest="28"/>
-				</Border>
+                    <ImageButton
+                            x:Name="ProfileButton"
+                            Source="profile.png"
+                            BackgroundColor="Transparent"
+                            Aspect="AspectFit"
+                            HeightRequest="28"
+                            WidthRequest="28"
+                            Clicked="OnProfileClicked"/>
+                </Border>
 			</Grid>
 
 
@@ -72,6 +75,7 @@
                     Padding="0">
 							<Grid Padding="12" ColumnDefinitions="*,Auto">
 								<Label Text="Pogi sige na"
+                                       IsVisible="False"
                            FontSize="16"
                            VerticalOptions="Center"
                            TextColor="#6C584D"
