@@ -5,6 +5,8 @@ namespace gatchapon
 {
     public partial class Login : ContentPage
     {
+        bool isPasswordVisible = false;
+        private readonly FirebaseAuthService _authService = new(); // <-- Create FirebaseAuthService instance
 
         public Login()
         {
@@ -12,24 +14,25 @@ namespace gatchapon
         }
         private async void Logsbtn(object sender, EventArgs e)
         {
-            String username = emailEntry.Text;
-            String password = passwordEntry.Text;
-            if (String.IsNullOrWhiteSpace(username) || String.IsNullOrWhiteSpace(password))
-            {
-                DisplayAlert("Error", "Please enter username and password", "OK");
-                return;
-            }
-            else if (username == "admin" && password == "1234")
+
+            string emaillogin = emailEntry.Text;
+            string password = passwordEntry.Text;
+
+            
+            string email = $"{emaillogin}";
+
+            var signInResult = await _authService.SignInWithEmailPasswordAsync(email, password);
+
+            if (signInResult != null)
             {
                 DisplayAlert("Success", "Login Successful", "OK");
                 await Shell.Current.GoToAsync("//Dashboard");
-
             }
-
             else
             {
                 await DisplayAlert("Login Failed", "Invalid email or password.", "OK");
             }
+
 
 
         }
