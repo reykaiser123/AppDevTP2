@@ -1,68 +1,67 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="gatchapon.Register"
-             BackgroundColor="#ADC179">
+             x:Class="gatchapon.Register">
+    <Grid Padding="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
 
-    <Grid VerticalOptions="Center" Padding="20">
-
-        <Border StrokeShape="RoundRectangle 20"
-                StrokeThickness="0"
-                BackgroundColor="#DDE5B6"
-                Padding="20"
-                HorizontalOptions="Fill"
-                VerticalOptions="Center"
-                Shadow="Default">
-
+        <Frame BackgroundColor="#C0D3A6"
+           CornerRadius="20"
+           Padding="20"
+           VerticalOptions="Center"
+           Grid.Row="1">
             <VerticalStackLayout Spacing="15">
 
-                <Label Text="Email"
-                       FontAttributes="Bold"
-                       TextColor="#333333" />
-                <Entry x:Name="emailEntryReg"
-                       Placeholder="Email address"
-                       BackgroundColor="#F0EAD2"
-                       ReturnType="Next"
-                       Keyboard="Email"
-                       ClearButtonVisibility="WhileEditing" />
+                <Label Text="Email" TextColor="Black"/>
+                <Border StrokeThickness="0"
+                  BackgroundColor="#E7E8D6"
+                  Padding="10"
+                  HeightRequest="60"
+                  StrokeShape="RoundRectangle 10">
+                    <Entry Placeholder="Enter Email"
+                      PlaceholderColor="Gray"
+                      TextColor="Black"
+                      VerticalOptions="Center"/>
+                </Border>
 
-                <Label Text="Password"
-                       FontAttributes="Bold"
-                       TextColor="#333333" />
-                <Entry x:Name="passwordEntryReg"
-                       Placeholder="Password"
-                       IsPassword="True"
-                       BackgroundColor="#F0EAD2"
-                       ClearButtonVisibility="WhileEditing" />
+                <Label Text="Password" TextColor="Black"/>
+                <Border StrokeThickness="0"
+                    BackgroundColor="#E7E8D6"
+                    Padding="10"
+                    HeightRequest="60"
+                    StrokeShape="RoundRectangle 10">
+                    <Entry Placeholder="Enter Password"
+                        IsPassword="True"
+                        PlaceholderColor="Gray"
+                        TextColor="Black"
+                        VerticalOptions="Center"/>
+                </Border>
 
-                <Label Text="Confirm Password"
-                       FontAttributes="Bold"
-                       TextColor="#333333"/>
-                <Entry x:Name="confirmPass"
-                       Placeholder="Enter Password"
-                       IsPassword="True"
-                       BackgroundColor="#F0EAD2"
-                       ClearButtonVisibility="WhileEditing"/>
+                <Label Text="Confirm Password" TextColor="Black"/>
+                <Border StrokeThickness="0"
+                       BackgroundColor="#E7E8D6"
+                       Padding="10"
+                       HeightRequest="60"
+                       StrokeShape="RoundRectangle 10">
+                    <Entry Placeholder="Confirm Password"
+                           IsPassword="True"
+                           PlaceholderColor="Gray"
+                           TextColor="Black"
+                           VerticalOptions="Center"/>
+                </Border>
 
                 <Button Text="Register"
-                        BackgroundColor="#6C584D"
-                        TextColor="#F0EAD2"
+                        BackgroundColor="#8A7A6A"
+                        TextColor="White"
                         CornerRadius="10"
-                        HorizontalOptions="Fill"
-                        FontAttributes="Bold"
-                        Clicked="Regsbtn"/>
-
-                <Label Text="Already have an account? Click here"
-                       HorizontalOptions="Start"
-                       TextColor="#DDE5B6"
-                       FontAttributes="Bold">
-                    <Label.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="Regshere"/>
-                    </Label.GestureRecognizers>
-                </Label>
+                        HeightRequest="50"
+                        Margin="0,10,0,0"
+                        />
 
             </VerticalStackLayout>
-        </Border>
+        </Frame>
     </Grid>
 </ContentPage>
-    
