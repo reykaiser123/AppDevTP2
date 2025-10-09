@@ -60,6 +60,13 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<None Update="appsettings.json">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
+
+
+	<ItemGroup>
 	  <AndroidResource Remove="NewFolder1\**" />
 	  <Compile Remove="NewFolder1\**" />
 	  <EmbeddedResource Remove="NewFolder1\**" />

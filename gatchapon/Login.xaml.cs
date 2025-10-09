@@ -21,7 +21,7 @@ namespace gatchapon
             
             string email = $"{emaillogin}";
 
-            var signInResult = await _authService.SignInWithEmailPasswordAsync(email, password);
+            var signInResult = await _authService.SignInResponseAsync(email, password);
 
             if (signInResult != null)
             {
@@ -42,8 +42,8 @@ namespace gatchapon
         }
         private async void onForgotPassBTN(object sender, EventArgs e)
         {
-            
-            await Shell.Current.GoToAsync("/ForgotPass");
+
+            await Shell.Current.GoToAsync("ForgotPass");
         }
 
 
