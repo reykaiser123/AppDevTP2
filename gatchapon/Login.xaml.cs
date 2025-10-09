@@ -21,10 +21,15 @@ namespace gatchapon
             
             string email = $"{emaillogin}";
 
+            var authService = new FirebaseAuthService();
+
             var signInResult = await _authService.SignInResponseAsync(email, password);
 
             if (signInResult != null)
             {
+                var dbService = new FirebaseDatabaseService();
+                var user = await dbService.GetUserAsync<dynamic>(signInResult.localId);
+
                 DisplayAlert("Success", "Login Successful", "OK");
                 await Shell.Current.GoToAsync("//Dashboard");
             }
