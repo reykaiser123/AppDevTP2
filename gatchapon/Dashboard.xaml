@@ -79,7 +79,7 @@
                            FontSize="16"
                            VerticalOptions="Center"
                            TextColor="#6C584D"
-                           HorizontalOptions="StartAndExpand"/>
+                           HorizontalOptions="Start"/>
 								<Image Grid.Column="1"
                            Source="check.png"
                            WidthRequest="24"
@@ -102,7 +102,7 @@
                            FontSize="16"
                            VerticalOptions="Center"
                            TextColor="#6C584D"
-                           HorizontalOptions="StartAndExpand"/>
+                           HorizontalOptions="Start"/>
 								<Image Grid.Column="1"
                            Source="check.png"
                            WidthRequest="24"
@@ -125,7 +125,7 @@
                            FontSize="16"
                            VerticalOptions="Center"
                            TextColor="#6C584D"
-                           HorizontalOptions="StartAndExpand"/>
+                           HorizontalOptions="Start"/>
 								<Image Grid.Column="1"
                            Source="check.png"
                            WidthRequest="24"
@@ -148,7 +148,7 @@
                            FontSize="16"
                            VerticalOptions="Center"
                            TextColor="#6C584D"
-                           HorizontalOptions="StartAndExpand"/>
+                           HorizontalOptions="Start"/>
 								<Image Grid.Column="1"
                            Source="check.png"
                            WidthRequest="24"
@@ -171,7 +171,7 @@
                            FontSize="16"
                            VerticalOptions="Center"
                            TextColor="#6C584D"
-                           HorizontalOptions="StartAndExpand"/>
+                           HorizontalOptions="Start"/>
 								<Image Grid.Column="1"
                            Source="check.png"
                            WidthRequest="24"
@@ -193,7 +193,10 @@
 			<Border BackgroundColor="#DDE5B6"
                     StrokeShape="RoundRectangle 10"
                     Padding="12">
-				<Border>
+                <ScrollView Orientation="Horizontal"
+                            HorizontalScrollBarVisibility="Never"> 
+    
+                    <Border>
 					<HorizontalStackLayout HorizontalOptions="Center"
                                            Spacing="12">
 
@@ -236,7 +239,8 @@
                                 Padding="14,6"
                                 HeightRequest="46"
                                 FontAttributes="Bold"
-                                TextColor="#6C584D"/>
+                                TextColor="#6C584D"
+                                Clicked="Shopbtn"/>
 
 						<Button Text="Quest"
                                 ImageSource="badge.png"
@@ -256,12 +260,14 @@
                                 Padding="14,6"
                                 HeightRequest="46"
                                 FontAttributes="Bold"
-                                TextColor="#6C584D"/>
+                                TextColor="#6C584D"
+                                Clicked="Charbtn"/>
 
 
 					</HorizontalStackLayout>
 				</Border>
-			</Border>
+                </ScrollView>
+            </Border>
 
 			<!-- Current Banner  -->
 			<Border BackgroundColor="#DDE5B6"
@@ -280,11 +286,12 @@
                             StrokeThickness="1"
                             StrokeShape="RoundRectangle 12"
                             Padding="6">
-						<Image Source="banner.png"
+                        <ImageButton Source="banner.png"
                                Aspect="AspectFill"
                                HeightRequest="160"
-                               HorizontalOptions="Fill" />
-					</Border>
+                               HorizontalOptions="Fill"
+                               Clicked="OnCharsImgClicked"/>
+                    </Border>
 				</VerticalStackLayout>
 			</Border>
 

@@ -16,20 +16,20 @@ namespace gatchapon
             String password = passwordEntry.Text;
             if (String.IsNullOrWhiteSpace(username) || String.IsNullOrWhiteSpace(password))
             {
-                DisplayAlert("Error", "Please enter username and password", "OK");
+                await DisplayAlert("Error", "Please enter username and password", "OK");
                 return;
             }
             if (username == "admin" && password == "1234")
             {
-                DisplayAlert("Success", "Login Successful", "OK");
+                await DisplayAlert("Success", "Login Successful", "OK");
                 await Shell.Current.GoToAsync("Dashboard");
 
-                Application.Current.MainPage = new NavigationPage(new Dashboard());
+                
             }
 
             else
             {
-                DisplayAlert("Error", "Invalid username or password", "OK");
+                await DisplayAlert("Error", "Invalid username or password", "OK");
             }
                 
         }
