@@ -1,3 +1,6 @@
+using System.Threading.Tasks;
+using Microsoft.Maui.Controls;
+using System;
 namespace gatchapon;
 
 public partial class Dashboard : ContentPage
@@ -5,23 +8,27 @@ public partial class Dashboard : ContentPage
 	public Dashboard()
 	{
 		InitializeComponent();
-		NavigationPage.SetHasBackButton(this, false);
-    }
-    private async void OnProfileClicked(object sender, EventArgs e)
-    {
-        await Navigation.PushAsync(new ProfileSetting()); 
-    }
-    private async void Charbtn(object sender, EventArgs e)
-    {
-        await Navigation.PushAsync(new Characters());
-    }
-    private async void OnCharsImgClicked(object sender, EventArgs e)
-    {
-        await Navigation.PushAsync(new GachaBanner());
-    }
-    private async void Shopbtn(object sender, EventArgs e)
-    {
-        await Navigation.PushAsync(new Shop());
+		
+
     }
 
+    private async void OnclickedShop(object sender, EventArgs e)
+    {
+
+        await Shell.Current.GoToAsync("Shop");
+    }
+
+    private async void OnclickedProfile(object? sender, EventArgs e)
+    {
+        await Shell.Current.GoToAsync("ProfileSetting");
+    }
+
+    private void TapGestureRecognizer_Tapped(object sender, TappedEventArgs e)
+    {
+
+    }
+    private async void OnBannerTapped(object sender, EventArgs e)
+    {
+        await Shell.Current.GoToAsync("GachaBanner");
+    }
 }

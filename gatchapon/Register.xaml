@@ -2,57 +2,57 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="gatchapon.Register"
-             BackgroundColor="#ADC179"
-             xmlns:local="clr-namespace:gatchapon">
-    <Grid Padding="20">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
+             BackgroundColor="#ADC179">
 
-        <Border
-                BackgroundColor="#C0D3A6"
-                Padding="20"
-                VerticalOptions="Center"
-                Grid.Row="1"
-                StrokeShape="RoundRectangle 20">
-            <VerticalStackLayout Spacing="15">
+    <Grid VerticalOptions="Center" Padding="20">
 
-                <Label Text="Email" TextColor="Black"/>
+        <Border StrokeShape="RoundRectangle 20"
+            StrokeThickness="0"
+            BackgroundColor="#DDE5B6"
+            Padding="20"
+            HorizontalOptions="Fill"
+            VerticalOptions="Center"
+            >
+
+            <VerticalStackLayout Spacing="10">
+
+
+                <Label Text="Email" TextColor="Black"
+                       FontAttributes="Bold"/>
                 <Border StrokeThickness="0"
                   BackgroundColor="#E7E8D6"
                   Padding="10"
                   HeightRequest="60"
                   StrokeShape="RoundRectangle 10">
-                    <Entry  x:Name="emailEntryReg"
-                            Placeholder="Enter Email"
-                            PlaceholderColor="Gray"
-                            TextColor="Black"
-                            VerticalOptions="Center"/>
+                    <Entry Placeholder="Enter Email"
+                           x:Name="emailEntryReg"
+                      PlaceholderColor="Gray"
+                      TextColor="Black"
+                      VerticalOptions="Center"/>
                 </Border>
 
-                <Label Text="Password" TextColor="Black"/>
+                <Label Text="Password" TextColor="Black" FontAttributes="Bold"/>
                 <Border StrokeThickness="0"
                     BackgroundColor="#E7E8D6"
                     Padding="10"
                     HeightRequest="60"
                     StrokeShape="RoundRectangle 10">
-                    <Entry x:Name="passwordEntryReg"
-                            Placeholder="Enter Password"
-                            IsPassword="True"
-                            PlaceholderColor="Gray"
-                            TextColor="Black"
-                            VerticalOptions="Center"/>
+                    <Entry Placeholder="Enter Password"
+                           x:Name="passwordEntryReg"
+                        IsPassword="True"
+                        PlaceholderColor="Gray"
+                        TextColor="Black"
+                        VerticalOptions="Center"/>
                 </Border>
 
-                <Label Text="Confirm Password" TextColor="Black"/>
+                <Label Text="Confirm Password" TextColor="Black" FontAttributes="Bold"/>
                 <Border StrokeThickness="0"
                        BackgroundColor="#E7E8D6"
                        Padding="10"
                        HeightRequest="60"
                        StrokeShape="RoundRectangle 10">
-                    <Entry x:Name="confirmPass"
-                           Placeholder="Confirm Password"
+                    <Entry Placeholder="Confirm Password"
+                           x:Name="confirmPass"
                            IsPassword="True"
                            PlaceholderColor="Gray"
                            TextColor="Black"
@@ -60,11 +60,14 @@
                 </Border>
 
                 <Button Text="Register"
+                        FontAttributes="Bold"
+                        FontSize="18"
                         BackgroundColor="#8A7A6A"
                         TextColor="White"
                         CornerRadius="10"
                         HeightRequest="50"
                         Margin="0,10,0,0"
+                        Clicked="OnRegisterBTN"
                         />
 
             </VerticalStackLayout>

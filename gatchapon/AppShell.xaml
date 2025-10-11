@@ -4,30 +4,21 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:gatchapon"
-    Title="gatchapon">
+    Title="gatchapon"
+	>
 
   
     <ShellContent
         Title="Login"
-        Route="Login"
-        Shell.NavBarIsVisible="False">
-        <ShellContent.ContentTemplate>
-            <DataTemplate>
-                <local:Login />
-            </DataTemplate>
-        </ShellContent.ContentTemplate>
-    </ShellContent>
-
+        ContentTemplate="{DataTemplate local:Login}"
+        Route="Login" 
+        Shell.NavBarIsVisible="False"
+        Shell.FlyoutBehavior="Disabled"/>
     <ShellContent
-    Title="dashboard"
-    Route="dashboard"
-    Shell.NavBarIsVisible="False">
-        <ShellContent.ContentTemplate>
-            <DataTemplate>
-                <local:Dashboard />
-            </DataTemplate>
-        </ShellContent.ContentTemplate>
-    </ShellContent>
+        Route="Dashboard"
+        ContentTemplate="{DataTemplate local:Dashboard}"
+        Shell.NavBarIsVisible="False"
+        Shell.FlyoutBehavior="Disabled"/>
 
 
 </Shell>

@@ -4,39 +4,53 @@ namespace gatchapon
 {
     public partial class Register : ContentPage
     {
+        private readonly FirebaseAuthService _authService = new();
 
         public Register()
         {
             InitializeComponent();
+
         }
-        private async void Regsbtn(object sender, EventArgs e)
+        private async void OnRegisterBTN(object sender, EventArgs e)
         {
-            String username = emailEntryReg.Text;
-            String password = passwordEntryReg.Text;
-            String confirm = confirmPass.Text;
-            if (String.IsNullOrWhiteSpace(username) || String.IsNullOrWhiteSpace(password)
-                || String.IsNullOrWhiteSpace(confirm))
+            string email = emailEntryReg.Text?.Trim();
+            string password = passwordEntryReg.Text;
+            string confirm = confirmPass.Text;
+                
+            if (string.IsNullOrWhiteSpace(email) ||
+                string.IsNullOrWhiteSpace(password) ||
+                string.IsNullOrWhiteSpace(confirm))
             {
-                await DisplayAlert("Error", "Please enter username and password", "OK");
+                await DisplayAlert("Error", "Please enter all fields.", "OK");
                 return;
             }
 
             if (password != confirm)
             {
-                await DisplayAlert("Error", "Passwords do not match", "OK");
+                await DisplayAlert("Error", "Passwords do not match.", "OK");
                 return;
             }
 
-            if (username == "admin" && password == "1234")
-                await DisplayAlert("Success", "Login Successful", "OK");
+            var authService = new FirebaseAuthService();
+            var result = await _authService.SignUpWithEmailPasswordAsync(email, password);
+
+            if (result == null)
+            {
+                var dbService = new FirebaseDatabaseService();
+                var user = new { Email = result.email, LocalId = result.localId, CreatedAt = DateTime.UtcNow };
+                await dbService.SaveUserAsync(result.localId, user);
+
+                await DisplayAlert("Error", "Registration failed. Check your email format or try again.", "OK");
+                return;
+            }
+
             else
-                await DisplayAlert("Error", "Invalid username or password", "OK");
-        }
-     private async void Regshere(object sender, EventArgs e)
-        {
-            await Shell.Current.GoToAsync("Login");
-        }
+            {
+                await DisplayAlert("Success", "Account created successfully!", "OK");
 
+                await Shell.Current.GoToAsync("//Login");
 
+            }
+        }
     }
 }

@@ -8,3 +8,5 @@ obj/
 *.pdb
 *.tmp
 *.bak
+gatchapon/Resources/Raw/*.json
+
