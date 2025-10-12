@@ -5,6 +5,14 @@
              NavigationPage.HasNavigationBar="False"
              BackgroundColor="#ADC179"
              Title="Dashboard">
+<<<<<<<<< Temporary merge branch 1
+    <VerticalStackLayout>
+        <Label 
+            Text="Welcome to .NET MAUI!"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" />
+    </VerticalStackLayout>
+=========
 	<ScrollView>
 		<VerticalStackLayout Padding="15" Spacing="20">
 
@@ -308,4 +316,5 @@
 		</VerticalStackLayout>
 	</ScrollView>
 
+>>>>>>>>> Temporary merge branch 2
 </ContentPage>
