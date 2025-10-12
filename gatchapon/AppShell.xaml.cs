@@ -22,9 +22,10 @@ namespace gatchapon
             Routing.RegisterRoute(nameof(Dashboard), typeof(Dashboard));
             Routing.RegisterRoute(nameof(Shop), typeof(Shop));
             Routing.RegisterRoute(nameof(GachaBanner), typeof(GachaBanner));
+            Routing.RegisterRoute(nameof(Quest), typeof(Quest));
 
             // Starts the asynchronous check when the app launches
-            
+
         }
         private void OnShellLoaded(object sender, EventArgs e)
         {

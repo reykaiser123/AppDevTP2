@@ -248,25 +248,27 @@
                             />
 
                         <Button 
-                                        x:Name="Quest"
-                                        Text="Quest"
-                                        BackgroundColor="#6C584D"
-                                        CornerRadius="20"
-                                        WidthRequest="100"
-                                        HeightRequest="30"
-                                        FontAttributes="Bold"
-                                        TextColor="#F0EAD2" />
+                            x:Name="Quest"
+                            Text="Quest"
+                            BackgroundColor="#6C584D"
+                            CornerRadius="20"
+                            WidthRequest="100"
+                            HeightRequest="30"
+                            FontAttributes="Bold"
+                            TextColor="#F0EAD2"
+                            Clicked="OnclickedQuest"
+                            />
 
                         <Button
-                                        x:Name="Profile"
-                                        Text="profile"
-                                        BackgroundColor="#6C584D"
-                                        CornerRadius="20"
-                                         WidthRequest="100"
-                                        HeightRequest="30"
-                                        FontAttributes="Bold"
-                                        TextColor="#F0EAD2" 
-                                        Clicked="OnclickedProfile"
+                            x:Name="Profile"
+                            Text="profile"
+                            BackgroundColor="#6C584D"
+                            CornerRadius="20"
+                                WidthRequest="100"
+                            HeightRequest="30"
+                            FontAttributes="Bold"
+                            TextColor="#F0EAD2" 
+                            Clicked="OnclickedProfile"
                             />
                     </HorizontalStackLayout>
                 </ScrollView>

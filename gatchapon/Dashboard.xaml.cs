@@ -35,4 +35,8 @@ public partial class Dashboard : ContentPage
     {
         await Shell.Current.GoToAsync("ProfileSetting");
     }
+    private async void OnclickedQuest(object sender, EventArgs e)
+    {
+        await Shell.Current.GoToAsync("Quest");
+    }
 }

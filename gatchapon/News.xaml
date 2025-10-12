@@ -19,7 +19,7 @@
                         TextColor="#6C534D"
                         HorizontalOptions="Start"
                         VerticalOptions="Center"
-                        Clicked="OnMenuClicked"/>
+                        />
 
                 <!-- Title -->
                 <Label Grid.Column="1"
@@ -41,7 +41,7 @@
                         HeightRequest="28"
                         VerticalOptions="Center"
                         HorizontalOptions="End"
-                        Clicked="OnSortClicked"/>
+                        />
             </Grid>
 
             <!-- News Card -->

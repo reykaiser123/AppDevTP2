@@ -18,7 +18,7 @@
                         TextColor="#433832"
                         HorizontalOptions="Start"
                         VerticalOptions="Center"
-                        Clicked="OnMenuClicked"/>
+                        />
 
                 <!-- Title -->
                 <Label Text="QUESTS"
@@ -60,7 +60,7 @@
                                 <ImageButton Source="check_placeholder.png"
                                              Aspect="AspectFit"
                                              BackgroundColor="Transparent"
-                                             Clicked="OnDayClicked"/>
+                                             />
                             </Frame>
                         </VerticalStackLayout>
 
@@ -75,9 +75,9 @@
                                    HasShadow="False"
                                    Padding="5"
                                    HorizontalOptions="Center">
-                                <ImageButton Source=""
+                                <ImageButton Source="taskaton.png"
                                              BackgroundColor="Transparent"
-                                             Clicked="OnDayClicked"/>
+                                             />
                             </Frame>
                         </VerticalStackLayout>
 
@@ -92,9 +92,9 @@
                                    HasShadow="False"
                                    Padding="5"
                                    HorizontalOptions="Center">
-                                <ImageButton Source=""
+                                <ImageButton Source="taskaton.png"
                                              BackgroundColor="Transparent"
-                                             Clicked="OnDayClicked"/>
+                                             />
                             </Frame>
                         </VerticalStackLayout>
 
@@ -109,9 +109,9 @@
                                    HasShadow="False"
                                    Padding="5"
                                    HorizontalOptions="Center">
-                                <ImageButton Source=""
+                                <ImageButton Source="taskaton.png"
                                              BackgroundColor="Transparent"
-                                             Clicked="OnDayClicked"/>
+                                             />
                             </Frame>
                         </VerticalStackLayout>
 
@@ -127,9 +127,9 @@
                                    HasShadow="False"
                                    Padding="5"
                                    HorizontalOptions="Center">
-                                <ImageButton Source=""
+                                <ImageButton Source="taskaton.png"
                                              BackgroundColor="Transparent"
-                                             Clicked="OnDayClicked"/>
+                                             />
                             </Frame>
                         </VerticalStackLayout>
 
@@ -145,9 +145,9 @@
                                    HasShadow="False"
                                    Padding="5"
                                    HorizontalOptions="Center">
-                                <ImageButton Source=""
+                                <ImageButton Source="taskaton.png"
                                              BackgroundColor="Transparent"
-                                             Clicked="OnDayClicked"/>
+                                             />
                             </Frame>
                         </VerticalStackLayout>
 
@@ -163,9 +163,9 @@
                                    HasShadow="False"
                                    Padding="5"
                                    HorizontalOptions="Center">
-                                <ImageButton Source=""
+                                <ImageButton Source="taskaton.png"
                                              BackgroundColor="Transparent"
-                                             Clicked="OnDayClicked"/>
+                                             />
                             </Frame>
                         </VerticalStackLayout>
 
@@ -204,7 +204,7 @@
                                 <ImageButton Source="reward_placeholder.png"
                                              Aspect="AspectFit"
                                              BackgroundColor="Transparent"
-                                             Clicked="OnRewardClicked"/>
+                                            />
                             </Frame>
                         </HorizontalStackLayout>
                     </VerticalStackLayout>
@@ -227,7 +227,7 @@
                                 <ImageButton Source="reward_placeholder.png"
                                              Aspect="AspectFit"
                                              BackgroundColor="Transparent"
-                                             Clicked="OnRewardClicked"/>
+                                             />
                             </Frame>
                             <Frame BackgroundColor="#F2F1D7"
                                    Padding="5"
@@ -237,7 +237,7 @@
                                 <ImageButton Source="reward_placeholder.png"
                                              Aspect="AspectFit"
                                              BackgroundColor="Transparent"
-                                             Clicked="OnRewardClicked"/>
+                                             />
                             </Frame>
                         </HorizontalStackLayout>
                     </VerticalStackLayout>
@@ -260,7 +260,7 @@
                                 <ImageButton Source="reward_placeholder.png"
                                              Aspect="AspectFit"
                                              BackgroundColor="Transparent"
-                                             Clicked="OnRewardClicked"/>
+                                             />
                             </Frame>
                             <Frame BackgroundColor="#F2F1D7"
                                    Padding="5"
@@ -270,7 +270,7 @@
                                 <ImageButton Source="reward_placeholder.png"
                                              Aspect="AspectFit"
                                              BackgroundColor="Transparent"
-                                             Clicked="OnRewardClicked"/>
+                                             />
                             </Frame>
                         </HorizontalStackLayout>
                     </VerticalStackLayout>

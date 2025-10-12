@@ -310,5 +310,46 @@ namespace gatchapon
             return true;
         }
 
+        public async Task<bool> EmailExistsInFirebaseAsync(string email)
+        {
+            string requestUri = $"https://identitytoolkit.googleapis.com/v1/accounts:createAuthUri?key={_apiKey}";
+            var payload = new { identifier = email, continueUri = "http://localhost" };
+
+            var response = await _httpClient.PostAsJsonAsync(requestUri, payload);
+            if (!response.IsSuccessStatusCode)
+            {
+                return false;
+            }
+
+            var result = await response.Content.ReadFromJsonAsync<Dictionary<string, object>>();
+            // If "registered" = true, the email exists in Firebase Authentication
+            return result != null && result.TryGetValue("registered", out var registered) && (bool)registered;
+        }
+        public async Task<bool> SendPasswordResetEmailAsync(string email)
+        {
+            string requestUri = $"https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key={_apiKey}";
+            var payload = new { requestType = "PASSWORD_RESET", email };
+
+            try
+            {
+                var response = await _httpClient.PostAsJsonAsync(requestUri, payload);
+                string result = await response.Content.ReadAsStringAsync();
+
+                Console.WriteLine("Firebase raw response: " + result);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    // throw instead of returning false so we can see the cause
+                    throw new Exception($"Firebase error: {result}");
+                }
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Exception: " + ex.Message);
+                throw; // rethrow so UI can show the message
+            }
+        }
     }
 }
