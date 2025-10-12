@@ -11,7 +11,7 @@
 
     <ScrollView>
         <VerticalStackLayout Padding="10" Spacing="15">
-            <Frame BackgroundColor="#D8E6B6" CornerRadius="10" Padding="15">
+            <Border BackgroundColor="#D8E6B6" StrokeShape="RoundRectangle 10" Padding="15">
                 <VerticalStackLayout Spacing="15">
 
                     <HorizontalStackLayout Spacing="10">
@@ -73,7 +73,7 @@
                 <VerticalStackLayout>
                     <Label Text="Settings" TextColor="Black" FontAttributes="Bold" FontSize="16" Margin="0,0,0,10"/>
 
-                    <HorizontalStackLayout Spacing="10" VerticalOptions="CenterAndExpand">
+                    <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
                         <Label Text="Dark Mode" TextColor="Black" VerticalOptions="Center"/>
                         <Switch IsToggled="False"/>
                     </HorizontalStackLayout>

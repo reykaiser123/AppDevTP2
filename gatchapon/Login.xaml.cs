@@ -30,7 +30,7 @@ namespace gatchapon
                 var dbService = new FirebaseDatabaseService();
                 var user = await dbService.GetUserAsync<dynamic>(signInResult.localId);
 
-                DisplayAlert("Success", "Login Successful", "OK");
+                await DisplayAlert("Success", "Login Successful", "OK");
                 await Shell.Current.GoToAsync("//Dashboard");
             }
             else

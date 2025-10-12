@@ -292,8 +292,8 @@
                         <Image Source="taskaton.png"
                                Aspect="AspectFill"
                                HeightRequest="160"
-                               HorizontalOptions="FillAndExpand"
-                               VerticalOptions="FillAndExpand"
+                               HorizontalOptions="Fill"
+                               VerticalOptions="Fill"
                                >
 
                             <Image.GestureRecognizers>
