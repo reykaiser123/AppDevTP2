@@ -6,7 +6,7 @@ namespace gatchapon
     public partial class Login : ContentPage
     {
         bool isPasswordVisible = false;
-        private readonly FirebaseAuthService _authService = new(); // <-- Create FirebaseAuthService instance
+        private readonly FirebaseAuthService _authService = new(); 
 
         public Login()
         {
