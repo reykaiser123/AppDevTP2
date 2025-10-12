@@ -5,8 +5,8 @@
              NavigationPage.HasNavigationBar="False"
              BackgroundColor="#ADC179"
              Title="Dashboard">
-	<ScrollView>
-		<VerticalStackLayout Padding="15" Spacing="20">
+    <ScrollView>
+        <VerticalStackLayout Padding="15" Spacing="20">
 
 			<!-- Top Bar -->
 			<Grid ColumnDefinitions="Auto,*,Auto" Padding="5" VerticalOptions="Start">
@@ -41,12 +41,15 @@
             BackgroundColor="#433832"
             VerticalOptions="Center"
             HorizontalOptions="End">
-					<ImageButton Source="profile.png"
-                     BackgroundColor="Transparent"
-                     Aspect="AspectFit"
-                     HeightRequest="28"
-                     WidthRequest="28"/>
-				</Border>
+                    <ImageButton
+                            x:Name="ProfileButton"
+                            Source="profile.png"
+                            BackgroundColor="Transparent"
+                            Aspect="AspectFit"
+                            HeightRequest="28"
+                            WidthRequest="28"
+                            Clicked="OnProfileClicked"/>
+                </Border>
 			</Grid>
 
 
@@ -73,10 +76,11 @@
                     Padding="0">
 							<Grid Padding="12" ColumnDefinitions="*,Auto">
 								<Label Text="Pogi sige na"
+                                       IsVisible="False"
                            FontSize="16"
                            VerticalOptions="Center"
                            TextColor="#6C584D"
-                           HorizontalOptions="StartAndExpand"/>
+                           HorizontalOptions="Start"/>
 								<Image Grid.Column="1"
                            Source="check.png"
                            WidthRequest="24"
@@ -99,7 +103,7 @@
                            FontSize="16"
                            VerticalOptions="Center"
                            TextColor="#6C584D"
-                           HorizontalOptions="StartAndExpand"/>
+                           HorizontalOptions="Start"/>
 								<Image Grid.Column="1"
                            Source="check.png"
                            WidthRequest="24"
@@ -122,7 +126,7 @@
                            FontSize="16"
                            VerticalOptions="Center"
                            TextColor="#6C584D"
-                           HorizontalOptions="StartAndExpand"/>
+                           HorizontalOptions="Start"/>
 								<Image Grid.Column="1"
                            Source="check.png"
                            WidthRequest="24"
@@ -145,7 +149,7 @@
                            FontSize="16"
                            VerticalOptions="Center"
                            TextColor="#6C584D"
-                           HorizontalOptions="StartAndExpand"/>
+                           HorizontalOptions="Start"/>
 								<Image Grid.Column="1"
                            Source="check.png"
                            WidthRequest="24"
@@ -168,7 +172,7 @@
                            FontSize="16"
                            VerticalOptions="Center"
                            TextColor="#6C584D"
-                           HorizontalOptions="StartAndExpand"/>
+                           HorizontalOptions="Start"/>
 								<Image Grid.Column="1"
                            Source="check.png"
                            WidthRequest="24"
@@ -244,25 +248,27 @@
                             />
 
                         <Button 
-                                        x:Name="Quest"
-                                        Text="Quest"
-                                        BackgroundColor="#6C584D"
-                                        CornerRadius="20"
-                                        WidthRequest="100"
-                                        HeightRequest="30"
-                                        FontAttributes="Bold"
-                                        TextColor="#F0EAD2" />
+                            x:Name="Quest"
+                            Text="Quest"
+                            BackgroundColor="#6C584D"
+                            CornerRadius="20"
+                            WidthRequest="100"
+                            HeightRequest="30"
+                            FontAttributes="Bold"
+                            TextColor="#F0EAD2"
+                            Clicked="OnclickedQuest"
+                            />
 
                         <Button
-                                        x:Name="Profile"
-                                        Text="profile"
-                                        BackgroundColor="#6C584D"
-                                        CornerRadius="20"
-                                         WidthRequest="100"
-                                        HeightRequest="30"
-                                        FontAttributes="Bold"
-                                        TextColor="#F0EAD2" 
-                                        Clicked="OnclickedProfile"
+                            x:Name="Profile"
+                            Text="profile"
+                            BackgroundColor="#6C584D"
+                            CornerRadius="20"
+                                WidthRequest="100"
+                            HeightRequest="30"
+                            FontAttributes="Bold"
+                            TextColor="#F0EAD2" 
+                            Clicked="OnclickedProfile"
                             />
                     </HorizontalStackLayout>
                 </ScrollView>
@@ -288,8 +294,8 @@
                         <Image Source="taskaton.png"
                                Aspect="AspectFill"
                                HeightRequest="160"
-                               HorizontalOptions="FillAndExpand"
-                               VerticalOptions="FillAndExpand"
+                               HorizontalOptions="Fill"
+                               VerticalOptions="Fill"
                                >
 
                             <Image.GestureRecognizers>
@@ -303,5 +309,6 @@
 
 		</VerticalStackLayout>
 	</ScrollView>
+
 
 </ContentPage>

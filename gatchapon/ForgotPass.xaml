@@ -3,10 +3,21 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="gatchapon.ForgotPass"
              Title="ForgotPass">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
+    <VerticalStackLayout Padding="20" Spacing="15">
+        <Label Text="Enter your email to reset your password"
+               FontSize="16"
+               HorizontalOptions="Center" />
+
+        <Entry x:Name="EmailEntry"
+               Placeholder="Email address"
+               Keyboard="Email" />
+
+        <Button Text="Send Reset Email"
+                Clicked="OnSendResetEmailClicked" />
+
+        <Label x:Name="StatusLabel"
+               Text=""
+               TextColor="Gray"
+               HorizontalOptions="Center" />
     </VerticalStackLayout>
 </ContentPage>

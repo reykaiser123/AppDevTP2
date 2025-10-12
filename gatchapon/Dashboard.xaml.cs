@@ -31,4 +31,12 @@ public partial class Dashboard : ContentPage
     {
         await Shell.Current.GoToAsync("GachaBanner");
     }
+    private async void OnProfileClicked(object sender, EventArgs e)
+    {
+        await Shell.Current.GoToAsync("ProfileSetting");
+    }
+    private async void OnclickedQuest(object sender, EventArgs e)
+    {
+        await Shell.Current.GoToAsync("Quest");
+    }
 }

@@ -67,20 +67,20 @@
 
 
 	<ItemGroup>
-	  <AndroidResource Remove="NewFolder1\**" />
-	  <Compile Remove="NewFolder1\**" />
-	  <EmbeddedResource Remove="NewFolder1\**" />
-	  <MauiCss Remove="NewFolder1\**" />
-	  <MauiXaml Remove="NewFolder1\**" />
-	  <None Remove="NewFolder1\**" />
+		<AndroidResource Remove="NewFolder1\**" />
+		<Compile Remove="NewFolder1\**" />
+		<EmbeddedResource Remove="NewFolder1\**" />
+		<MauiCss Remove="NewFolder1\**" />
+		<MauiXaml Remove="NewFolder1\**" />
+		<None Remove="NewFolder1\**" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <None Remove="Resources\Splash\taskatonsplash.svg" />
+		<None Remove="Resources\Splash\taskatonsplash.svg" />
 	</ItemGroup>
-	
+
 	<ItemGroup>
-	  <MauiSplashScreen Include="Resources\Splash\taskatonsplash.svg" BaseSize="128,128" Color="ADC179" />
+		<MauiSplashScreen Include="Resources\Splash\taskatonsplash.svg" BaseSize="128,128" Color="ADC179" />
 	</ItemGroup>
 
 	<ItemGroup>

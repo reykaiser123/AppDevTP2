@@ -8,13 +8,14 @@
              Shell.ForegroundColor="White"
              
              BackgroundColor="#E5F0C4">
+
     <ScrollView>
         <VerticalStackLayout Padding="10" Spacing="15">
-            <Frame BackgroundColor="#D8E6B6" CornerRadius="10" Padding="15">
+            <Border BackgroundColor="#D8E6B6" StrokeShape="RoundRectangle 10" Padding="15">
                 <VerticalStackLayout Spacing="15">
 
                     <HorizontalStackLayout Spacing="10">
-                        <Frame WidthRequest="60" HeightRequest="60" CornerRadius="30" BackgroundColor="#C1B7A1"/>
+                        <Border WidthRequest="60" HeightRequest="60" StrokeShape="RoundRectangle 30" Background="#C1B7A1"/>
                         <VerticalStackLayout>
                             <Label Text="Username Placeholder" TextColor="Black" FontAttributes="Bold" FontSize="20"/>
                             <Label Text="UID(unsure?)" FontSize="12" TextColor="Gray"/>
@@ -26,7 +27,6 @@
                         </VerticalStackLayout>
                     </HorizontalStackLayout>
 
-
                     <VerticalStackLayout>
                         <Label Text="Email" TextColor="Black" FontAttributes="Bold"/>
                         <Label Text="example.google@gmail.com" TextColor="Gray"/>
@@ -36,7 +36,6 @@
                                 Margin="10"
                                 Padding="5,2"/>
                     </VerticalStackLayout>
-
 
                     <VerticalStackLayout>
                         <Label Text="Password" TextColor="Black" FontAttributes="Bold"/>
@@ -67,13 +66,14 @@
 							/>
                           
                 </VerticalStackLayout>
-            </Frame>
+            </Border>
 
-            <Frame BackgroundColor="#D8E6B6" CornerRadius="10" Padding="15">
+            <!-- Settings section -->
+            <Border Background="#D8E6B6" StrokeShape="RoundRectangle 10" Padding="15">
                 <VerticalStackLayout>
                     <Label Text="Settings" TextColor="Black" FontAttributes="Bold" FontSize="16" Margin="0,0,0,10"/>
 
-                    <HorizontalStackLayout Spacing="10" VerticalOptions="CenterAndExpand">
+                    <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
                         <Label Text="Dark Mode" TextColor="Black" VerticalOptions="Center"/>
                         <Switch IsToggled="False"/>
                     </HorizontalStackLayout>
@@ -83,9 +83,10 @@
                         <Switch IsToggled="False"/>
                     </HorizontalStackLayout>
                 </VerticalStackLayout>
-            </Frame>
+            </Border>
 
-            <Frame BackgroundColor="#D8E6B6" CornerRadius="10" Padding="15">
+            <!-- Information section -->
+            <Border Background="#D8E6B6" StrokeShape="RoundRectangle 10" Padding="15">
                 <VerticalStackLayout>
                     <Label Text="Information" TextColor="Black" FontAttributes="Bold" FontSize="16" Margin="0,0,0,10"/>
 
@@ -94,7 +95,7 @@
                         <Label Text="v0.1" TextColor="Gray"/>
                     </HorizontalStackLayout>
                 </VerticalStackLayout>
-            </Frame>
+            </Border>
 
         </VerticalStackLayout>
     </ScrollView>

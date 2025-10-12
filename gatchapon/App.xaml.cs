@@ -10,6 +10,7 @@ namespace gatchapon
         public App()
         {
             InitializeComponent();
+
         }
 
         protected override Window CreateWindow(IActivationState? activationState)
@@ -49,5 +50,6 @@ namespace gatchapon
             }
 
         }
+        
     }
 }

@@ -152,5 +152,204 @@ namespace gatchapon
 
             return await response.Content.ReadFromJsonAsync<FirebaseSignInResponse>();
         }
+
+        //for logout nilagay ko pwede din tangalin if may possible error - (oswell)
+        public async Task LogOut()
+        {
+                       try
+            {
+                SecureStorage.Remove("refresh_token");
+                SecureStorage.Remove("user_email");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error during logout: {ex.Message}");
+            }
+        }
+
+        //checks if user is logged in
+        public async Task<bool> IsUserLoggedInAsync()
+        {
+            String refreshToken = await SecureStorage.GetAsync("refresh_token");
+            return !string.IsNullOrEmpty(refreshToken);
+        }
+        public async Task<string?> GetCurrentIDTokenAsync()
+        {
+            string refreshToken = await SecureStorage.GetAsync("refresh_token");
+            if(string.IsNullOrEmpty(refreshToken)) return null;
+
+            var refreshedResponse = await RefreshIdTokenAsync(refreshToken);
+            return refreshedResponse?.idToken;
+        }
+        public async Task<string?> GetCurrentLocalIdAsync()
+        {
+            string refreshToken = await SecureStorage.GetAsync("refresh_token");
+            if(string.IsNullOrEmpty(refreshToken)) return null;
+            var refreshedResponse = await RefreshIdTokenAsync(refreshToken);
+            return refreshedResponse?.localId;
+        }
+
+        // for change username in profileSettings 
+        public async Task<bool> UpdateUsernameAsync(string newUsername)
+        {
+            string? idToken = await GetCurrentIDTokenAsync();
+            if (idToken == null) return false;
+
+            string requestUri = $"https://identitytoolkit.googleapis.com/v1/accounts:update?key=AIzaSyDnE-unnTD3dSGWzovUUUjYWvMI4NTR2DQ";
+            var payload = new
+            {
+                idToken,
+                diplayName = newUsername,
+                returnSecureToken = true
+            };
+            var response =await _httpClient.PostAsJsonAsync(requestUri, payload);
+            if (!response.IsSuccessStatusCode)
+            {
+                var error = await response.Content.ReadAsStringAsync();
+                Console.WriteLine($"Firebase Update Username Error: {error}");
+            }
+            return true;
+        }
+        //for change email
+        public async Task<bool> UpdateEmailAsync(string newEmail)
+        {
+            string? idToken = await GetCurrentIDTokenAsync();
+            if(idToken == null)
+            {
+                Console.WriteLine("UpdateEmail Error: Could not retrive ID token.");
+                return false;
+            }
+            string requestUri = $"https://identitytoolkit.googleapis.com/v1/accounts:update?key=AIzaSyDnE-unnTD3dSGWzovUUUjYWvMI4NTR2DQ";
+
+            var payload = new
+            {
+                idToken,
+                email = newEmail,
+                returnSecureToken = true
+            };
+            var response = await _httpClient.PostAsJsonAsync(requestUri, payload);
+            if (!response.IsSuccessStatusCode)
+            {
+                var error = await response.Content.ReadAsStringAsync();
+                Console.WriteLine($"Firebase Update Email Error: {error}");
+                return false;
+            }
+            Console.WriteLine($"Email successfully updated to: {newEmail}. Verification link may have been sent.");
+            await SecureStorage.SetAsync("user_email", newEmail);
+            return true;
+        }
+        //for change password
+        public async Task<bool> UpdatePasswordAsync(string newPassword)
+        {
+            
+            string? idToken = await GetCurrentIDTokenAsync();
+            if (idToken == null)
+            {
+                Console.WriteLine("UpdatePassword Error: Could not retrieve ID Token. User needs to re-authenticate.");
+                
+                return false;
+            }
+
+            
+            string requestUri = $"https://identitytoolkit.googleapis.com/v1/accounts:update?key=AIzaSyDnE-unnTD3dSGWzovUUUjYWvMI4NTR2DQ";
+
+           
+            var payload = new
+            {
+                idToken,
+                password = newPassword, 
+                returnSecureToken = true
+            };
+
+            
+            var response = await _httpClient.PostAsJsonAsync(requestUri, payload);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                var error = await response.Content.ReadAsStringAsync();
+                Console.WriteLine($"Firebase Password Update Error: {error}");
+                return false;
+            }
+
+           
+            Console.WriteLine("Password successfully updated.");
+
+           
+            return true;
+        }
+        //for change phone number
+        public async Task<bool> UpdatePhoneNumberAsync(string newPhoneNumber)
+        {
+            string? idToken = await GetCurrentIDTokenAsync();
+            if (idToken == null)
+            {
+                Console.WriteLine("UpdatePhoneNumber Error: Could not retrieve ID Token.");
+                return false;
+            }
+
+            // Uses the _apiKey variable which holds "AIzaSyDnE-unnTD3dSGWzovUUUjYWvMI4NTR2DQ"
+            string requestUri = $"https://identitytoolkit.googleapis.com/v1/accounts:update?key={_apiKey}";
+
+            var payload = new
+            {
+                idToken,
+                phoneNumber = newPhoneNumber,
+                returnSecureToken = true
+            };
+
+            var response = await _httpClient.PostAsJsonAsync(requestUri, payload);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                var error = await response.Content.ReadAsStringAsync();
+                Console.WriteLine($"Firebase Phone Number Update Error: {error}");
+                return false;
+            }
+
+            Console.WriteLine($"Phone number successfully updated to: {newPhoneNumber}.");
+            return true;
+        }
+
+        public async Task<bool> EmailExistsInFirebaseAsync(string email)
+        {
+            string requestUri = $"https://identitytoolkit.googleapis.com/v1/accounts:createAuthUri?key={_apiKey}";
+            var payload = new { identifier = email, continueUri = "http://localhost" };
+
+            var response = await _httpClient.PostAsJsonAsync(requestUri, payload);
+            if (!response.IsSuccessStatusCode)
+            {
+                return false;
+            }
+
+            var result = await response.Content.ReadFromJsonAsync<Dictionary<string, object>>();
+            // If "registered" = true, the email exists in Firebase Authentication
+            return result != null && result.TryGetValue("registered", out var registered) && (bool)registered;
+        }
+        public async Task<bool> SendPasswordResetEmailAsync(string email)
+        {
+            string requestUri = $"https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key={_apiKey}";
+            var payload = new { requestType = "PASSWORD_RESET", email };
+
+            try
+            {
+                var response = await _httpClient.PostAsJsonAsync(requestUri, payload);
+                string result = await response.Content.ReadAsStringAsync();
+
+                Console.WriteLine("Firebase raw response: " + result);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    // throw instead of returning false so we can see the cause
+                    throw new Exception($"Firebase error: {result}");
+                }
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Exception: " + ex.Message);
+                throw; // rethrow so UI can show the message
+            }
+        }
     }
 }

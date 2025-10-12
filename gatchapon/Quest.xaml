@@ -1,0 +1,283 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="gatchapon.Quest"
+             BackgroundColor="#ADC179">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="10" Spacing="20">
+
+            <!-- Top Bar -->
+            <Grid ColumnDefinitions="50,*,50" VerticalOptions="Start">
+
+                <Button WidthRequest="36" HeightRequest="36"
+                        CornerRadius="18"
+                        BackgroundColor="#c3d89b"
+                        Text="≡"
+                        FontSize="20"
+                        TextColor="#433832"
+                        HorizontalOptions="Start"
+                        VerticalOptions="Center"
+                        />
+
+                <!-- Title -->
+                <Label Text="QUESTS"
+                       FontSize="18"
+                       FontAttributes="Bold"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center"
+                       TextColor="#c3d89b"
+                       Grid.Column="1"/>
+            </Grid>
+
+            <!-- Daily Check-In Section -->
+            <Frame BackgroundColor="#c3d89b"
+                   CornerRadius="10"
+                   HasShadow="False"
+                   Padding="15">
+                <VerticalStackLayout Spacing="15">
+
+                    <Label Text="Daily Check-In"
+                           FontSize="16"
+                           FontAttributes="Bold"
+                           HorizontalOptions="Center"
+                           TextColor="#433832"/>
+
+                    <!-- Week Days -->
+                    <HorizontalStackLayout HorizontalOptions="Center" Spacing="20">
+
+                        <VerticalStackLayout Spacing="5" HorizontalOptions="Center">
+                            <Label Text="SUN"
+                                   FontSize="10"
+                                   HorizontalOptions="Center"
+                                   TextColor="#433832"/>
+                            <Frame BackgroundColor="#A48E66"
+                                   WidthRequest="35" HeightRequest="35"
+                                   CornerRadius="18"
+                                   HasShadow="False"
+                                   Padding="5"
+                                   HorizontalOptions="Center">
+                                <ImageButton Source="check_placeholder.png"
+                                             Aspect="AspectFit"
+                                             BackgroundColor="Transparent"
+                                             />
+                            </Frame>
+                        </VerticalStackLayout>
+
+                        <VerticalStackLayout Spacing="5" HorizontalOptions="Center">
+                            <Label Text="MON"
+                                   FontSize="10"
+                                   HorizontalOptions="Center"
+                                   TextColor="#433832"/>
+                            <Frame BackgroundColor="White"
+                                   WidthRequest="35" HeightRequest="35"
+                                   CornerRadius="18"
+                                   HasShadow="False"
+                                   Padding="5"
+                                   HorizontalOptions="Center">
+                                <ImageButton Source="taskaton.png"
+                                             BackgroundColor="Transparent"
+                                             />
+                            </Frame>
+                        </VerticalStackLayout>
+
+                        <VerticalStackLayout Spacing="5" HorizontalOptions="Center">
+                            <Label Text="TUE"
+                                   FontSize="10"
+                                   HorizontalOptions="Center"
+                                   TextColor="#433832"/>
+                            <Frame BackgroundColor="White"
+                                   WidthRequest="35" HeightRequest="35"
+                                   CornerRadius="18"
+                                   HasShadow="False"
+                                   Padding="5"
+                                   HorizontalOptions="Center">
+                                <ImageButton Source="taskaton.png"
+                                             BackgroundColor="Transparent"
+                                             />
+                            </Frame>
+                        </VerticalStackLayout>
+
+                        <VerticalStackLayout Spacing="5" HorizontalOptions="Center">
+                            <Label Text="WED"
+                                   FontSize="10"
+                                   HorizontalOptions="Center"
+                                   TextColor="#433832"/>
+                            <Frame BackgroundColor="White"
+                                   WidthRequest="35" HeightRequest="35"
+                                   CornerRadius="18"
+                                   HasShadow="False"
+                                   Padding="5"
+                                   HorizontalOptions="Center">
+                                <ImageButton Source="taskaton.png"
+                                             BackgroundColor="Transparent"
+                                             />
+                            </Frame>
+                        </VerticalStackLayout>
+
+                        <!-- Thursday -->
+                        <VerticalStackLayout Spacing="5" HorizontalOptions="Center">
+                            <Label Text="THU"
+                                   FontSize="10"
+                                   HorizontalOptions="Center"
+                                   TextColor="#433832"/>
+                            <Frame BackgroundColor="White"
+                                   WidthRequest="35" HeightRequest="35"
+                                   CornerRadius="18"
+                                   HasShadow="False"
+                                   Padding="5"
+                                   HorizontalOptions="Center">
+                                <ImageButton Source="taskaton.png"
+                                             BackgroundColor="Transparent"
+                                             />
+                            </Frame>
+                        </VerticalStackLayout>
+
+                        <!-- Friday -->
+                        <VerticalStackLayout Spacing="5" HorizontalOptions="Center">
+                            <Label Text="FRI"
+                                   FontSize="10"
+                                   HorizontalOptions="Center"
+                                   TextColor="#433832"/>
+                            <Frame BackgroundColor="White"
+                                   WidthRequest="35" HeightRequest="35"
+                                   CornerRadius="18"
+                                   HasShadow="False"
+                                   Padding="5"
+                                   HorizontalOptions="Center">
+                                <ImageButton Source="taskaton.png"
+                                             BackgroundColor="Transparent"
+                                             />
+                            </Frame>
+                        </VerticalStackLayout>
+
+                        <!-- Saturday -->
+                        <VerticalStackLayout Spacing="5" HorizontalOptions="Center">
+                            <Label Text="SAT"
+                                   FontSize="10"
+                                   HorizontalOptions="Center"
+                                   TextColor="#433832"/>
+                            <Frame BackgroundColor="White"
+                                   WidthRequest="35" HeightRequest="35"
+                                   CornerRadius="18"
+                                   HasShadow="False"
+                                   Padding="5"
+                                   HorizontalOptions="Center">
+                                <ImageButton Source="taskaton.png"
+                                             BackgroundColor="Transparent"
+                                             />
+                            </Frame>
+                        </VerticalStackLayout>
+
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Quests Section -->
+            <Frame BackgroundColor="#c3d89b"
+                   CornerRadius="10"
+                   HasShadow="False"
+                   Padding="15">
+                <VerticalStackLayout Spacing="25">
+
+                    <Label Text="Quests"
+                           FontSize="16"
+                           FontAttributes="Bold"
+                           HorizontalOptions="Center"
+                           TextColor="#433832"/>
+
+                    <!-- Quest 1 -->
+                    <VerticalStackLayout Spacing="5">
+                        <Label Text="Check in for 7 days in a row."
+                               FontSize="14"
+                               TextColor="#433832"/>
+                        <ProgressBar Progress="0.2"
+                                     HeightRequest="6"
+                                     ProgressColor="Brown"/>
+                        <Label Text="Rewards:" FontSize="13" TextColor="Brown"/>
+                        <HorizontalStackLayout>
+                            <Frame BackgroundColor="#F2F1D7"
+                                   Padding="5"
+                                   WidthRequest="50" HeightRequest="50"
+                                   CornerRadius="8"
+                                   HasShadow="False">
+                                <ImageButton Source="reward_placeholder.png"
+                                             Aspect="AspectFit"
+                                             BackgroundColor="Transparent"
+                                            />
+                            </Frame>
+                        </HorizontalStackLayout>
+                    </VerticalStackLayout>
+
+                    <!-- Quest 2 -->
+                    <VerticalStackLayout Spacing="5">
+                        <Label Text="Check in every day for this month."
+                               FontSize="14"
+                               TextColor="#433832"/>
+                        <ProgressBar Progress="0.2"
+                                     HeightRequest="6"
+                                     ProgressColor="Brown"/>
+                        <Label Text="Rewards:" FontSize="13" TextColor="Brown"/>
+                        <HorizontalStackLayout Spacing="10">
+                            <Frame BackgroundColor="#F2F1D7"
+                                   Padding="5"
+                                   WidthRequest="50" HeightRequest="50"
+                                   CornerRadius="8"
+                                   HasShadow="False">
+                                <ImageButton Source="reward_placeholder.png"
+                                             Aspect="AspectFit"
+                                             BackgroundColor="Transparent"
+                                             />
+                            </Frame>
+                            <Frame BackgroundColor="#F2F1D7"
+                                   Padding="5"
+                                   WidthRequest="50" HeightRequest="50"
+                                   CornerRadius="8"
+                                   HasShadow="False">
+                                <ImageButton Source="reward_placeholder.png"
+                                             Aspect="AspectFit"
+                                             BackgroundColor="Transparent"
+                                             />
+                            </Frame>
+                        </HorizontalStackLayout>
+                    </VerticalStackLayout>
+
+                    <!-- Quest 3 -->
+                    <VerticalStackLayout Spacing="5">
+                        <Label Text="Complete 3 Daily Tasks"
+                               FontSize="14"
+                               TextColor="#433832"/>
+                        <ProgressBar Progress="0.2"
+                                     HeightRequest="6"
+                                     ProgressColor="Brown"/>
+                        <Label Text="Rewards:" FontSize="13" TextColor="Brown"/>
+                        <HorizontalStackLayout Spacing="10">
+                            <Frame BackgroundColor="#F2F1D7"
+                                   Padding="5"
+                                   WidthRequest="50" HeightRequest="50"
+                                   CornerRadius="8"
+                                   HasShadow="False">
+                                <ImageButton Source="reward_placeholder.png"
+                                             Aspect="AspectFit"
+                                             BackgroundColor="Transparent"
+                                             />
+                            </Frame>
+                            <Frame BackgroundColor="#F2F1D7"
+                                   Padding="5"
+                                   WidthRequest="50" HeightRequest="50"
+                                   CornerRadius="8"
+                                   HasShadow="False">
+                                <ImageButton Source="reward_placeholder.png"
+                                             Aspect="AspectFit"
+                                             BackgroundColor="Transparent"
+                                             />
+                            </Frame>
+                        </HorizontalStackLayout>
+                    </VerticalStackLayout>
+
+                </VerticalStackLayout>
+            </Frame>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
