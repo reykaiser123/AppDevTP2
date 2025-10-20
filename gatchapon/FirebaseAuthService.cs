@@ -133,24 +133,34 @@ namespace gatchapon
 
         public async Task<FirebaseSignInResponse?> SignUpWithEmailPasswordAsync(string email, string password)
         {
-            if (string.IsNullOrEmpty(_apiKey))
+            try
             {
-                Console.WriteLine("Firebase API key not found.");
+                string requestUri = $"https://identitytoolkit.googleapis.com/v1/accounts:signUp?key={FirebaseApiKey}";
+                var payload = new { email, password, returnSecureToken = true };
+
+                var response = await _httpClient.PostAsJsonAsync(requestUri, payload);
+
+                var responseBody = await response.Content.ReadAsStringAsync();
+                Console.WriteLine($"Firebase Sign-Up Response: {responseBody}");
+
+                if (!response.IsSuccessStatusCode)
+                {
+#if DEBUG
+                    await Application.Current.MainPage.DisplayAlert("Firebase Sign-Up Error", responseBody, "OK");
+#endif
+                    return null;
+                }
+
+                return await response.Content.ReadFromJsonAsync<FirebaseSignInResponse>();
+            }
+            catch (Exception ex)
+            {
+#if DEBUG
+                await Application.Current.MainPage.DisplayAlert("Exception", ex.Message, "OK");
+#endif
+                Console.WriteLine($"Exception during sign-up: {ex.Message}");
                 return null;
             }
-
-            string requestUri = $"https://identitytoolkit.googleapis.com/v1/accounts:signUp?key={_apiKey}";
-            var payload = new { email, password, returnSecureToken = true };
-
-            var response = await _httpClient.PostAsJsonAsync(requestUri, payload);
-            if (!response.IsSuccessStatusCode)
-            {
-                var error = await response.Content.ReadAsStringAsync();
-                Console.WriteLine($"Firebase Sign-Up Error: {error}");
-                return null;
-            }
-
-            return await response.Content.ReadFromJsonAsync<FirebaseSignInResponse>();
         }
 
         //for logout nilagay ko pwede din tangalin if may possible error - (oswell)
