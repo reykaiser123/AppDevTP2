@@ -233,7 +233,8 @@
                                          WidthRequest="100"
                                         HeightRequest="30"
                                         FontAttributes="Bold"
-                                        TextColor="#F0EAD2"  />
+                                        TextColor="#F0EAD2"
+                                        Clicked="OnclickedNews"/>
 
                         <Button 
                                         x:Name="Shop"

@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Microsoft.Maui.Controls;
 using gatchapon;
+using gachapon;
 
 namespace gatchapon
 {
@@ -23,6 +24,8 @@ namespace gatchapon
             Routing.RegisterRoute(nameof(Shop), typeof(Shop));
             Routing.RegisterRoute(nameof(GachaBanner), typeof(GachaBanner));
             Routing.RegisterRoute(nameof(Quest), typeof(Quest));
+            Routing.RegisterRoute(nameof(News), typeof(News));
+
 
             // Starts the asynchronous check when the app launches
 
