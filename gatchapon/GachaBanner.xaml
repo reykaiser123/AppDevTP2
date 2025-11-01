@@ -2,27 +2,11 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="gatchapon.GachaBanner"
+             Title="GACHABANNER"
              BackgroundColor="#ADC179">
     <Grid RowDefinitions="Auto,*,Auto">
 
         <VerticalStackLayout Grid.Row="0" Spacing="10">
-            <Border BackgroundColor="#ADC179" Padding="10" StrokeShape="RoundRectangle 0,0,10,10">
-                <Grid ColumnDefinitions="30,*" ColumnSpacing="10">
-                    <Image Source="menu.png"
-                           Grid.Column="0"
-                           WidthRequest="30"
-                           HeightRequest="30"
-                           HorizontalOptions="Start"
-                           VerticalOptions="Center"/>
-                    <Label Grid.Column="1"
-                           Text="LIMITED BANNER"
-                           FontSize="20"
-                           TextColor="White"
-                           HorizontalOptions="Center"
-                           VerticalOptions="Center"/>
-                </Grid>
-            </Border>
-
             <Border BackgroundColor="#DDE5B6"
                     Padding="10">
                 <HorizontalStackLayout Spacing="8"
@@ -48,7 +32,7 @@
         </VerticalStackLayout>
 
         <Grid Grid.Row="1" BackgroundColor="#ADC179">
-            <Image Source="mariowbg.png"
+            <Image Source="taskaton.png"
                    Aspect="AspectFill"
                    Opacity="1.0"  
                    HorizontalOptions="Fill"
@@ -57,18 +41,12 @@
                 <VerticalStackLayout Grid.Row="0" Grid.Column="0"
                                      Spacing="10" VerticalOptions="Start"
                                      Margin="5,20,0,0">
-                    <Border StrokeShape="RoundRectangle 10" BackgroundColor="#6C584D" Padding="3">
-                        <Image Source="mariowbgbox.png" WidthRequest="80" HeightRequest="80" Aspect="AspectFill"/>
-                    </Border>
-                    <Border StrokeShape="RoundRectangle 10" BackgroundColor="#6C584D" Padding="3">
-                        <Image Source="luigiwbgbox.png" WidthRequest="80" HeightRequest="80" Aspect="AspectFill"/>
-                    </Border>
                 </VerticalStackLayout>
 
                 <VerticalStackLayout Grid.Row="1" Grid.ColumnSpan="2"
                                      VerticalOptions="End"
                                      HorizontalOptions="Center"
-                                     Margin="0,0,0,40">
+                                     Margin="0,0,0,0">
                     <Label Text="Mario"
                            FontSize="36"
                            TextColor="White"
@@ -89,29 +67,38 @@
             </Grid>
         </Grid>
 
+        <!-- this is the buttons supposedly. -->
         <Border Grid.Row="2"
                 BackgroundColor="#DDE5B6"
                 Padding="15">
             <Grid ColumnDefinitions="Auto,Auto,Auto"
                   ColumnSpacing="10"
                   HorizontalOptions="End">
-                <Image Grid.Column="0"
-                       Source="exclamation.png"
-                       WidthRequest="30"
-                       HeightRequest="30"
-                       VerticalOptions="Center"/>
-                <Border Grid.Column="1"
-                        BackgroundColor="#6C584D"
-                        StrokeShape="RoundRectangle 10"
-                        Padding="15,10">
-                    <Label Text="Draw ×1 $" TextColor="White" FontSize="18" VerticalOptions="Center"/>
-                </Border>
-                <Border Grid.Column="2"
-                        BackgroundColor="#6C584D"
-                        StrokeShape="RoundRectangle 10"
-                        Padding="15,10">
-                    <Label Text="Draw ×10 $" TextColor="White" FontSize="18" VerticalOptions="Center"/>
-                </Border>
+
+                <Button 
+                    Grid.Column="1"
+                    WidthRequest="140"
+                    VerticalOptions="Center"
+                    Text="1x Pull" 
+                    FontSize="20"
+                    FontAttributes="Bold"
+                    Clicked="OnSinglePullClicked" 
+                    Padding="15,10"
+                    Background="#6C584D"
+                    TextColor="White"
+                    />
+                <Button 
+                    Grid.Column="2"
+                    WidthRequest="140"
+                    VerticalOptions="Center"
+                    Text="1x Pull" 
+                    FontSize="20"
+                    FontAttributes="Bold"
+                    Clicked="OnTenPullClicked" 
+                    Padding="15,10"
+                    Background="#6C584D"
+                    TextColor="White"
+                    />
             </Grid>
         </Border>
     </Grid>

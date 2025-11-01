@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="gachapon.News"
+             x:Class="gatchapon.News"
+             Title="NEWS"
              BackgroundColor="#ADC179">
 
     <ScrollView>
@@ -9,18 +10,6 @@
 
             <!-- Header -->
             <Grid ColumnDefinitions="Auto,*,Auto" VerticalOptions="Center">
-
-                <!-- Menu Button -->
-                <Button WidthRequest="36" HeightRequest="36"
-                        CornerRadius="18"
-                        BackgroundColor="#DCE5B6"
-                        Text="≡"
-                        FontSize="20"
-                        TextColor="#6C534D"
-                        HorizontalOptions="Start"
-                        VerticalOptions="Center"
-                        />
-
                 <!-- Title -->
                 <Label Grid.Column="1"
                        Text="NEWS"

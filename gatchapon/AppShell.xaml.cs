@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Microsoft.Maui.Controls;
 using gatchapon;
-using gachapon;
+
 
 namespace gatchapon
 {
