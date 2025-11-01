@@ -206,7 +206,7 @@
                                 VerticalOptions="Center">
 
                         <Button 
-                                        x:Name="CheckIn"
+                                        x:Name="CheckInBTN"
                                         Text="Check-In"
                                         BackgroundColor="#6C584D"
                                         CornerRadius="30"
@@ -216,7 +216,7 @@
                                         TextColor="#F0EAD2" />
 
                         <Button 
-                                        x:Name="Task"
+                                        x:Name="TaskBTN"
                                         Text="Tasks"
                                         BackgroundColor="#6C584D"
                                         CornerRadius="20"
@@ -226,7 +226,7 @@
                                         TextColor="#F0EAD2"  />
 
                         <Button
-                                        x:Name="News"
+                                        x:Name="NewsBTN"
                                         Text="News"
                                         BackgroundColor="#6C584D"
                                         CornerRadius="20"
@@ -237,7 +237,7 @@
                                         Clicked="OnclickedNews"/>
 
                         <Button 
-                                        x:Name="Shop"
+                                        x:Name="ShopBTN"
                                          Text="Shop"
                                         BackgroundColor="#6C584D"
                                         CornerRadius="20"
@@ -249,7 +249,7 @@
                             />
 
                         <Button 
-                            x:Name="Quest"
+                            x:Name="QuestBTN"
                             Text="Quest"
                             BackgroundColor="#6C584D"
                             CornerRadius="20"
@@ -259,18 +259,18 @@
                             TextColor="#F0EAD2"
                             Clicked="OnclickedQuest"
                             />
-
                         <Button
-                            x:Name="Profile"
-                            Text="profile"
-                            BackgroundColor="#6C584D"
-                            CornerRadius="20"
-                                WidthRequest="100"
-                            HeightRequest="30"
-                            FontAttributes="Bold"
-                            TextColor="#F0EAD2" 
-                            Clicked="OnclickedProfile"
-                            />
+                             x:Name="CharacterBTN"
+                             Text="Character"
+                             BackgroundColor="#6C584D"
+                             CornerRadius="20"
+                                 WidthRequest="100"
+                             HeightRequest="30"
+                             FontAttributes="Bold"
+                             TextColor="#F0EAD2" 
+                             Clicked="OnclickedCharacter"
+                             />
+
                     </HorizontalStackLayout>
                 </ScrollView>
             </Border>
