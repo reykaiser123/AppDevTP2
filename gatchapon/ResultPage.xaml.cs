@@ -50,7 +50,7 @@ public partial class ResultPage : ContentPage
     private async void OnCloseClicked(object sender, EventArgs e)
     {
         updatePityCallback?.Invoke(pullsSinceEpic);
-        await Navigation.PopModalAsync();
+        await Shell.Current.GoToAsync("//Dashboard/GachaBanner");
     }
 
     private GachaItem PullItem()

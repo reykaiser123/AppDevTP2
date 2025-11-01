@@ -26,6 +26,8 @@ namespace gatchapon
             Routing.RegisterRoute(nameof(Quest), typeof(Quest));
             Routing.RegisterRoute(nameof(News), typeof(News));
             Routing.RegisterRoute(nameof(Characters), typeof(Characters));
+            Routing.RegisterRoute(nameof(ResultPage), typeof(ResultPage));
+            Routing.RegisterRoute(nameof(ResultPageSingle), typeof(ResultPageSingle));
 
 
             // Starts the asynchronous check when the app launches

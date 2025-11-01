@@ -91,7 +91,7 @@
                     Grid.Column="2"
                     WidthRequest="140"
                     VerticalOptions="Center"
-                    Text="1x Pull" 
+                    Text="10x Pull" 
                     FontSize="20"
                     FontAttributes="Bold"
                     Clicked="OnTenPullClicked" 

@@ -33,9 +33,7 @@ public partial class GachaBanner : ContentPage
                 for (int i = 0; i < 10; i++)
                     results.Add(PullItem());
 
-                await Navigation.PushModalAsync(new ResultPage(
-                    results, items, random, pullsSinceEpic, UpdatePullsSinceEpic
-                ));
+                await Navigation.PushModalAsync(new ResultPage(results, items, random, pullsSinceEpic, UpdatePullsSinceEpic));
             }
 
             private GachaItem PullItem()

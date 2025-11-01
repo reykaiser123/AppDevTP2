@@ -26,6 +26,11 @@
         Shell.NavBarIsVisible="False"
         Shell.FlyoutBehavior="Disabled"/>
 
+    <ShellContent
+        Title="Gacha Banner"
+        Route="GachaBanner"
+        ContentTemplate="{DataTemplate local:GachaBanner}" />
+
 
 </Shell>
     
