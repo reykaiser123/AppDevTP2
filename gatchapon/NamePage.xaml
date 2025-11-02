@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="gatchapon.NamePage"
+               BackgroundColor="#ADC179">
+
+    <VerticalStackLayout Spacing="25" Padding="40" VerticalOptions="Center">
+
+        <Label Text="Welcome!"
+               FontSize="26"
+               FontAttributes="Bold"
+               HorizontalOptions="Center" />
+
+        <Label Text="What should we call you?"
+               FontSize="18"
+               HorizontalOptions="Center" />
+        <Border StrokeThickness="0" BackgroundColor="#FFF8E1">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="12" />
+            </Border.StrokeShape>
+
+            <Entry Placeholder="Enter your name"
+           BackgroundColor="Transparent"
+           x:Name="Name123"
+           Margin="10,8" />
+        </Border>
+
+
+        <Button Text="Continue"
+                BackgroundColor="#5E4529"
+                TextColor="White"
+                CornerRadius="12"
+                Clicked="OnContinueClicked" />
+    </VerticalStackLayout>
+</ContentPage>

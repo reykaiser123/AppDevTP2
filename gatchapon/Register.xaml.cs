@@ -44,11 +44,15 @@ namespace gatchapon
             var user = new { Email = result.email, LocalId = result.localId, CreatedAt = DateTime.UtcNow };
             await dbService.SaveUserAsync(result.localId, user);
 
+            //Store UserId securely on device
+            await SecureStorage.SetAsync("userId", result.localId);
+
             await DisplayAlert("Success", "Account created successfully!", "OK");
 
-                await Shell.Current.GoToAsync("//Login");
-
             
+            //await Shell.Current.GoToAsync($"//NamePage?userId={result.localId}");
+            await Shell.Current.GoToAsync($"{nameof(NamePage)}?userId={result.localId}");
+
         }
     }
 }

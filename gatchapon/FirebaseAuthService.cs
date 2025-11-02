@@ -24,7 +24,7 @@ namespace gatchapon
     {
         private readonly HttpClient _httpClient = new();
         private readonly string _apiKey;
-
+        private const string DatabaseUrl = "https://gatchapon-d7cd9-default-rtdb.firebaseio.com/";
         private const string FirebaseApiKey = "AIzaSyDnE-unnTD3dSGWzovUUUjYWvMI4NTR2DQ";
 
         public FirebaseAuthService()
@@ -200,25 +200,21 @@ namespace gatchapon
         }
 
         // for change username in profileSettings 
-        public async Task<bool> UpdateUsernameAsync(string newUsername)
+      public async Task<bool> UpdateUserAsync(string UserId, object userData)
         {
-            string? idToken = await GetCurrentIDTokenAsync();
-            if (idToken == null) return false;
+            try
+            {
+                string url = $"{DatabaseUrl}users/{UserId}.json";
 
-            string requestUri = $"https://identitytoolkit.googleapis.com/v1/accounts:update?key=AIzaSyDnE-unnTD3dSGWzovUUUjYWvMI4NTR2DQ";
-            var payload = new
-            {
-                idToken,
-                diplayName = newUsername,
-                returnSecureToken = true
-            };
-            var response =await _httpClient.PostAsJsonAsync(requestUri, payload);
-            if (!response.IsSuccessStatusCode)
-            {
-                var error = await response.Content.ReadAsStringAsync();
-                Console.WriteLine($"Firebase Update Username Error: {error}");
+                var response = await _httpClient.PatchAsJsonAsync(url, userData);
+
+                return response.IsSuccessStatusCode;
             }
-            return true;
+            catch (Exception ex)
+            {
+                Console.WriteLine($"UpdateUserAsync error: {ex.Message}");
+                return false;
+            }
         }
         //for change email
         public async Task<bool> UpdateEmailAsync(string newEmail)

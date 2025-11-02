@@ -43,5 +43,19 @@ namespace gatchapon
                 return default;
             }
         }
+        public async Task<bool> UpdateUserFieldAsync(string userId, string fieldName, object value)
+        {
+            try
+            {
+                string url = $"{DatabaseUrl}users/{userId}/{fieldName}.json";
+                var response = await _httpClient.PutAsJsonAsync(url, value);
+                return response.IsSuccessStatusCode;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"UpdateUserFieldAsync error: {ex.Message}");
+                return false;
+            }
+        }
     }
 }

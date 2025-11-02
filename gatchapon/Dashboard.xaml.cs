@@ -1,6 +1,9 @@
 using System.Threading.Tasks;
 using Microsoft.Maui.Controls;
 using System;
+using gatchapon.Models;
+
+  
 namespace gatchapon;
 
 public partial class Dashboard : ContentPage
@@ -8,9 +11,8 @@ public partial class Dashboard : ContentPage
 	public Dashboard()
 	{
 		InitializeComponent();
-		
-
     }
+   
 
     private async void OnclickedShop(object sender, EventArgs e)
     {

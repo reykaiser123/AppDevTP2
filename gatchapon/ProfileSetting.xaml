@@ -17,8 +17,8 @@
                     <HorizontalStackLayout Spacing="10">
                         <Border WidthRequest="60" HeightRequest="60" StrokeShape="RoundRectangle 30" Background="#C1B7A1"/>
                         <VerticalStackLayout>
-                            <Label Text="Username Placeholder" TextColor="Black" FontAttributes="Bold" FontSize="20"/>
-                            <Label Text="UID(unsure?)" FontSize="12" TextColor="Gray"/>
+                            <Label x:Name="Userlabel" Text="Username Placeholder" TextColor="Black" FontAttributes="Bold" FontSize="20"/>
+                            <Label x:Name="uidlabel" Text="UID(unsure?)" FontSize="12" TextColor="Gray"/>
                             <Button Text="Change Username"
                                     BackgroundColor="#8B6F4E" 
                                     TextColor="White"
@@ -28,7 +28,7 @@
                     </HorizontalStackLayout>
 
                     <VerticalStackLayout>
-                        <Label Text="Email" TextColor="Black" FontAttributes="Bold"/>
+                        <Label x:Name="Emaillabel" Text="Email" TextColor="Black" FontAttributes="Bold"/>
                         <Label Text="example.google@gmail.com" TextColor="Gray"/>
                         <Button Text="Change Email"
                                 BackgroundColor="#8B6F4E" 
