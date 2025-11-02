@@ -333,7 +333,7 @@ namespace gatchapon
         }
         public async Task<bool> SendPasswordResetEmailAsync(string email)
         {
-            string requestUri = $"https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key={_apiKey}";
+            string requestUri = $"https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key={FirebaseApiKey}";
             var payload = new { requestType = "PASSWORD_RESET", email };
 
             try
@@ -345,7 +345,6 @@ namespace gatchapon
 
                 if (!response.IsSuccessStatusCode)
                 {
-                    // throw instead of returning false so we can see the cause
                     throw new Exception($"Firebase error: {result}");
                 }
 
@@ -354,7 +353,7 @@ namespace gatchapon
             catch (Exception ex)
             {
                 Console.WriteLine("Exception: " + ex.Message);
-                throw; // rethrow so UI can show the message
+                throw;
             }
         }
     }

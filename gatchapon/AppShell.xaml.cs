@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.Maui.Controls;
 using gatchapon;
 
+
 namespace gatchapon
 {
     public partial class AppShell : Shell
@@ -23,7 +24,11 @@ namespace gatchapon
             Routing.RegisterRoute(nameof(Shop), typeof(Shop));
             Routing.RegisterRoute(nameof(GachaBanner), typeof(GachaBanner));
             Routing.RegisterRoute(nameof(Quest), typeof(Quest));
-            Routing.RegisterRoute(nameof(NamePage), typeof(NamePage));
+            Routing.RegisterRoute(nameof(News), typeof(News));
+            Routing.RegisterRoute(nameof(Characters), typeof(Characters));
+            Routing.RegisterRoute(nameof(ResultPage), typeof(ResultPage));
+            Routing.RegisterRoute(nameof(ResultPageSingle), typeof(ResultPageSingle));
+
 
             // Starts the asynchronous check when the app launches
 

@@ -7,6 +7,10 @@
     xmlns:local="clr-namespace:gatchapon"
     Title="gatchapon"
     Loaded="OnShellLoaded"
+    Shell.TitleColor="#F0EAD2"
+    Shell.ForegroundColor="#F0EAD2"
+    Shell.BackgroundColor="#4C763B"
+    
 	>
 
   
@@ -21,6 +25,11 @@
         ContentTemplate="{DataTemplate local:Dashboard}"
         Shell.NavBarIsVisible="False"
         Shell.FlyoutBehavior="Disabled"/>
+
+    <ShellContent
+        Title="Gacha Banner"
+        Route="GachaBanner"
+        ContentTemplate="{DataTemplate local:GachaBanner}" />
 
 
 </Shell>

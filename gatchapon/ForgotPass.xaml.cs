@@ -30,7 +30,7 @@ public partial class ForgotPass : ContentPage
         catch (Exception ex)
         {
             StatusLabel.TextColor = Colors.Red;
-            StatusLabel.Text = ex.Message; // show Firebase’s real message
+            StatusLabel.Text = "Error Please Try again, if persist please try other email."; 
         }
     }
 }

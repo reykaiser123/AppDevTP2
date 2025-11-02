@@ -20,11 +20,6 @@ public partial class Dashboard : ContentPage
         await Shell.Current.GoToAsync("Shop");
     }
 
-    private async void OnclickedProfile(object? sender, EventArgs e)
-    {
-        await Shell.Current.GoToAsync("ProfileSetting");
-    }
-
     private void TapGestureRecognizer_Tapped(object sender, TappedEventArgs e)
     {
 
@@ -40,5 +35,14 @@ public partial class Dashboard : ContentPage
     private async void OnclickedQuest(object sender, EventArgs e)
     {
         await Shell.Current.GoToAsync("Quest");
+    }
+
+    private async void OnclickedCharacter(object? sender, EventArgs e)
+    {
+        await Shell.Current.GoToAsync("Characters");
+    }
+    private async void OnclickedNews(object? sender, EventArgs e)
+    {
+        await Shell.Current.GoToAsync("News");
     }
 }
