@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="gatchapon.GachaBanner"
+             Title="GACHABANNER"
+             BackgroundColor="#ADC179">
+    <Grid RowDefinitions="Auto,*,Auto">
+
+        <VerticalStackLayout Grid.Row="0" Spacing="10">
+            <Border BackgroundColor="#DDE5B6"
+                    Padding="10">
+                <HorizontalStackLayout Spacing="8"
+                                       HorizontalOptions="End">
+                    <Border BackgroundColor="#6C584D"
+                            StrokeShape="RoundRectangle 10"
+                            Padding="5">
+                        <HorizontalStackLayout Spacing="5">
+                            <Image Source="starglitter.png" WidthRequest="20" HeightRequest="20"/>
+                            <Label Text="9999999" TextColor="#F2F0D5" FontSize="18" FontAttributes="Bold"/>
+                        </HorizontalStackLayout>
+                    </Border>
+                    <Border BackgroundColor="#6C584D"
+                            StrokeShape="RoundRectangle 10"
+                            Padding="5">
+                        <HorizontalStackLayout Spacing="5">
+                            <Image Source="primogem.png" WidthRequest="20" HeightRequest="20"/>
+                            <Label Text="9999999" TextColor="#F2F0D5" FontSize="18" FontAttributes="Bold"/>
+                        </HorizontalStackLayout>
+                    </Border>
+                </HorizontalStackLayout>
+            </Border>
+        </VerticalStackLayout>
+
+        <Grid Grid.Row="1" BackgroundColor="#ADC179">
+            <Image Source="taskaton.png"
+                   Aspect="AspectFill"
+                   Opacity="1.0"  
+                   HorizontalOptions="Fill"
+                   VerticalOptions="Fill"/>
+            <Grid Padding="10" RowDefinitions="Auto,*" ColumnDefinitions="Auto,*">
+                <VerticalStackLayout Grid.Row="0" Grid.Column="0"
+                                     Spacing="10" VerticalOptions="Start"
+                                     Margin="5,20,0,0">
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Grid.Row="1" Grid.ColumnSpan="2"
+                                     VerticalOptions="End"
+                                     HorizontalOptions="Center"
+                                     Margin="0,0,0,0">
+                    <Label Text="Mario"
+                           FontSize="36"
+                           TextColor="White"
+                           FontAttributes="Bold"
+                           HorizontalTextAlignment="Center"/>
+                    <HorizontalStackLayout HorizontalOptions="Center" Spacing="2">
+                        <Label Text="★" TextColor="Yellow" FontSize="25"/>
+                        <Label Text="★" TextColor="Yellow" FontSize="25"/>
+                        <Label Text="★" TextColor="Yellow" FontSize="25"/>
+                        <Label Text="★" TextColor="Yellow" FontSize="25"/>
+                        <Label Text="★" TextColor="Yellow" FontSize="25"/>
+                    </HorizontalStackLayout>
+                    <Label Text="God of Games"
+                           FontSize="18"
+                           TextColor="Black"
+                           HorizontalTextAlignment="Center"/>
+                </VerticalStackLayout>
+            </Grid>
+        </Grid>
+
+        <!-- this is the buttons supposedly. -->
+        <Border Grid.Row="2"
+                BackgroundColor="#DDE5B6"
+                Padding="15">
+            <Grid ColumnDefinitions="Auto,Auto,Auto"
+                  ColumnSpacing="10"
+                  HorizontalOptions="End">
+
+                <Button 
+                    Grid.Column="1"
+                    WidthRequest="140"
+                    VerticalOptions="Center"
+                    Text="1x Pull" 
+                    FontSize="20"
+                    FontAttributes="Bold"
+                    Clicked="OnSinglePullClicked" 
+                    Padding="15,10"
+                    Background="#6C584D"
+                    TextColor="White"
+                    />
+                <Button 
+                    Grid.Column="2"
+                    WidthRequest="140"
+                    VerticalOptions="Center"
+                    Text="10x Pull" 
+                    FontSize="20"
+                    FontAttributes="Bold"
+                    Clicked="OnTenPullClicked" 
+                    Padding="15,10"
+                    Background="#6C584D"
+                    TextColor="White"
+                    />
+            </Grid>
+        </Border>
+    </Grid>
+</ContentPage>

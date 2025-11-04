@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="gatchapon.Login"
+             BackgroundColor="#ADC179">
+
+    <Grid VerticalOptions="Center" Padding="20">
+
+        <Border StrokeShape="RoundRectangle 20"
+                StrokeThickness="0"
+                BackgroundColor="#DDE5B6"
+                Padding="20"
+                HorizontalOptions="Fill"
+                VerticalOptions="Center"
+                >
+
+            <VerticalStackLayout Spacing="23">
+
+                <Label Text="Email"
+                       FontAttributes="Bold"
+                       TextColor="#333333" />
+                <Entry x:Name="emailEntry"
+                       Placeholder="Email address"
+                       BackgroundColor="#F0EAD2"
+                       TextColor="Black"
+                       ReturnType="Next"
+                       Keyboard="Email"
+                       ClearButtonVisibility="WhileEditing" />
+
+                <Label Text="Password"
+                       FontAttributes="Bold"
+                       TextColor="#333333" />
+                <Entry x:Name="passwordEntry"
+                       Placeholder="Password"
+                       IsPassword="True"
+                       BackgroundColor="#F0EAD2"
+                       TextColor="Black"
+                       ClearButtonVisibility="WhileEditing" />
+
+                <Label Text="Forgot password?"
+                       HorizontalOptions="Start"
+                       TextColor="blue"
+                       FontAttributes="Bold"
+                       >
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="onForgotPassBTN"/>
+                    </Label.GestureRecognizers>
+                </Label>
+                
+                <Button Text="Sign In"
+                        BackgroundColor="#6C584D"
+                        TextColor="#F0EAD2"
+                        CornerRadius="10"
+                        HorizontalOptions="Fill"
+                        FontAttributes="Bold"
+                        Clicked="Logsbtn"/>
+
+                <Label Text="don't have an account? Click here" 
+                       HorizontalOptions="Start"
+                       TextColor="blue"
+                       FontAttributes="Bold">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="Createhere"/>
+                    </Label.GestureRecognizers>
+                </Label>
+
+            </VerticalStackLayout>
+        </Border>
+    </Grid>
+</ContentPage>
+    

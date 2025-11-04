@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Firebase.Auth;
+using Firebase.Auth.Providers;
+using Microsoft.Extensions.Logging;
 
 namespace gatchapon
 {
@@ -16,7 +18,20 @@ namespace gatchapon
                 });
 
 #if DEBUG
+            builder.Logging.AddDebug();
     		builder.Logging.AddDebug();
+
+            builder.Services.AddTransient<Login>();
+
+            builder.Services.AddSingleton(new FirebaseAuthClient(new FirebaseAuthConfig()
+            {
+                ApiKey = "AIzaSyD1bX4k0bY3aX2n8KXG6ZyW8g5v7mJHh6M",
+                AuthDomain = "gatchapon-9f3f4.firebaseapp.com",
+                Providers = new FirebaseAuthProvider[]
+                {
+                    new EmailProvider()
+                }
+            }));
 #endif
 
             return builder.Build();

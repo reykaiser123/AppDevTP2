@@ -1,14 +1,36 @@
 <?xml version="1.0" encoding="UTF-8" ?>
+
 <Shell
     x:Class="gatchapon.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:gatchapon"
-    Title="gatchapon">
+    Title="gatchapon"
+    Loaded="OnShellLoaded"
+    Shell.TitleColor="#F0EAD2"
+    Shell.ForegroundColor="#F0EAD2"
+    Shell.BackgroundColor="#4C763B"
+    
+	>
+
+  
+    <ShellContent
+        Title="Login"
+        ContentTemplate="{DataTemplate local:Login}"
+        Route="Login" 
+        Shell.NavBarIsVisible="False"
+        Shell.FlyoutBehavior="Disabled"/>
+    <ShellContent
+        Route="Dashboard"
+        ContentTemplate="{DataTemplate local:Dashboard}"
+        Shell.NavBarIsVisible="False"
+        Shell.FlyoutBehavior="Disabled"/>
 
     <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
+        Title="Gacha Banner"
+        Route="GachaBanner"
+        ContentTemplate="{DataTemplate local:GachaBanner}" />
+
 
 </Shell>
+    
