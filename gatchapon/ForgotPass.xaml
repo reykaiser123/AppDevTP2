@@ -2,22 +2,77 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="gatchapon.ForgotPass"
-             Title="ForgotPass">
-    <VerticalStackLayout Padding="20" Spacing="15">
-        <Label Text="Enter your email to reset your password"
-               FontSize="16"
-               HorizontalOptions="Center" />
+             BackgroundColor="#ADC179"
+             NavigationPage.HasNavigationBar="False">
 
-        <Entry x:Name="EmailEntry"
-               Placeholder="Email address"
-               Keyboard="Email" />
+    <Grid VerticalOptions="Center" Padding="20">
+        <Border
+            StrokeShape="RoundRectangle 8"
+            StrokeThickness="0"
+            BackgroundColor="#DDE5B6"
+            Padding="24"
+            HorizontalOptions="Fill"
+            VerticalOptions="Center">
 
-        <Button Text="Send Reset Email"
-                Clicked="OnSendResetEmailClicked" />
+            <VerticalStackLayout Spacing="15">
+                <Label Text="Forgot your Password?"
+                       TextColor="#5D4037"
+                       FontAttributes="Bold"
+                       FontSize="18"
+                       HorizontalOptions="Center" />
 
-        <Label x:Name="StatusLabel"
-               Text=""
-               TextColor="Gray"
-               HorizontalOptions="Center" />
-    </VerticalStackLayout>
+                <Label Text="Enter your email and we’ll send you a message to reset your password."
+                       FontSize="14"
+                       TextColor="#5D4037"
+                       HorizontalOptions="Center"
+                       HorizontalTextAlignment="Center" />
+
+                <Border StrokeThickness="0"
+                        BackgroundColor="#F0EAD2"
+                        Padding="10"
+                        HeightRequest="60"
+                        StrokeShape="RoundRectangle 8">
+                    <Entry Placeholder="Enter Email"
+                           x:Name="emailEntryForgot"
+                           PlaceholderColor="#A98467"
+                           TextColor="Black"
+                           VerticalOptions="Center"/>
+                </Border>
+
+                <!-- ✅ Added Status Label -->
+                <Label x:Name="StatusLabel"
+                       Text=""
+                       FontSize="14"
+                       TextColor="Red"
+                       HorizontalOptions="Center"
+                       HorizontalTextAlignment="Center"/>
+
+                <Grid Padding="8" HorizontalOptions="Fill">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Label Grid.Column="0" 
+                           Text="Back to Login" 
+                           HorizontalOptions="Start"
+                           TextColor="#A98467"
+                           TextDecorations="Underline"
+                           FontAttributes="Bold">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="BTL"/>
+                        </Label.GestureRecognizers>
+                    </Label>
+
+                    <Button Text="Reset Password"
+                            Grid.Column="1"
+                            BackgroundColor="#4E342E"
+                            TextColor="White"
+                            CornerRadius="10"
+                            HorizontalOptions="End"
+                            Clicked="OnRPCBTN" />
+                </Grid>
+            </VerticalStackLayout>
+        </Border>
+    </Grid>
 </ContentPage>

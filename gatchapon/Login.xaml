@@ -18,9 +18,10 @@
 
                 <Label Text="Email"
                        FontAttributes="Bold"
-                       TextColor="#333333" />
+                       TextColor="#5D4037" />
                 <Entry x:Name="emailEntry"
                        Placeholder="Email address"
+                       PlaceholderColor="#A98467"
                        BackgroundColor="#F0EAD2"
                        TextColor="Black"
                        ReturnType="Next"
@@ -29,9 +30,10 @@
 
                 <Label Text="Password"
                        FontAttributes="Bold"
-                       TextColor="#333333" />
+                       TextColor="#5D4037" />
                 <Entry x:Name="passwordEntry"
                        Placeholder="Password"
+                       PlaceholderColor="#A98467"
                        IsPassword="True"
                        BackgroundColor="#F0EAD2"
                        TextColor="Black"
@@ -39,7 +41,7 @@
 
                 <Label Text="Forgot password?"
                        HorizontalOptions="Start"
-                       TextColor="blue"
+                       TextColor="#6C584D"
                        FontAttributes="Bold"
                        >
                     <Label.GestureRecognizers>
@@ -54,10 +56,10 @@
                         HorizontalOptions="Fill"
                         FontAttributes="Bold"
                         Clicked="Logsbtn"/>
-
+                
                 <Label Text="don't have an account? Click here" 
                        HorizontalOptions="Start"
-                       TextColor="blue"
+                       TextColor="#6C584D"
                        FontAttributes="Bold">
                     <Label.GestureRecognizers>
                         <TapGestureRecognizer Tapped="Createhere"/>

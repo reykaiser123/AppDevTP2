@@ -1,36 +1,45 @@
-using Microsoft.Maui.ApplicationModel.Communication;
+using Microsoft.Maui.Controls;
+using System;
 
-namespace gatchapon;
-
-public partial class ForgotPass : ContentPage
+namespace gatchapon
 {
-    private readonly FirebaseAuthService _authService = new FirebaseAuthService();
-
-    public ForgotPass()
+    public partial class ForgotPass : ContentPage
     {
-        InitializeComponent();
-    }
+        private readonly FirebaseAuthService _authService = new FirebaseAuthService();
 
-    private async void OnSendResetEmailClicked(object sender, EventArgs e)
-    {
-        var email = EmailEntry.Text?.Trim();
-
-        if (string.IsNullOrEmpty(email))
+        public ForgotPass()
         {
-            StatusLabel.Text = "Please enter your email.";
-            return;
+            InitializeComponent();
         }
 
-        try
+        private async void OnRPCBTN(object sender, EventArgs e)
         {
-            bool success = await _authService.SendPasswordResetEmailAsync(email);
-            StatusLabel.TextColor = Colors.Green;
-            StatusLabel.Text = "Reset link sent. Check your email.";
+            var email = emailEntryForgot.Text?.Trim();
+
+            if (string.IsNullOrEmpty(email))
+            {
+                await DisplayAlert("Error", "Please enter your email.", "OK");
+                return;
+            }
+
+            try
+            {
+                bool success = await _authService.SendPasswordResetEmailAsync(email);
+
+                if (success)
+                    await DisplayAlert("Success", "Reset link sent. Check your email.", "OK");
+                else
+                    await DisplayAlert("Failed", "Failed to send reset email. Please try again.", "OK");
+            }
+            catch (Exception)
+            {
+                await DisplayAlert("Error", "Something went wrong. Try again or use a different email.", "OK");
+            }
         }
-        catch (Exception ex)
+
+        private async void BTL(object sender, EventArgs e)
         {
-            StatusLabel.TextColor = Colors.Red;
-            StatusLabel.Text = "Error Please Try again, if persist please try other email."; 
+            await Shell.Current.GoToAsync("//Login");
         }
     }
 }

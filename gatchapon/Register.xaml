@@ -2,14 +2,15 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="gatchapon.Register"
-             BackgroundColor="#ADC179">
+             BackgroundColor="#ADC179"
+             NavigationPage.HasNavigationBar="False">
 
-    <Grid VerticalOptions="Center" Padding="20">
+    <Grid VerticalOptions="Center" Padding="24">
 
-        <Border StrokeShape="RoundRectangle 20"
+        <Border StrokeShape="RoundRectangle 8"
             StrokeThickness="0"
             BackgroundColor="#DDE5B6"
-            Padding="20"
+            Padding="24"
             HorizontalOptions="Fill"
             VerticalOptions="Center"
             >
@@ -17,58 +18,66 @@
             <VerticalStackLayout Spacing="10">
 
 
-                <Label Text="Email" TextColor="Black"
+                <Label Text="Email" TextColor="#5D4037"
                        FontAttributes="Bold"/>
                 <Border StrokeThickness="0"
-                  BackgroundColor="#E7E8D6"
+                  BackgroundColor="#F0EAD2"
                   Padding="10"
                   HeightRequest="60"
-                  StrokeShape="RoundRectangle 10">
+                  StrokeShape="RoundRectangle 8">
                     <Entry Placeholder="Enter Email"
                            x:Name="emailEntryReg"
-                      PlaceholderColor="Gray"
+                      PlaceholderColor="#A98467"
                       TextColor="Black"
                       VerticalOptions="Center"/>
                 </Border>
 
-                <Label Text="Password" TextColor="Black" FontAttributes="Bold"/>
+                <Label Text="Password" TextColor="#5D4037" FontAttributes="Bold"/>
                 <Border StrokeThickness="0"
-                    BackgroundColor="#E7E8D6"
+                    BackgroundColor="#F0EAD2"
                     Padding="10"
                     HeightRequest="60"
-                    StrokeShape="RoundRectangle 10">
+                    StrokeShape="RoundRectangle 8">
                     <Entry Placeholder="Enter Password"
                            x:Name="passwordEntryReg"
                         IsPassword="True"
-                        PlaceholderColor="Gray"
+                        PlaceholderColor="#A98467"
                         TextColor="Black"
                         VerticalOptions="Center"/>
                 </Border>
 
-                <Label Text="Confirm Password" TextColor="Black" FontAttributes="Bold"/>
+                <Label Text="Confirm Password" TextColor="#5D4037" FontAttributes="Bold"/>
                 <Border StrokeThickness="0"
-                       BackgroundColor="#E7E8D6"
+                       BackgroundColor="#F0EAD2"
                        Padding="10"
                        HeightRequest="60"
-                       StrokeShape="RoundRectangle 10">
+                       StrokeShape="RoundRectangle 8">
                     <Entry Placeholder="Confirm Password"
                            x:Name="confirmPass"
                            IsPassword="True"
-                           PlaceholderColor="Gray"
+                           PlaceholderColor="#A98467"
                            TextColor="Black"
                            VerticalOptions="Center"/>
                 </Border>
 
                 <Button Text="Register"
-                        FontAttributes="Bold"
+                        FontAttributes="None"
                         FontSize="18"
-                        BackgroundColor="#8A7A6A"
-                        TextColor="White"
-                        CornerRadius="10"
+                        BackgroundColor="#6C584D"
+                        TextColor="#F0EAD2"
+                        CornerRadius="8"
                         HeightRequest="50"
                         Margin="0,10,0,0"
                         Clicked="OnRegisterBTN"
                         />
+                <Label Text="Already have an account? Click here" 
+                       HorizontalOptions="Center"
+                       TextColor="#6C584D"
+                       FontAttributes="Bold">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="Clkhere"/>
+                    </Label.GestureRecognizers>
+                </Label>
 
             </VerticalStackLayout>
         </Border>

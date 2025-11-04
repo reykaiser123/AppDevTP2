@@ -54,5 +54,9 @@ namespace gatchapon
             await Shell.Current.GoToAsync($"{nameof(NamePage)}?userId={result.localId}");
 
         }
+        private async void Clkhere(object sender, EventArgs e)
+        {
+            await Shell.Current.GoToAsync("//Login");
+        }
     }
 }
