@@ -15,16 +15,13 @@
                             StrokeShape="RoundRectangle 10"
                             Padding="5">
                         <HorizontalStackLayout Spacing="5">
-                            <Image Source="starglitter.png" WidthRequest="20" HeightRequest="20"/>
-                            <Label Text="9999999" TextColor="#F2F0D5" FontSize="18" FontAttributes="Bold"/>
-                        </HorizontalStackLayout>
-                    </Border>
-                    <Border BackgroundColor="#6C584D"
-                            StrokeShape="RoundRectangle 10"
-                            Padding="5">
-                        <HorizontalStackLayout Spacing="5">
                             <Image Source="primogem.png" WidthRequest="20" HeightRequest="20"/>
-                            <Label Text="9999999" TextColor="#F2F0D5" FontSize="18" FontAttributes="Bold"/>
+                            <Label 
+                                x:Name="goldcoin"
+                                Text="" 
+                                TextColor="#F2F0D5" 
+                                FontSize="18" 
+                                FontAttributes="Bold"/>
                         </HorizontalStackLayout>
                     </Border>
                 </HorizontalStackLayout>

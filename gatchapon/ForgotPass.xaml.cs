@@ -14,27 +14,28 @@ namespace gatchapon
 
         private async void OnRPCBTN(object sender, EventArgs e)
         {
-            var email = emailEntryForgot.Text?.Trim();
+            var email = EmailEntry.Text?.Trim();
 
             if (string.IsNullOrEmpty(email))
             {
-                await DisplayAlert("Error", "Please enter your email.", "OK");
+                StatusLabel.TextColor = Colors.Red;
+                StatusLabel.Text = "Please enter your email.";
                 return;
             }
 
             try
             {
+                // Send reset email directly
                 bool success = await _authService.SendPasswordResetEmailAsync(email);
-
-                if (success)
-                    await DisplayAlert("Success", "Reset link sent. Check your email.", "OK");
-                else
-                    await DisplayAlert("Failed", "Failed to send reset email. Please try again.", "OK");
+                StatusLabel.TextColor = Colors.Green;
+                StatusLabel.Text = "Reset link sent, Please check your email.";
             }
+            
             catch (Exception)
-            {
-                await DisplayAlert("Error", "Something went wrong. Try again or use a different email.", "OK");
-            }
+                {
+                    StatusLabel.TextColor = Colors.Red;
+                    StatusLabel.Text = "Error Please Try again, if persist please try other email.";
+                }
         }
 
         private async void BTL(object sender, EventArgs e)

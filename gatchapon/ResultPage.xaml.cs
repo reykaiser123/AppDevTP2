@@ -7,6 +7,7 @@ public partial class ResultPage : ContentPage
     private int pullsSinceEpic;
     private int totalPulls;
     private readonly Action<int> updatePityCallback;
+    
 
     public ResultPage(List<GachaItem> results, List<GachaItem> itemPool, Random rng, int pityCount, Action<int> onUpdatePity)
     {
@@ -14,7 +15,7 @@ public partial class ResultPage : ContentPage
 
         ResultCollection.ItemsSource = results ?? new List<GachaItem>();
 
-
+        UpdateUI();
         items = itemPool;
         random = rng;
         pullsSinceEpic = pityCount;
@@ -30,8 +31,12 @@ public partial class ResultPage : ContentPage
                 PullCountLabel.Text = $"Total pulls: {pullsSinceEpic} / 80 (resets after Epic)";
         };
     }
+    private void UpdateUI()
+    {
+        goldcoin.Text = PlayerSession.Player.Coin.ToString();
+    }
 
-        private void SafeShowResults(List<GachaItem> results)
+    private void SafeShowResults(List<GachaItem> results)
     {
         PullCountLabel.Text = $"Total pulls: {pullsSinceEpic} / 80 (resets after Epic)";
         ResultCollection.ItemsSource = results;
@@ -39,18 +44,23 @@ public partial class ResultPage : ContentPage
 
     private void OnPullAgainClicked(object sender, EventArgs e)
     {
-        var newResults = new List<GachaItem>();
-        for (int i = 0; i < 10; i++)
-            newResults.Add(PullItem());
+        if (PlayerSession.Player.Coin >= 10)
+        {
+            PlayerSession.Player.Coin -= 1;
+            goldcoin.Text = PlayerSession.Player.Coin.ToString();
+            var newResults = new List<GachaItem>();
+            for (int i = 0; i < 10; i++)
+                newResults.Add(PullItem());
 
-        SafeShowResults(newResults);
-        updatePityCallback?.Invoke(pullsSinceEpic);
+            SafeShowResults(newResults);
+            updatePityCallback?.Invoke(pullsSinceEpic);
+        }
     }
 
     private async void OnCloseClicked(object sender, EventArgs e)
     {
         updatePityCallback?.Invoke(pullsSinceEpic);
-        await Shell.Current.GoToAsync("//Dashboard/GachaBanner");
+        await Navigation.PopModalAsync();
     }
 
     private GachaItem PullItem()

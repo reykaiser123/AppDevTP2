@@ -21,7 +21,9 @@
                        FontSize="18"
                        HorizontalOptions="Center" />
 
-                <Label Text="Enter your email and we’ll send you a message to reset your password."
+                <Label 
+                        
+                       Text="Enter your email and we’ll send you a message to reset your password."
                        FontSize="14"
                        TextColor="#5D4037"
                        HorizontalOptions="Center"
@@ -33,7 +35,7 @@
                         HeightRequest="60"
                         StrokeShape="RoundRectangle 8">
                     <Entry Placeholder="Enter Email"
-                           x:Name="emailEntryForgot"
+                           x:Name="EmailEntry"
                            PlaceholderColor="#A98467"
                            TextColor="Black"
                            VerticalOptions="Center"/>

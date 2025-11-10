@@ -6,11 +6,13 @@ public partial class ResultPageSingle : ContentPage
     private readonly Random random;
     private int pullsSinceEpic;
     private Action<int> updatePityCallback;
-
+    
     public ResultPageSingle(GachaItem result, List<GachaItem> itemPool, Random rng, int pityCount, Action<int> onUpdatePity)
 	{
 		InitializeComponent();
 
+        
+        UpdateUI();
         items = itemPool;
         random = rng;
         pullsSinceEpic = pityCount;
@@ -19,6 +21,10 @@ public partial class ResultPageSingle : ContentPage
         ShowResult(result);
     }
 
+    private void UpdateUI()
+    {
+        goldcoin.Text = PlayerSession.Player.Coin.ToString();
+    }
     private void ShowResult(GachaItem item)
     {
         PullCountLabel.Text = $"Total pulls: {pullsSinceEpic} / 80 (resets after Epic)";
@@ -55,15 +61,20 @@ public partial class ResultPageSingle : ContentPage
 
     private void OnPullAgainClicked(object sender, EventArgs e)
     {
-        var newItem = PullItem();
+        if (PlayerSession.Player.Coin >= 1)
+        {
+            PlayerSession.Player.Coin -= 1;
+            goldcoin.Text = PlayerSession.Player.Coin.ToString();
+            var newItem = PullItem();
         ShowResult(newItem);
         updatePityCallback?.Invoke(pullsSinceEpic);
+        }
     }
 
     private async void OnCloseClicked(object sender, EventArgs e)
     {
         updatePityCallback?.Invoke(pullsSinceEpic);
-        await Shell.Current.GoToAsync("//Dashboard/GachaBanner");
+         await Navigation.PopModalAsync();
     }
 
 }
