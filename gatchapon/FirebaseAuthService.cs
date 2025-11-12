@@ -95,6 +95,7 @@ namespace gatchapon
         {
             await SecureStorage.SetAsync("refresh_token", user.refreshToken);
             await SecureStorage.SetAsync("user_email", user.email);
+
         }
 
         public async Task<FirebaseSignInResponse?> SignInResponseAsync(string email, string password)

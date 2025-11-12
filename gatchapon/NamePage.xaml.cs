@@ -18,6 +18,7 @@ namespace gatchapon
 
         private async void OnContinueClicked(object sender, EventArgs e)
         {
+            // This line assumes your Entry is named "Name123"
             string name = Name123.Text?.Trim();
 
 
@@ -33,10 +34,13 @@ namespace gatchapon
                 return;
             }
 
-            // Save name in Firebase
-            await _dbService.UpdateUserFieldAsync(UserId, "Username", name);
+            // --- THIS IS THE FIX ---
+            // Save name in Firebase using the lowercase "username" key
+            await _dbService.UpdateUserFieldAsync(UserId, "username", name);
+            // --- END OF FIX ---
 
             // Optional local storage
+            // This line was already correct
             await SecureStorage.SetAsync("userId", UserId);
             await SecureStorage.SetAsync("userName", name);
 

@@ -1,7 +1,8 @@
 ﻿
-using System.Threading.Tasks;
-using Microsoft.Maui.Controls;
+using Firebase.Auth.Requests;
 using gatchapon;
+using Microsoft.Maui.Controls;
+using System.Threading.Tasks;
 
 
 namespace gatchapon
@@ -28,16 +29,15 @@ namespace gatchapon
             Routing.RegisterRoute(nameof(Characters), typeof(Characters));
             Routing.RegisterRoute(nameof(ResultPage), typeof(ResultPage));
             Routing.RegisterRoute(nameof(ResultPageSingle), typeof(ResultPageSingle));
+            Routing.RegisterRoute(nameof(NamePage), typeof(NamePage));
+            Routing.RegisterRoute(nameof(TodoPage), typeof(TodoPage));
+          
 
 
             // Starts the asynchronous check when the app launches
 
         }
-        private void OnShellLoaded(object sender, EventArgs e)
-        {
-            // Call the navigation logic ONLY when the Shell is confirmed to be loaded.
-            _ = CheckLoginStatusAndNavigate();
-        }
+       
         private async Task CheckLoginStatusAndNavigate()
         {
             // Now '_authService' is recognized by the compiler
@@ -51,6 +51,7 @@ namespace gatchapon
             {
                 await Shell.Current.GoToAsync($"//{nameof(Login)}");
             }
+           
         }
     }
 }

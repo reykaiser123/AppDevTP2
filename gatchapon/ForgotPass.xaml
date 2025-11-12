@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="gatchapon.ForgotPass"
              BackgroundColor="#ADC179"
-             NavigationPage.HasNavigationBar="False">
+             Shell.NavBarIsVisible="False">
 
     <Grid VerticalOptions="Center" Padding="20">
         <Border

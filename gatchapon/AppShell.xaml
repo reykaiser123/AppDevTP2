@@ -6,18 +6,15 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:gatchapon"
     Title="gatchapon"
-    Loaded="OnShellLoaded"
     Shell.TitleColor="#F0EAD2"
     Shell.ForegroundColor="#F0EAD2"
     Shell.BackgroundColor="#ADC179"
     
 	>
-
-  
     <ShellContent
-        Title="Login"
+        Title=""
+        Route="Login"
         ContentTemplate="{DataTemplate local:Login}"
-        Route="Login" 
         Shell.NavBarIsVisible="False"
         Shell.FlyoutBehavior="Disabled"/>
     <ShellContent
@@ -26,10 +23,8 @@
         Shell.NavBarIsVisible="False"
         Shell.FlyoutBehavior="Disabled"/>
 
-    <ShellContent
-        Title="Gacha Banner"
-        Route="GachaBanner"
-        ContentTemplate="{DataTemplate local:GachaBanner}" />
+
+
 
 
 </Shell>

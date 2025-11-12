@@ -1,293 +1,224 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:models="clr-namespace:gatchapon.Models" 
              x:Class="gatchapon.Dashboard"
              NavigationPage.HasNavigationBar="False"
              BackgroundColor="#ADC179"
-             Title="Dashboard">
+             Title="">
     <ScrollView>
         <VerticalStackLayout Padding="15" Spacing="20">
 
-			<!-- Top Bar -->
-			<Grid ColumnDefinitions="Auto,*,Auto" Padding="5" VerticalOptions="Start">
-				<!-- Menu  -->
-				<Border StrokeShape="Ellipse"
-            HeightRequest="36"
-            WidthRequest="36"
-            BackgroundColor="#c3d89b"
-            VerticalOptions="Center"
-            HorizontalOptions="Start">
-					<ImageButton Source="menu1.png"
-                     BackgroundColor="Transparent"
-                     Aspect="AspectFit"
-                     HeightRequest="28"
-                     WidthRequest="28"/>
-				</Border>
-
-				<!-- Title -->
-				<Label Grid.Column="1"
-           Text="DASHBOARD"
-           FontSize="22"
-           FontAttributes="Bold"
-           HorizontalOptions="Center"
-           VerticalOptions="Center"
-           TextColor="#6C584D"/>
-
-				<!-- Profile  -->
-				<Border Grid.Column="2"
-            StrokeShape="Ellipse"
-            HeightRequest="36"
-            WidthRequest="36"
-            BackgroundColor="#433832"
-            VerticalOptions="Center"
-            HorizontalOptions="End">
-                    <ImageButton
-                            x:Name="ProfileButton"
-                            Source="profile.png"
-                            BackgroundColor="Transparent"
-                            Aspect="AspectFit"
-                            HeightRequest="28"
-                            WidthRequest="28"
-                            Clicked="OnProfileClicked"/>
+            <Grid ColumnDefinitions="Auto,*,Auto" Padding="5" VerticalOptions="Start">
+                <Border StrokeShape="Ellipse"
+                        HeightRequest="36"
+                        WidthRequest="36"
+                        BackgroundColor="#c3d89b"
+                        VerticalOptions="Center"
+                        HorizontalOptions="Start">
+                    <ImageButton Source="menu1.png"
+                                 BackgroundColor="Transparent"
+                                 Aspect="AspectFit"
+                                 HeightRequest="28"
+                                 WidthRequest="28"/>
                 </Border>
-			</Grid>
+                <Label Grid.Column="1"
+                       Text="DASHBOARD"
+                       FontSize="22"
+                       FontAttributes="Bold"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center"
+                       TextColor="#6C584D"/>
+                <Border Grid.Column="2"
+                        StrokeShape="Ellipse"
+                        HeightRequest="36"
+                        WidthRequest="36"
+                        BackgroundColor="#433832"
+                        VerticalOptions="Center"
+                        HorizontalOptions="End">
+                    <ImageButton
+                        x:Name="ProfileButton"
+                        Source="profile.png"
+                        BackgroundColor="Transparent"
+                        Aspect="AspectFit"
+                        HeightRequest="28"
+                        WidthRequest="28"
+                        Clicked="OnProfileClicked"/>
+                </Border>
+            </Grid>
 
+            <Border BackgroundColor="#DDE5B6"
+                    StrokeShape="RoundRectangle 10"
+                    Padding="18">
+                <VerticalStackLayout Spacing="14">
+                    <Label Text="Tasks for Today"
+                           FontSize="20"
+                           FontAttributes="Bold"
+                           HorizontalOptions="Center"
+                           TextColor="#6C584D"/>
+                    <CollectionView x:Name="TasksCollectionView"
+                                    ItemsSource="{Binding TodayTasks}">
+                        <CollectionView.EmptyView>
+                            <Label Text="No tasks for today. Add one!"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center"
+                                   TextColor="#8a7970"
+                                   Padding="20"/>
+                        </CollectionView.EmptyView>
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="models:UserTask">
+                                <Border BackgroundColor="#f5f1d6"
+                                        StrokeShape="RoundRectangle 12"
+                                        Stroke="#d1c9a6"
+                                        StrokeThickness="1"
+                                        Padding="10"
+                                        Margin="0,5">
+                                    <Grid ColumnDefinitions="Auto, *, Auto" ColumnSpacing="10">
+                                        <Image Grid.Column="0"
+                                               Source="gem_icon.png" 
+                                               HeightRequest="40"
+                                               WidthRequest="40"
+                                               VerticalOptions="Center"/>
+                                        <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
+                                            <Label Text="{Binding TaskName}"
+                                                   FontSize="16"
+                                                   FontAttributes="Bold"
+                                                   TextColor="#6C584D"/>
+                                            <HorizontalStackLayout Spacing="10">
+                                                <Label Text="{Binding Reward, StringFormat='💰 {0}'}"
+                                                       FontSize="12"
+                                                       FontAttributes="Bold"
+                                                       TextColor="#B8860B"/>
+                                                <Label Text="{Binding Streak, StringFormat='Streak: {0}'}"
+                                                       FontSize="12"
+                                                       TextColor="#8a7970"/>
+                                                <Label Text="{Binding Total, StringFormat='Total: {0}'}"
+                                                       FontSize="12"
+                                                       TextColor="#8a7970"/>
+                                            </HorizontalStackLayout>
+                                        </VerticalStackLayout>
 
-			<!-- Tasks Today-->
-			<Border BackgroundColor="#DDE5B6"
-        StrokeShape="RoundRectangle 10"
-        Padding="18">
-				<VerticalStackLayout Spacing="14">
+                                        <Button Grid.Column="2"
+                                                Text="Claim Rewards"
+                                                FontSize="10"
+                                                CornerRadius="15"
+                                                HeightRequest="30"
+                                                BackgroundColor="#8B7E74" 
+                                                TextColor="#F0EAD2"
+                                                VerticalOptions="Center"
+                                                Clicked="OnClaimRewardClicked"
+                                                CommandParameter="{Binding .}">
 
-					<Label Text="Tasks Today"
-               FontSize="20"
-               FontAttributes="Bold"
-               HorizontalOptions="Center"
-               TextColor="#6C584D"/>
+                                            <Button.Triggers>
+                                                <DataTrigger TargetType="Button"
+                                                             Binding="{Binding IsCompletedToday}"
+                                                             Value="True">
+                                                    <Setter Property="Text" Value="Claimed" />
+                                                    <Setter Property="BackgroundColor" Value="#4CAF50" />
+                                                    <Setter Property="IsEnabled" Value="False" />
+                                                </DataTrigger>
+                                            </Button.Triggers>
 
-					<!-- Task list with inner frames for each task -->
-					<VerticalStackLayout Spacing="10">
+                                        </Button>
+                                    </Grid>
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnTaskTapped"
+                                                              CommandParameter="{Binding .}"/>
+                                    </Border.GestureRecognizers>
+                                </Border>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </VerticalStackLayout>
+            </Border>
 
-						<!-- Task 1 -->
-						<Border BackgroundColor="#f5f1d6"
-                    StrokeShape="RoundRectangle 12"
-                    Stroke="#d1c9a6"
-                    StrokeThickness="1"
-                    Padding="0">
-							<Grid Padding="12" ColumnDefinitions="*,Auto">
-								<Label Text="Pogi sige na"
-                                       IsVisible="False"
-                           FontSize="16"
-                           VerticalOptions="Center"
-                           TextColor="#6C584D"
-                           HorizontalOptions="Start"/>
-								<Image Grid.Column="1"
-                           Source="check.png"
-                           WidthRequest="24"
-                           HeightRequest="24"
-                           VerticalOptions="Center"/>
-							</Grid>
-							<Border.GestureRecognizers>
-								<TapGestureRecognizer />
-							</Border.GestureRecognizers>
-						</Border>
-
-						<!-- Task 2 -->
-						<Border BackgroundColor="#f5f1d6"
-                    StrokeShape="RoundRectangle 12"
-                    Stroke="#d1c9a6"
-                    StrokeThickness="1"
-                    Padding="0">
-							<Grid Padding="12" ColumnDefinitions="*,Auto">
-								<Label Text="Pogi sige na"
-                           FontSize="16"
-                           VerticalOptions="Center"
-                           TextColor="#6C584D"
-                           HorizontalOptions="Start"/>
-								<Image Grid.Column="1"
-                           Source="check.png"
-                           WidthRequest="24"
-                           HeightRequest="24"
-                           VerticalOptions="Center"/>
-							</Grid>
-							<Border.GestureRecognizers>
-								<TapGestureRecognizer />
-							</Border.GestureRecognizers>
-						</Border>
-
-						<!-- Task 3 -->
-						<Border BackgroundColor="#f5f1d6"
-                    StrokeShape="RoundRectangle 12"
-                    Stroke="#d1c9a6"
-                    StrokeThickness="1"
-                    Padding="0">
-							<Grid Padding="12" ColumnDefinitions="*,Auto">
-								<Label Text="Pogi sige na"
-                           FontSize="16"
-                           VerticalOptions="Center"
-                           TextColor="#6C584D"
-                           HorizontalOptions="Start"/>
-								<Image Grid.Column="1"
-                           Source="check.png"
-                           WidthRequest="24"
-                           HeightRequest="24"
-                           VerticalOptions="Center"/>
-							</Grid>
-							<Border.GestureRecognizers>
-								<TapGestureRecognizer />
-							</Border.GestureRecognizers>
-						</Border>
-
-						<!-- Task 4 -->
-						<Border BackgroundColor="#f5f1d6"
-                    StrokeShape="RoundRectangle 12"
-                    Stroke="#d1c9a6"
-                    StrokeThickness="1"
-                    Padding="0">
-							<Grid Padding="12" ColumnDefinitions="*,Auto">
-								<Label Text="Pogi sige na"
-                           FontSize="16"
-                           VerticalOptions="Center"
-                           TextColor="#6C584D"
-                           HorizontalOptions="Start"/>
-								<Image Grid.Column="1"
-                           Source="check.png"
-                           WidthRequest="24"
-                           HeightRequest="24"
-                           VerticalOptions="Center"/>
-							</Grid>
-							<Border.GestureRecognizers>
-								<TapGestureRecognizer />
-							</Border.GestureRecognizers>
-						</Border>
-
-						<!-- Task 5 -->
-						<Border BackgroundColor="#f5f1d6"
-                    StrokeShape="RoundRectangle 12"
-                    Stroke="#d1c9a6"
-                    StrokeThickness="1"
-                    Padding="0">
-							<Grid Padding="12" ColumnDefinitions="*,Auto">
-								<Label Text="Pogi sige na"
-                           FontSize="16"
-                           VerticalOptions="Center"
-                           TextColor="#6C584D"
-                           HorizontalOptions="Start"/>
-								<Image Grid.Column="1"
-                           Source="check.png"
-                           WidthRequest="24"
-                           HeightRequest="24"
-                           VerticalOptions="Center"/>
-							</Grid>
-							<Border.GestureRecognizers>
-								<TapGestureRecognizer />
-							</Border.GestureRecognizers>
-						</Border>
-
-					</VerticalStackLayout>
-				</VerticalStackLayout>
-			</Border>
-
-
-
-			<!-- Bottom menu container -->
             <Border BackgroundColor="#DDE5B6"
                     StrokeShape="RoundRectangle 10">
-
                 <ScrollView 
-                                 Orientation="Horizontal"
-                                 BackgroundColor="#D3D3D3"
-                                 HeightRequest="90"
-                                >
+                            Orientation="Horizontal"
+                            BackgroundColor="#D3D3D3"
+                            HeightRequest="90">
                     <HorizontalStackLayout 
                                 Spacing="5"
                                 Padding="10"
                                 HorizontalOptions="Center"
                                 VerticalOptions="Center">
-
                         <Button 
-                                        x:Name="CheckInBTN"
-                                        Text="Check-In"
-                                        BackgroundColor="#6C584D"
-                                        CornerRadius="30"
-                                         WidthRequest="100"
-                                        HeightRequest="30"
-                                        FontAttributes="Bold"
-                                        TextColor="#F0EAD2" />
-
-                        <Button 
-                                        x:Name="TaskBTN"
-                                        Text="Tasks"
-                                        BackgroundColor="#6C584D"
-                                        CornerRadius="20"
-                                        WidthRequest="100"
-                                        HeightRequest="30"
-                                        FontAttributes="Bold"
-                                        TextColor="#F0EAD2"  />
-
-                        <Button
-                                        x:Name="NewsBTN"
-                                        Text="News"
-                                        BackgroundColor="#6C584D"
-                                        CornerRadius="20"
-                                         WidthRequest="100"
-                                        HeightRequest="30"
-                                        FontAttributes="Bold"
-                                        TextColor="#F0EAD2"
-                                        Clicked="OnclickedNews"/>
-
-                        <Button 
-                                        x:Name="ShopBTN"
-                                         Text="Shop"
-                                        BackgroundColor="#6C584D"
-                                        CornerRadius="20"
-                                         WidthRequest="100"
-                                        HeightRequest="30"
-                                        FontAttributes="Bold"
-                                        TextColor="#F0EAD2"
-                                        Clicked="OnclickedShop" 
-                            />
-
-                        <Button 
-                            x:Name="QuestBTN"
-                            Text="Quest"
-                            BackgroundColor="#6C584D"
-                            CornerRadius="20"
-                            WidthRequest="100"
-                            HeightRequest="30"
-                            FontAttributes="Bold"
-                            TextColor="#F0EAD2"
-                            Clicked="OnclickedQuest"
-                            />
-                        <Button
-                             x:Name="CharacterBTN"
-                             Text="Character"
-                             BackgroundColor="#6C584D"
-                             CornerRadius="20"
+                                x:Name="CheckInBTN"
+                                Text="Check-In"
+                                BackgroundColor="#6C584D"
+                                CornerRadius="30"
                                  WidthRequest="100"
-                             HeightRequest="30"
-                             FontAttributes="Bold"
-                             TextColor="#F0EAD2" 
-                             Clicked="OnclickedCharacter"
-                             />
-
+                                HeightRequest="30"
+                                FontAttributes="Bold"
+                                TextColor="#F0EAD2" />
+                        <Button 
+                                x:Name="TaskBTN"
+                                Text="Tasks"
+                                BackgroundColor="#6C584D"
+                                CornerRadius="20"
+                                WidthRequest="100"
+                                HeightRequest="30"
+                                FontAttributes="Bold"
+                                TextColor="#F0EAD2"
+                                Clicked="OnTasksClicked"/>
+                        <Button
+                                x:Name="NewsBTN"
+                                Text="News"
+                                BackgroundColor="#6C584D"
+                                CornerRadius="20"
+                                 WidthRequest="100"
+                                HeightRequest="30"
+                                FontAttributes="Bold"
+                                TextColor="#F0EAD2"
+                                Clicked="OnclickedNews"/>
+                        <Button 
+                                x:Name="ShopBTN"
+                                 Text="Shop"
+                                BackgroundColor="#6C584D"
+                                CornerRadius="20"
+                                 WidthRequest="100"
+                                HeightRequest="30"
+                                FontAttributes="Bold"
+                                TextColor="#F0EAD2"
+                                Clicked="OnclickedShop" 
+                               />
+                        <Button 
+                                x:Name="QuestBTN"
+                                Text="Quest"
+                                BackgroundColor="#6C584D"
+                                CornerRadius="20"
+                                WidthRequest="100"
+                                HeightRequest="30"
+                                FontAttributes="Bold"
+                                TextColor="#F0EAD2"
+                                Clicked="OnclickedQuest"
+                                />
+                        <Button
+                               x:Name="CharacterBTN"
+                               Text="Character"
+                               BackgroundColor="#6C584D"
+                               CornerRadius="20"
+                                 WidthRequest="100"
+                               HeightRequest="30"
+                               FontAttributes="Bold"
+                               TextColor="#F0EAD2" 
+                               Clicked="OnclickedCharacter"
+                               />
                     </HorizontalStackLayout>
                 </ScrollView>
             </Border>
 
-			<!-- Current Banner  -->
-			<Border BackgroundColor="#DDE5B6"
+            <Border BackgroundColor="#DDE5B6"
                     StrokeShape="RoundRectangle 20"
                     Padding="14">
-				<VerticalStackLayout Spacing="12">
-					<Label Text="Current Banner"
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="Current Banner"
                            FontSize="20"
                            FontAttributes="Bold"
                            HorizontalOptions="Center"
                            TextColor="#6C584D"/>
-
-					<!-- banner inner area -->
-					<Border BackgroundColor="#f5f1d6"
+                    <Border BackgroundColor="#f5f1d6"
                             Stroke="#efe9d0"
                             StrokeThickness="1"
                             StrokeShape="RoundRectangle 12"
@@ -296,20 +227,15 @@
                                Aspect="AspectFill"
                                HeightRequest="160"
                                HorizontalOptions="Fill"
-                               VerticalOptions="Fill"
-                               >
-
+                               VerticalOptions="Fill">
                             <Image.GestureRecognizers>
                                 <TapGestureRecognizer Tapped="OnBannerTapped"/>
                             </Image.GestureRecognizers>
-                            
                         </Image>
-					</Border>
-				</VerticalStackLayout>
-			</Border>
+                    </Border>
+                </VerticalStackLayout>
+            </Border>
 
-		</VerticalStackLayout>
-	</ScrollView>
-
-
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

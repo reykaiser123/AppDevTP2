@@ -17,14 +17,18 @@
                     <Border BackgroundColor="#6C584D" StrokeShape="RoundRectangle 10" Padding="5" >
                         <HorizontalStackLayout Spacing="5">
                             <BoxView Color="#FFFFFFB2" WidthRequest="20" HeightRequest="20" CornerRadius="10" />
-                            <Label Text="9999999" TextColor="White" FontSize="16" VerticalOptions="Center" />
+                            <Label x:Name="GoldLabel" 
+                                   Text="0" 
+                                   TextColor="White" FontSize="16" VerticalOptions="Center" />
                         </HorizontalStackLayout>
                     </Border>
 
                     <Border BackgroundColor="#6C584D" StrokeShape="RoundRectangle 10" Padding="5">
                         <HorizontalStackLayout Spacing="5">
                             <BoxView Color="#FFFFFFB2" WidthRequest="20" HeightRequest="20" CornerRadius="10" />
-                            <Label Text="9999999" TextColor="White" FontSize="16" VerticalOptions="Center" />
+                            <Label x:Name="GemLabel" 
+                                   Text="0" 
+                                   TextColor="White" FontSize="16" VerticalOptions="Center" />
                         </HorizontalStackLayout>
                     </Border>
                 </HorizontalStackLayout>
@@ -41,12 +45,14 @@
                             <BoxView Color="#F0EAD2" WidthRequest="90" HeightRequest="90" CornerRadius="10" />
                             <Label Text="Streak Saver" FontSize="18" TextColor="#333333" FontAttributes="Bold" HorizontalTextAlignment="Center" />
                             <HorizontalStackLayout Spacing="5" HorizontalOptions="Center">
-
                                 <BoxView Color="#FFFFFFB2" WidthRequest="18" HeightRequest="18" CornerRadius="9" />
                                 <Label Text="1000" FontSize="16" TextColor="#333333" />
-
                             </HorizontalStackLayout>
                         </VerticalStackLayout>
+
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnBuyStreakSaverClicked"/>
+                        </Border.GestureRecognizers>
                     </Border>
 
                     <Border BackgroundColor="#DDE5B6" StrokeShape="RoundRectangle 10" Padding="10" WidthRequest="160" HeightRequest="210">
@@ -54,12 +60,14 @@
                             <BoxView Color="#F0EAD2" WidthRequest="90" HeightRequest="90" CornerRadius="10" />
                             <Label Text="2x Boost (3day)" FontSize="18" TextColor="#333333" FontAttributes="Bold" HorizontalTextAlignment="Center" />
                             <HorizontalStackLayout Spacing="5" HorizontalOptions="Center">
-
                                 <BoxView Color="#FFFFFFB2" WidthRequest="18" HeightRequest="18" CornerRadius="9" />
                                 <Label Text="50" FontSize="16" TextColor="#333333" />
-
                             </HorizontalStackLayout>
                         </VerticalStackLayout>
+
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnBuyBoostClicked"/>
+                        </Border.GestureRecognizers>
                     </Border>
                 </HorizontalStackLayout>
 
