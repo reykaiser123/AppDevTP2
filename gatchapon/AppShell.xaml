@@ -6,8 +6,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:gatchapon"
     Title="gatchapon"
-    Shell.TitleColor="#F0EAD2"
-    Shell.ForegroundColor="#F0EAD2"
+    Shell.TitleColor="White"
+    Shell.ForegroundColor="White"
     Shell.BackgroundColor="#ADC179"
     
 	>

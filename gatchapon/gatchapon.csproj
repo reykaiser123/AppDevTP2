@@ -46,7 +46,7 @@
 		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
 
 		<!-- Splash Screen -->
-	
+		<MauiSplashScreen Include="Resources\Splash\task_a_ton_splash.svg" Color="#ADC179" BaseSize="128,128" />
 
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />
@@ -80,14 +80,6 @@
 		<MauiCss Remove="NewFolder1\**" />
 		<MauiXaml Remove="NewFolder1\**" />
 		<None Remove="NewFolder1\**" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<None Remove="Resources\Splash\taskatonsplash.svg" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<MauiSplashScreen Include="Resources\Splash\taskatonsplash.svg" BaseSize="128,128" Color="ADC179" />
 	</ItemGroup>
 
 	<ItemGroup>

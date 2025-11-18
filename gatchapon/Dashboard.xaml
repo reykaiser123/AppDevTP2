@@ -13,7 +13,7 @@
                 <Border StrokeShape="Ellipse"
                         HeightRequest="36"
                         WidthRequest="36"
-                        BackgroundColor="#c3d89b"
+                        BackgroundColor="Transparent"
                         VerticalOptions="Center"
                         HorizontalOptions="Start">
                     <ImageButton Source="menu1.png"
@@ -91,10 +91,10 @@
                                                        TextColor="#B8860B"/>
                                                 <Label Text="{Binding Streak, StringFormat='Streak: {0}'}"
                                                        FontSize="12"
-                                                       TextColor="#8a7970"/>
+                                                       TextColor="#A98467"/>
                                                 <Label Text="{Binding Total, StringFormat='Total: {0}'}"
                                                        FontSize="12"
-                                                       TextColor="#8a7970"/>
+                                                       TextColor="#A98467"/>
                                             </HorizontalStackLayout>
                                         </VerticalStackLayout>
 
@@ -136,75 +136,77 @@
                     StrokeShape="RoundRectangle 10">
                 <ScrollView 
                             Orientation="Horizontal"
-                            BackgroundColor="#D3D3D3"
-                            HeightRequest="90">
+                            BackgroundColor="#DDE5B6"
+                            HeightRequest="64">
                     <HorizontalStackLayout 
                                 Spacing="5"
                                 Padding="10"
                                 HorizontalOptions="Center"
                                 VerticalOptions="Center">
                         <Button 
-                                x:Name="CheckInBTN"
-                                Text="Check-In"
+                                x:Name="QuestBTN"
+                                Text="Quests"
                                 BackgroundColor="#6C584D"
-                                CornerRadius="30"
-                                 WidthRequest="100"
+                                CornerRadius="20"
+                                
                                 HeightRequest="30"
                                 FontAttributes="Bold"
-                                TextColor="#F0EAD2" />
+                                TextColor="#F0EAD2"
+                                Clicked="OnclickedQuest"
+                                ImageSource="quest_icon.png"
+                                ContentLayout="Left, 10"
+                                />
+
                         <Button 
                                 x:Name="TaskBTN"
                                 Text="Tasks"
                                 BackgroundColor="#6C584D"
                                 CornerRadius="20"
-                                WidthRequest="100"
                                 HeightRequest="30"
                                 FontAttributes="Bold"
                                 TextColor="#F0EAD2"
-                                Clicked="OnTasksClicked"/>
+                                Clicked="OnTasksClicked"
+                                ImageSource="task_icon.png"
+                                ContentLayout="Left, 10"
+                            />
                         <Button
                                 x:Name="NewsBTN"
                                 Text="News"
                                 BackgroundColor="#6C584D"
                                 CornerRadius="20"
-                                 WidthRequest="100"
                                 HeightRequest="30"
                                 FontAttributes="Bold"
                                 TextColor="#F0EAD2"
-                                Clicked="OnclickedNews"/>
+                                Clicked="OnclickedNews"
+                                ImageSource="news_icon.png"
+                                ContentLayout="Left, 10"
+                            />
+                        <Button
+                                x:Name="CharacterBTN"
+                                Text="Characters"
+                                BackgroundColor="#6C584D"
+                                CornerRadius="20"
+                                HeightRequest="30"
+                                FontAttributes="Bold"
+                                TextColor="#F0EAD2" 
+                                Clicked="OnclickedCharacter"
+                                ImageSource="characters_icon.png"
+                                ContentLayout="left, 10"
+                                />  
                         <Button 
                                 x:Name="ShopBTN"
                                  Text="Shop"
                                 BackgroundColor="#6C584D"
                                 CornerRadius="20"
-                                 WidthRequest="100"
                                 HeightRequest="30"
                                 FontAttributes="Bold"
                                 TextColor="#F0EAD2"
-                                Clicked="OnclickedShop" 
+                                Clicked="OnclickedShop"
+                                ImageSource="shop_icon.png"
+                                ContentLayout="Left, 10"
                                />
-                        <Button 
-                                x:Name="QuestBTN"
-                                Text="Quest"
-                                BackgroundColor="#6C584D"
-                                CornerRadius="20"
-                                WidthRequest="100"
-                                HeightRequest="30"
-                                FontAttributes="Bold"
-                                TextColor="#F0EAD2"
-                                Clicked="OnclickedQuest"
-                                />
-                        <Button
-                               x:Name="CharacterBTN"
-                               Text="Character"
-                               BackgroundColor="#6C584D"
-                               CornerRadius="20"
-                                 WidthRequest="100"
-                               HeightRequest="30"
-                               FontAttributes="Bold"
-                               TextColor="#F0EAD2" 
-                               Clicked="OnclickedCharacter"
-                               />
+                        
+                       
                     </HorizontalStackLayout>
                 </ScrollView>
             </Border>
@@ -222,10 +224,11 @@
                             Stroke="#efe9d0"
                             StrokeThickness="1"
                             StrokeShape="RoundRectangle 12"
-                            Padding="6">
-                        <Image Source="taskaton.png"
+                            Padding="20">
+                        <Image Source="marisol.png"
                                Aspect="AspectFill"
-                               HeightRequest="160"
+                               HeightRequest="222"
+                               WidthRequest="318"
                                HorizontalOptions="Fill"
                                VerticalOptions="Fill">
                             <Image.GestureRecognizers>

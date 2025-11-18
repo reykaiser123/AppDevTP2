@@ -11,14 +11,7 @@
                     Padding="10">
                 <HorizontalStackLayout Spacing="8"
                                        HorizontalOptions="End">
-                    <Border BackgroundColor="#6C584D"
-                            StrokeShape="RoundRectangle 10"
-                            Padding="5">
-                        <HorizontalStackLayout Spacing="5">
-                            <Image Source="starglitter.png" WidthRequest="20" HeightRequest="20"/>
-                            <Label Text="9999999" TextColor="#F2F0D5" FontSize="18" FontAttributes="Bold"/>
-                        </HorizontalStackLayout>
-                    </Border>
+                   
                     <Border BackgroundColor="#6C584D"
                             StrokeShape="RoundRectangle 10"
                             Padding="5">
@@ -32,7 +25,7 @@
         </VerticalStackLayout>
 
         <Grid Grid.Row="1" BackgroundColor="#ADC179">
-            <Image Source="taskaton.png"
+            <Image Source="marisol.png"
                    Aspect="AspectFill"
                    Opacity="1.0"  
                    HorizontalOptions="Fill"

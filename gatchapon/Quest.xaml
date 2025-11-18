@@ -6,7 +6,7 @@
              BackgroundColor="#ADC179">
 
     <ScrollView>
-        <VerticalStackLayout Padding="10" Spacing="20">
+        <VerticalStackLayout Padding="20" Spacing="20">
 
             <Border BackgroundColor="#DDE5B6" StrokeShape="RoundRectangle 10" Padding="15">
                 <VerticalStackLayout Spacing="15">
@@ -16,54 +16,67 @@
                            FontAttributes="Bold"
                            HorizontalOptions="Center"
                            TextColor="#433832"/>
-
-                    <HorizontalStackLayout HorizontalOptions="Center" Spacing="20">
+                    <HorizontalStackLayout HorizontalOptions="Center" Spacing="10">
 
                         <VerticalStackLayout Spacing="5" HorizontalOptions="Center">
-                            <Label Text="SUN" FontSize="10" HorizontalOptions="Center" TextColor="#433832"/>
-                            <Border x:Name="SunFrame" BackgroundColor="White" WidthRequest="35" HeightRequest="35" StrokeShape="RoundRectangle 18" Padding="5" HorizontalOptions="Center">
+                            <Label Text="SUN" FontAttributes="Bold" FontSize="10" HorizontalOptions="Center" TextColor="#433832"/>
+                            <Border x:Name="SunFrame" BackgroundColor="White" WidthRequest="35" HeightRequest="35" 
+                 StrokeShape="RoundRectangle 18" Padding="5" HorizontalOptions="Center"
+                 StrokeThickness="0">
                                 <Image x:Name="SunImage" Source="check_placeholder.png" Aspect="AspectFit" BackgroundColor="Transparent" IsVisible="False"/>
                             </Border>
                         </VerticalStackLayout>
 
                         <VerticalStackLayout Spacing="5" HorizontalOptions="Center">
-                            <Label Text="MON" FontSize="10" HorizontalOptions="Center" TextColor="#433832"/>
-                            <Border x:Name="MonFrame" BackgroundColor="White" WidthRequest="35" HeightRequest="35" StrokeShape="RoundRectangle 18" Padding="5" HorizontalOptions="Center">
+                            <Label Text="MON" FontAttributes="Bold" FontSize="10" HorizontalOptions="Center" TextColor="#433832"/>
+                            <Border x:Name="MonFrame" BackgroundColor="White" WidthRequest="35" HeightRequest="35" 
+                 StrokeShape="RoundRectangle 18" Padding="5" HorizontalOptions="Center"
+                 StrokeThickness="0">
                                 <Image x:Name="MonImage" Source="check_placeholder.png" Aspect="AspectFit" BackgroundColor="Transparent" IsVisible="False"/>
                             </Border>
                         </VerticalStackLayout>
 
                         <VerticalStackLayout Spacing="5" HorizontalOptions="Center">
-                            <Label Text="TUE" FontSize="10" HorizontalOptions="Center" TextColor="#433832"/>
-                            <Border x:Name="TueFrame" BackgroundColor="White" WidthRequest="35" HeightRequest="35" StrokeShape="RoundRectangle 18" Padding="5" HorizontalOptions="Center">
+                            <Label Text="TUE" FontAttributes="Bold" FontSize="10" HorizontalOptions="Center" TextColor="#433832"/>
+                            <Border x:Name="TueFrame" BackgroundColor="White" WidthRequest="35" HeightRequest="35" 
+                 StrokeShape="RoundRectangle 18" Padding="5" HorizontalOptions="Center"
+                 StrokeThickness="0">
                                 <Image x:Name="TueImage" Source="check_placeholder.png" Aspect="AspectFit" BackgroundColor="Transparent" IsVisible="False"/>
                             </Border>
                         </VerticalStackLayout>
 
                         <VerticalStackLayout Spacing="5" HorizontalOptions="Center">
-                            <Label Text="WED" FontSize="10" HorizontalOptions="Center" TextColor="#433832"/>
-                            <Border x:Name="WedFrame" BackgroundColor="White" WidthRequest="35" HeightRequest="35" StrokeShape="RoundRectangle 18" Padding="5" HorizontalOptions="Center">
+                            <Label Text="WED" FontAttributes="Bold" FontSize="10" HorizontalOptions="Center" TextColor="#433832"/>
+                            <Border x:Name="WedFrame" BackgroundColor="White" WidthRequest="35" HeightRequest="35" 
+                 StrokeShape="RoundRectangle 18" Padding="5" HorizontalOptions="Center"
+                 StrokeThickness="0">
                                 <Image x:Name="WedImage" Source="check_placeholder.png" Aspect="AspectFit" BackgroundColor="Transparent" IsVisible="False"/>
                             </Border>
                         </VerticalStackLayout>
 
                         <VerticalStackLayout Spacing="5" HorizontalOptions="Center">
-                            <Label Text="THU" FontSize="10" HorizontalOptions="Center" TextColor="#433832"/>
-                            <Border x:Name="ThuFrame" BackgroundColor="White" WidthRequest="35" HeightRequest="35" StrokeShape="RoundRectangle 18" Padding="5" HorizontalOptions="Center">
+                            <Label Text="THU" FontAttributes="Bold" FontSize="10" HorizontalOptions="Center" TextColor="#433832"/>
+                            <Border x:Name="ThuFrame" BackgroundColor="White" WidthRequest="35" HeightRequest="35" 
+                 StrokeShape="RoundRectangle 18" Padding="5" HorizontalOptions="Center"
+                 StrokeThickness="0">
                                 <Image x:Name="ThuImage" Source="check_placeholder.png" Aspect="AspectFit" BackgroundColor="Transparent" IsVisible="False"/>
                             </Border>
                         </VerticalStackLayout>
 
                         <VerticalStackLayout Spacing="5" HorizontalOptions="Center">
-                            <Label Text="FRI" FontSize="10" HorizontalOptions="Center" TextColor="#433832"/>
-                            <Border x:Name="FriFrame" BackgroundColor="White" WidthRequest="35" HeightRequest="35" StrokeShape="RoundRectangle 18" Padding="5" HorizontalOptions="Center">
+                            <Label Text="FRI" FontAttributes="Bold" FontSize="10" HorizontalOptions="Center" TextColor="#433832"/>
+                            <Border x:Name="FriFrame" BackgroundColor="White" WidthRequest="35" HeightRequest="35" 
+                 StrokeShape="RoundRectangle 18" Padding="5" HorizontalOptions="Center"
+                 StrokeThickness="0">
                                 <Image x:Name="FriImage" Source="check_placeholder.png" Aspect="AspectFit" BackgroundColor="Transparent" IsVisible="False"/>
                             </Border>
                         </VerticalStackLayout>
 
                         <VerticalStackLayout Spacing="5" HorizontalOptions="Center">
-                            <Label Text="SAT" FontSize="10" HorizontalOptions="Center" TextColor="#433832"/>
-                            <Border x:Name="SatFrame" BackgroundColor="White" WidthRequest="35" HeightRequest="35" StrokeShape="RoundRectangle 18" Padding="5" HorizontalOptions="Center">
+                            <Label Text="SAT" FontAttributes="Bold" FontSize="10" HorizontalOptions="Center" TextColor="#433832"/>
+                            <Border x:Name="SatFrame" BackgroundColor="White" WidthRequest="35" HeightRequest="35" 
+                 StrokeShape="RoundRectangle 18" Padding="5" HorizontalOptions="Center"
+                 StrokeThickness="0">
                                 <Image x:Name="SatImage" Source="check_placeholder.png" Aspect="AspectFit" BackgroundColor="Transparent" IsVisible="False"/>
                             </Border>
                         </VerticalStackLayout>

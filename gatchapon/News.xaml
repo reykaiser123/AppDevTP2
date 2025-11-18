@@ -10,7 +10,6 @@
 
             <!-- Header -->
             <Grid ColumnDefinitions="Auto,*,Auto" VerticalOptions="Center">
-                <!-- Title -->
                 <Label Grid.Column="1"
                        Text="NEWS"
                        FontAttributes="Bold"
@@ -29,60 +28,65 @@
                         WidthRequest="60"
                         HeightRequest="28"
                         VerticalOptions="Center"
-                        HorizontalOptions="End"
-                        />
+                        HorizontalOptions="End"/>
             </Grid>
 
             <!-- News Card -->
             <Border BackgroundColor="#DCE5B6"
-                     Padding="10">
+                    Padding="12"
+                    StrokeThickness="0">
                 <Border.StrokeShape>
-                    <RoundRectangle CornerRadius="12"/>
+                    <RoundRectangle CornerRadius="16"/>
                 </Border.StrokeShape>
 
-                <VerticalStackLayout Spacing="10">
+                <VerticalStackLayout Spacing="12">
 
-                    <!-- Image -->
+                    <!-- IMAGE SECTION (PAIMON AREA) -->
                     <Border Padding="0"
-                    StrokeThickness="0">
+                            BackgroundColor="Transparent"
+                            StrokeThickness="0">
                         <Border.StrokeShape>
-                            <RoundRectangle CornerRadius="8"/>
+                            <RoundRectangle CornerRadius="12" />
                         </Border.StrokeShape>
 
-                        <Image Source="sampleimage.png"
-                       Aspect="AspectFill"
-                       HeightRequest="140">
+                        <!-- The actual image -->
+                        <Image Source="news_img.png"
+                               Aspect="AspectFill"
+                               HeightRequest="170">
                             <Image.Clip>
-                                <RoundRectangleGeometry CornerRadius="8" />
+                                <RoundRectangleGeometry CornerRadius="12"/>
                             </Image.Clip>
                         </Image>
                     </Border>
+
+                    <!-- TEXT SECTION -->
                     <Border BackgroundColor="#F0EAD2"
-        Padding="10">
+                            Padding="14">
                         <Border.StrokeShape>
-                            <RoundRectangle CornerRadius="8"/>
+                            <RoundRectangle CornerRadius="12"/>
                         </Border.StrokeShape>
 
-                        <VerticalStackLayout Spacing="6">
+                        <VerticalStackLayout Spacing="8">
 
-                                           <Label Text="News Title"
-                               FontAttributes="Bold"
-                               FontSize="16"
-                               TextColor="Black"/>
-                                            <Label Text="dd / mm / yy"
-                               FontSize="12"
-                               TextColor="#6C534D"/>
+                            <Label Text="News Title"
+                                   FontAttributes="Bold"
+                                   FontSize="17"
+                                   TextColor="#5A4A42"/>
 
-                                            <Label Text="Lorem ipsum"
-                               FontSize="13"
-                               TextColor="Black"/>
+                            <Label Text="dd / mm / yy"
+                                   FontSize="13"
+                                   TextColor="#6C534D"/>
 
-                                            <Label Text="Excepteur efficient emerging, minim veniam anim aute carefully curated Ginza conversation exquisite perfect nostrud nisi intricate Content. Qui international first-class nulla ut. Punctual adipiscing, essential lovely queen tempor eiusmod irure. Exclusive izakaya charming Scandinavian impeccable aute quality of life soft power pariatur Melbourne occaecat discerning. Qui wardrobe aliquip, et Porter destination Toto remarkable officia Helsinki excepteur Basset hound. Zürich sleepy perfect consectetur."
-                               FontSize="13"
-                               TextColor="Black"/>
+                            <Label Text="Body text for your whole article or post. We'll put in some lorem ipsum to show how a filled-out page might look:"
+                                   FontSize="13"
+                                   TextColor="Black"/>
 
+                            <Label Text="Excepteur efficient emerging, minim veniam anim aute carefully curated Ginza conversation exquisite perfect nostrud nisi intricate Content. Qui international first-class nulla ut. Punctual adipiscing, essential lovely queen tempor eiusmod irure. Exclusive izakaya charming Scandinavian impeccable aute quality of life soft power pariatur Melbourne occaecat discerning. Qui wardrobe aliquip, et Porter destination Toto remarkable officia Helsinki excepteur Basset hound. Zürich sleepy perfect consectetur."
+                                   FontSize="13"
+                                   TextColor="Black"/>
                         </VerticalStackLayout>
                     </Border>
+
                 </VerticalStackLayout>
             </Border>
 
