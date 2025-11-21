@@ -1,53 +1,62 @@
-using Microsoft.Maui.Controls;
+using gatchapon.Models;
 using Microsoft.Maui.Storage;
-using System;
-using System.Threading.Tasks;
 
 namespace gatchapon
 {
-    [QueryProperty(nameof(UserId), "userId")]
     public partial class NamePage : ContentPage
     {
         private readonly FirebaseDatabaseService _dbService = new();
-        public string UserId { get; set; }
+        private string _userId;
 
-        public NamePage()
+        // Constructor accepts the UserId passed from RegisterPage
+        public NamePage(string userId)
         {
             InitializeComponent();
+            _userId = userId;
         }
 
         private async void OnContinueClicked(object sender, EventArgs e)
         {
-            // This line assumes your Entry is named "Name123"
             string name = Name123.Text?.Trim();
-
 
             if (string.IsNullOrEmpty(name))
             {
-                await DisplayAlert("Oops", "Please enter your name.", "OK");
+                await DisplayAlert("Oops", "Please enter a name to continue.", "OK");
                 return;
             }
 
-            if (string.IsNullOrEmpty(UserId))
+            try
             {
-                await DisplayAlert("Error", "User ID not found.", "OK");
-                return;
+                // 1. Get the current user data
+                var user = await _dbService.GetUserAsync<UserModel>(_userId);
+
+                if (user != null)
+                {
+                    // 2. Update the Username locally
+                    user.Username = name;
+
+                    // 3. Save changes back to Firebase
+                    await _dbService.SaveUserAsync(_userId, user);
+
+                    // 4. Save to Local Storage for easy access
+                    await SecureStorage.SetAsync("userId", _userId);
+                    await SecureStorage.SetAsync("userName", name);
+
+                    await DisplayAlert("Nice!", $"Welcome to the world, {name}!", "OK");
+
+                    // 5. Navigate to Dashboard (Resetting the stack so they can't go back)
+                    Application.Current.MainPage = new AppShell();
+                    await Shell.Current.GoToAsync("//Dashboard");
+                }
+                else
+                {
+                    await DisplayAlert("Error", "User not found. Please restart.", "OK");
+                }
             }
-
-            // --- THIS IS THE FIX ---
-            // Save name in Firebase using the lowercase "username" key
-            await _dbService.UpdateUserFieldAsync(UserId, "username", name);
-            // --- END OF FIX ---
-
-            // Optional local storage
-            // This line was already correct
-            await SecureStorage.SetAsync("userId", UserId);
-            await SecureStorage.SetAsync("userName", name);
-
-            await DisplayAlert("Nice!", $"Welcome, {name}!", "OK");
-
-            // Navigate to dashboard
-            await Shell.Current.GoToAsync("//Dashboard");
+            catch (Exception ex)
+            {
+                await DisplayAlert("Error", $"Could not save name: {ex.Message}", "OK");
+            }
         }
     }
 }

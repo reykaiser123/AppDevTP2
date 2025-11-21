@@ -26,7 +26,10 @@ namespace gatchapon
             InitializeComponent();
             _taskToEdit = task; // We are editing
         }
-
+        private async void OnCancelClicked(object sender, EventArgs e)
+        {
+            await Navigation.PopAsync();
+        }
         // Load data and set up the UI when the page appears
         protected override async void OnAppearing()
         {

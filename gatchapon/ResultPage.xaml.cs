@@ -1,11 +1,16 @@
+using gatchapon.Models;
+
 namespace gatchapon;
 
 public partial class ResultPage : ContentPage
 {
+    private readonly FirebaseDatabaseService _dbService = new();
+    private string _currentUserId;
+    private UserModel _currentUser;
+
     private readonly List<GachaItem> items;
     private readonly Random random;
     private int pullsSinceEpic;
-    private int totalPulls;
     private readonly Action<int> updatePityCallback;
 
     public ResultPage(List<GachaItem> results, List<GachaItem> itemPool, Random rng, int pityCount, Action<int> onUpdatePity)
@@ -14,55 +19,91 @@ public partial class ResultPage : ContentPage
 
         ResultCollection.ItemsSource = results ?? new List<GachaItem>();
 
-
         items = itemPool;
         random = rng;
         pullsSinceEpic = pityCount;
-        totalPulls = pityCount;
         updatePityCallback = onUpdatePity;
+    }
 
-        this.Appearing += (s, e) =>
+    // Load data when page appears so we know how much gold we have
+    protected override async void OnAppearing()
+    {
+        base.OnAppearing();
+        _currentUserId = await SecureStorage.GetAsync("userId");
+
+        if (!string.IsNullOrEmpty(_currentUserId))
         {
-            if (ResultCollection != null)
-                ResultCollection.ItemsSource = results;
-
-            if (PullCountLabel != null)
-                PullCountLabel.Text = $"Total pulls: {pullsSinceEpic} / 80 (resets after Epic)";
-        };
+            await LoadUserData();
+        }
     }
 
-        private void SafeShowResults(List<GachaItem> results)
+    private async Task LoadUserData()
     {
-        PullCountLabel.Text = $"Total pulls: {pullsSinceEpic} / 80 (resets after Epic)";
-        ResultCollection.ItemsSource = results;
+        _currentUser = await _dbService.GetUserAsync<UserModel>(_currentUserId);
+        if (_currentUser != null)
+        {
+            goldcoin.Text = _currentUser.Gold.ToString();
+        }
+        PullCountLabel.Text = $"Pity: {pullsSinceEpic} / 80";
     }
 
-    private void OnPullAgainClicked(object sender, EventArgs e)
+    private async void OnPullAgainClicked(object sender, EventArgs e)
     {
-        var newResults = new List<GachaItem>();
-        for (int i = 0; i < 10; i++)
-            newResults.Add(PullItem());
+        // 10x Pull Cost
+        int cost = 1000;
 
-        SafeShowResults(newResults);
-        updatePityCallback?.Invoke(pullsSinceEpic);
+        if (_currentUser == null) return;
+
+        if (_currentUser.Gold >= cost)
+        {
+            // 1. Deduct Gold
+            _currentUser.Gold -= cost;
+            goldcoin.Text = _currentUser.Gold.ToString(); // UI Update
+
+            // 2. Logic for 10 Pulls
+            var newResults = new List<GachaItem>();
+            for (int i = 0; i < 10; i++)
+            {
+                var item = PullItem();
+                newResults.Add(item);
+
+                // Save Character if new
+                if (!_currentUser.UnlockedCharacters.Contains(item.Name))
+                {
+                    _currentUser.UnlockedCharacters.Add(item.Name);
+                }
+            }
+
+            // 3. Save everything to Firebase
+            await _dbService.SaveUserAsync(_currentUserId, _currentUser);
+
+            // 4. Refresh UI List
+            ResultCollection.ItemsSource = null;
+            ResultCollection.ItemsSource = newResults;
+
+            updatePityCallback?.Invoke(pullsSinceEpic);
+            PullCountLabel.Text = $"Pity: {pullsSinceEpic} / 80";
+        }
+        else
+        {
+            await DisplayAlert("No Gold", "Not enough gold to pull again.", "OK");
+        }
     }
 
     private async void OnCloseClicked(object sender, EventArgs e)
     {
         updatePityCallback?.Invoke(pullsSinceEpic);
-        await Shell.Current.GoToAsync("//Dashboard/GachaBanner");
+        await Navigation.PopModalAsync();
     }
 
     private GachaItem PullItem()
     {
         pullsSinceEpic++;
-        totalPulls++;
 
         if (pullsSinceEpic >= 80)
         {
             pullsSinceEpic = 0;
-            totalPulls = 0;
-            return items.First(i => i.Name == "Epic");
+            return items.First(i => i.Rarity == "Epic");
         }
 
         double roll = random.NextDouble();
@@ -73,17 +114,11 @@ public partial class ResultPage : ContentPage
             cumulative += item.Rate;
             if (roll < cumulative)
             {
-                if (item.Name == "Epic")
-                {
+                if (item.Rarity == "Epic")
                     pullsSinceEpic = 0;
-                    totalPulls = 0;
-                }
-                updatePityCallback?.Invoke(pullsSinceEpic);
                 return item;
             }
         }
-
-        updatePityCallback?.Invoke(pullsSinceEpic);
         return items[0];
     }
 }

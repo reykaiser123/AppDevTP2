@@ -75,7 +75,7 @@
                                         Margin="0,5">
                                     <Grid ColumnDefinitions="Auto, *, Auto" ColumnSpacing="10">
                                         <Image Grid.Column="0"
-                                               Source="gem_icon.png" 
+                                               Source="goldcoin_icon.png" 
                                                HeightRequest="40"
                                                WidthRequest="40"
                                                VerticalOptions="Center"/>
@@ -192,7 +192,19 @@
                                 Clicked="OnclickedCharacter"
                                 ImageSource="characters_icon.png"
                                 ContentLayout="left, 10"
-                                />  
+                                />
+                        <Button 
+                                x:Name="InventoryBTN"
+                                Text="Inventory"
+                                BackgroundColor="#6C584D"
+                                CornerRadius="20"
+                                HeightRequest="30"
+                                FontAttributes="Bold"
+                                TextColor="#F0EAD2"
+                                Clicked="OnClickedInventory"
+                                ImageSource="inventory_icon.png"
+                                ContentLayout="Left, 10"
+                                />
                         <Button 
                                 x:Name="ShopBTN"
                                  Text="Shop"
@@ -225,7 +237,7 @@
                             StrokeThickness="1"
                             StrokeShape="RoundRectangle 12"
                             Padding="20">
-                        <Image Source="marisol.png"
+                        <Image Source="marisol_banner_wide.png"
                                Aspect="AspectFill"
                                HeightRequest="222"
                                WidthRequest="318"

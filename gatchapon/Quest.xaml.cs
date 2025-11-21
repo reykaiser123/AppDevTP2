@@ -1,9 +1,9 @@
 using gatchapon.Models;
-using System;
-using System.Linq;
 using Microsoft.Maui.Controls;
-using Firebase.Database;
-using Firebase.Database.Query;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace gatchapon
 {
@@ -11,14 +11,12 @@ namespace gatchapon
     {
         private readonly FirebaseDatabaseService _dbService = new();
         private readonly FirebaseAuthService _authService = new();
-        private readonly FirebaseClient _firebaseClient = new("https://gatchapon-d7cd9-default-rtdb.firebaseio.com/");
 
         private string _currentUserId;
         private UserModel _currentUser;
         private DateTime _today;
 
-        // --- THIS IS THE FIRST CHANGE ---
-        // A helper list to access the UI elements easily
+        // Helper list to access UI elements
         private List<Tuple<Border, Image>> _weekFrames;
 
         public Quest()
@@ -31,7 +29,7 @@ namespace gatchapon
             base.OnAppearing();
             _today = DateTime.Today; // Get today's date
 
-            // --- THIS IS THE SECOND CHANGE (Frame -> Border) ---
+            // Initialize UI references (Frames -> Borders)
             _weekFrames = new List<Tuple<Border, Image>>
             {
                 new(SunFrame, SunImage), new(MonFrame, MonImage), new(TueFrame, TueImage),
@@ -49,34 +47,52 @@ namespace gatchapon
             await LoadAndDisplayUserData();
         }
 
+        // --- NAVIGATION FIX ---
+        private async void OnBackClicked(object sender, EventArgs e)
+        {
+            await Navigation.PopAsync();
+        }
+
         private async Task LoadAndDisplayUserData()
         {
-            _currentUser = await _dbService.GetUserAsync<UserModel>(_currentUserId);
-            if (_currentUser == null)
+            try
             {
-                _currentUser = new UserModel(); // Create new user data if it doesn't exist
-            }
+                _currentUser = await _dbService.GetUserAsync<UserModel>(_currentUserId);
 
-            // 1. Update the Daily Check-In Button
-            string todayString = _today.ToString("o");
-            if (_currentUser.LastCheckInDate == todayString)
+                if (_currentUser == null)
+                {
+                    await DisplayAlert("Error", "User data not found.", "OK");
+                    return;
+                }
+
+                if (_currentUser.MonthlyCheckIns == null) _currentUser.MonthlyCheckIns = new List<string>();
+                if (_currentUser.UnlockedCharacters == null) _currentUser.UnlockedCharacters = new List<string>();
+
+                // 1. Update Daily Check-In Button
+                string todayString = _today.ToString("o");
+                if (_currentUser.LastCheckInDate == todayString)
+                {
+                    CheckInButton.Text = "Checked in for Today!";
+                    CheckInButton.IsEnabled = false;
+                    CheckInButton.BackgroundColor = Color.FromArgb("#4CAF50"); // Green
+                }
+                else
+                {
+                    CheckInButton.Text = "Check-In for Today";
+                    CheckInButton.IsEnabled = true;
+                    CheckInButton.BackgroundColor = Color.FromArgb("#A48E66"); // Brown
+                }
+
+                // 2. Update Calendar
+                UpdateWeekCalendarUI();
+
+                // 3. Update Quests
+                await UpdateQuestsUI();
+            }
+            catch (Exception ex)
             {
-                CheckInButton.Text = "Checked in for Today!";
-                CheckInButton.IsEnabled = false;
-                CheckInButton.BackgroundColor = Color.FromArgb("#4CAF50"); // Green
+                await DisplayAlert("Error", $"Failed to load quests: {ex.Message}", "OK");
             }
-            else
-            {
-                CheckInButton.Text = "Check-In for Today";
-                CheckInButton.IsEnabled = true;
-                CheckInButton.BackgroundColor = Color.FromArgb("#A48E66"); // Brown
-            }
-
-            // 2. Update the 7-Day Calendar Visual
-            UpdateWeekCalendarUI();
-
-            // 3. Update the Quests Progress
-            await UpdateQuestsUI();
         }
 
         private void UpdateWeekCalendarUI()
@@ -90,7 +106,10 @@ namespace gatchapon
 
                 var (border, image) = _weekFrames[i];
 
-                if (_currentUser.MonthlyCheckIns.Contains(dayString))
+                // Check using date part only to be safe
+                bool isCheckedIn = _currentUser.MonthlyCheckIns.Any(d => d.StartsWith(day.ToString("yyyy-MM-dd")));
+
+                if (isCheckedIn)
                 {
                     border.BackgroundColor = Color.FromArgb("#4CAF50"); // Green
                     image.IsVisible = true;
@@ -101,75 +120,119 @@ namespace gatchapon
                     image.IsVisible = false;
                 }
 
-                // --- THIS IS THE THIRD CHANGE (BorderColor -> Stroke) ---
-                // Highlight today's date
-                if (day == _today)
+                // Highlight Today
+                if (day.Date == _today.Date)
                 {
-                    border.Stroke = new SolidColorBrush(Color.FromArgb("#A48E66")); // Use Stroke
+                    border.Stroke = new SolidColorBrush(Color.FromArgb("#A48E66"));
                     border.StrokeThickness = 2;
                 }
                 else
                 {
-                    border.Stroke = new SolidColorBrush(Colors.Transparent); // Use Stroke
+                    border.Stroke = new SolidColorBrush(Colors.Transparent);
                     border.StrokeThickness = 0;
                 }
             }
         }
 
-        // This method checks the "Complete 3 Tasks" quest
         private async Task UpdateQuestsUI()
         {
             // --- Quest 1: 7-Day Streak ---
-            double streakProgress = _currentUser.CheckInStreak / 7.0;
+            // Reward increased to 500 Gold
+            double streakProgress = Math.Min(_currentUser.CheckInStreak / 7.0, 1.0);
             StreakQuestProgress.Progress = streakProgress;
             StreakQuestLabel.Text = $"Check in for 7 days in a row. ({_currentUser.CheckInStreak} / 7)";
-            if (streakProgress >= 1 && !_currentUser.Claimed7DayStreak)
+
+            if (_currentUser.CheckInStreak >= 7 && !_currentUser.Claimed7DayStreak)
             {
                 StreakQuestButton.IsEnabled = true;
-                StreakQuestButton.Text = "Claim (100 Gold)";
+                StreakQuestButton.Text = "Claim (500 Gold)";
+                StreakQuestButton.BackgroundColor = Color.FromArgb("#4CAF50");
             }
             else if (_currentUser.Claimed7DayStreak)
             {
                 StreakQuestButton.IsEnabled = false;
                 StreakQuestButton.Text = "Claimed";
+                StreakQuestButton.BackgroundColor = Color.FromArgb("#8B7E74");
+            }
+            else
+            {
+                StreakQuestButton.IsEnabled = false;
+                StreakQuestButton.Text = "Claim";
+                StreakQuestButton.BackgroundColor = Color.FromArgb("#8B7E74");
             }
 
             // --- Quest 2: Monthly Check-in ---
+            // Reward increased to 2000 Gold
             int daysInMonth = DateTime.DaysInMonth(_today.Year, _today.Month);
-            int monthlyCheckins = _currentUser.MonthlyCheckIns.Count(d => DateTime.Parse(d).Month == _today.Month);
+            int monthlyCheckins = _currentUser.MonthlyCheckIns.Count(d => DateTime.Parse(d).Month == _today.Month && DateTime.Parse(d).Year == _today.Year);
+
             double monthProgress = (double)monthlyCheckins / daysInMonth;
             MonthQuestProgress.Progress = monthProgress;
             MonthQuestLabel.Text = $"Check in every day for this month. ({monthlyCheckins} / {daysInMonth})";
-            if (monthProgress >= 1 && !_currentUser.ClaimedMonthly)
+
+            if (monthlyCheckins >= daysInMonth && !_currentUser.ClaimedMonthly)
             {
                 MonthQuestButton.IsEnabled = true;
-                MonthQuestButton.Text = "Claim (500 Gold)";
+                MonthQuestButton.Text = "Claim (2000 Gold)";
+                MonthQuestButton.BackgroundColor = Color.FromArgb("#4CAF50");
             }
             else if (_currentUser.ClaimedMonthly)
             {
                 MonthQuestButton.IsEnabled = false;
                 MonthQuestButton.Text = "Claimed";
+                MonthQuestButton.BackgroundColor = Color.FromArgb("#8B7E74");
+            }
+            else
+            {
+                MonthQuestButton.IsEnabled = false;
+                MonthQuestButton.Text = "Claim";
+                MonthQuestButton.BackgroundColor = Color.FromArgb("#8B7E74");
             }
 
             // --- Quest 3: Complete 3 Tasks ---
-            // Reset count if it's a new day
-            if (_currentUser.LastTaskCompletionDate != _today.ToString("o"))
+            // DAILY RESET LOGIC: This ensures it repeats every day!
+            string lastTaskDate = _currentUser.LastTaskCompletionDate;
+
+            // If "LastTaskCompletionDate" is NOT today (meaning it's yesterday or older), reset everything.
+            bool isNewDay = string.IsNullOrEmpty(lastTaskDate) || DateTime.Parse(lastTaskDate).Date != _today.Date;
+
+            if (isNewDay)
             {
+                // Reset the count to 0 for the new day
                 _currentUser.TasksCompletedToday = 0;
+
+                // Reset the "Claimed" status so they can claim it again today!
+                _currentUser.Claimed3Tasks = false;
+
+                // Set today as the new tracking date
+                _currentUser.LastTaskCompletionDate = _today.ToString("o");
+
+                // Save this reset state to Firebase so it persists
+                await _dbService.SaveUserAsync(_currentUserId, _currentUser);
             }
 
-            double tasksProgress = _currentUser.TasksCompletedToday / 3.0;
+            double tasksProgress = Math.Min(_currentUser.TasksCompletedToday / 3.0, 1.0);
             TasksQuestProgress.Progress = tasksProgress;
             TasksQuestLabel.Text = $"Complete 3 Daily Tasks today. ({_currentUser.TasksCompletedToday} / 3)";
-            if (tasksProgress >= 1 && !_currentUser.Claimed3Tasks)
+
+            // Reward increased to 300 Gold
+            if (_currentUser.TasksCompletedToday >= 3 && !_currentUser.Claimed3Tasks)
             {
                 TasksQuestButton.IsEnabled = true;
-                TasksQuestButton.Text = "Claim (50 Gold)";
+                TasksQuestButton.Text = "Claim (300 Gold)";
+                TasksQuestButton.BackgroundColor = Color.FromArgb("#4CAF50");
             }
             else if (_currentUser.Claimed3Tasks)
             {
                 TasksQuestButton.IsEnabled = false;
                 TasksQuestButton.Text = "Claimed";
+                TasksQuestButton.BackgroundColor = Color.FromArgb("#8B7E74");
+            }
+            else
+            {
+                TasksQuestButton.IsEnabled = false;
+                TasksQuestButton.Text = "Claim";
+                TasksQuestButton.BackgroundColor = Color.FromArgb("#8B7E74");
             }
         }
 
@@ -179,30 +242,41 @@ namespace gatchapon
             CheckInButton.IsEnabled = false;
 
             string todayString = _today.ToString("o");
-            string yesterdayString = _today.AddDays(-1).ToString("o");
 
-            // 1. Update Streak
-            if (_currentUser.LastCheckInDate == yesterdayString)
+            bool isConsecutive = false;
+            if (!string.IsNullOrEmpty(_currentUser.LastCheckInDate))
+            {
+                DateTime lastDate = DateTime.Parse(_currentUser.LastCheckInDate).Date;
+                if (lastDate == _today.AddDays(-1).Date)
+                {
+                    isConsecutive = true;
+                }
+                else if (lastDate == _today.Date)
+                {
+                    return;
+                }
+            }
+
+            if (isConsecutive)
             {
                 _currentUser.CheckInStreak++;
             }
-            else if (_currentUser.LastCheckInDate != todayString)
+            else
             {
                 _currentUser.CheckInStreak = 1;
             }
 
-            // 2. Update Check-In Dates
             _currentUser.LastCheckInDate = todayString;
+
             if (!_currentUser.MonthlyCheckIns.Contains(todayString))
             {
                 _currentUser.MonthlyCheckIns.Add(todayString);
             }
 
-            // 3. Save to Firebase
             await _dbService.SaveUserAsync(_currentUserId, _currentUser);
 
-            // 4. Refresh all UI
             await LoadAndDisplayUserData();
+            await DisplayAlert("Success", "Checked in!", "OK");
         }
 
         // --- Quest Claim Methods ---
@@ -211,25 +285,30 @@ namespace gatchapon
         {
             if (_currentUser.CheckInStreak < 7 || _currentUser.Claimed7DayStreak) return;
 
-            _currentUser.Gold += 100; // Give 100 Gold
+            _currentUser.Gold += 500; // UPDATED REWARD
             _currentUser.Claimed7DayStreak = true;
 
+            // Optional: Reset streak so they can earn it again?
+            // _currentUser.CheckInStreak = 0; 
+            // _currentUser.Claimed7DayStreak = false;
+
             await _dbService.SaveUserAsync(_currentUserId, _currentUser);
-            await DisplayAlert("Quest Complete!", "You earned 100 Gold!", "OK");
-            await UpdateQuestsUI(); // Refresh UI
+            await DisplayAlert("Quest Complete!", "You earned 500 Gold!", "OK");
+            await UpdateQuestsUI();
         }
 
         private async void OnClaimMonthQuestClicked(object sender, EventArgs e)
         {
             int daysInMonth = DateTime.DaysInMonth(_today.Year, _today.Month);
             int monthlyCheckins = _currentUser.MonthlyCheckIns.Count(d => DateTime.Parse(d).Month == _today.Month);
+
             if (monthlyCheckins < daysInMonth || _currentUser.ClaimedMonthly) return;
 
-            _currentUser.Gold += 500; // Give 500 Gold
+            _currentUser.Gold += 2000; // UPDATED REWARD
             _currentUser.ClaimedMonthly = true;
 
             await _dbService.SaveUserAsync(_currentUserId, _currentUser);
-            await DisplayAlert("Quest Complete!", "You earned 500 Gold!", "OK");
+            await DisplayAlert("Quest Complete!", "You earned 2000 Gold!", "OK");
             await UpdateQuestsUI();
         }
 
@@ -237,11 +316,11 @@ namespace gatchapon
         {
             if (_currentUser.TasksCompletedToday < 3 || _currentUser.Claimed3Tasks) return;
 
-            _currentUser.Gold += 50; // Give 50 Gold
+            _currentUser.Gold += 300; // UPDATED REWARD
             _currentUser.Claimed3Tasks = true;
 
             await _dbService.SaveUserAsync(_currentUserId, _currentUser);
-            await DisplayAlert("Quest Complete!", "You earned 50 Gold!", "OK");
+            await DisplayAlert("Quest Complete!", "You earned 300 Gold!", "OK");
             await UpdateQuestsUI();
         }
     }

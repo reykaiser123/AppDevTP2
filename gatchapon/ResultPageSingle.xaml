@@ -8,6 +8,12 @@
     <ScrollView>
         <VerticalStackLayout Padding="20" Spacing="20" VerticalOptions="Center">
 
+            <Label x:Name="goldcoin"
+               Text=""
+               TextColor="White"
+               HorizontalOptions="Center"
+               FontSize="18"/>
+            
             <Label x:Name="PullCountLabel"
                Text="Total pulls: 0 / 80"
                TextColor="White"

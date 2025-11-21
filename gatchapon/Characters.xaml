@@ -2,100 +2,105 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="gatchapon.Characters"
-             BackgroundColor="#4C763B"
-             Title="Characters">
+             BackgroundColor="#ADC179"
+             >
 
-    <Grid Padding="0"
-          RowDefinitions="Auto,*">
+    <Border BackgroundColor="#ADC179"
+            StrokeShape="RoundRectangle 30"
+            StrokeThickness="0"
+            Padding="25">
 
-        <VerticalStackLayout BackgroundColor="#C6D87C"
-                             Padding="10,20"
-                             Grid.Row="0">
+        <Grid RowDefinitions="Auto, Auto, *" RowSpacing="25">
 
-            <Grid ColumnDefinitions="Auto,*,Auto"
-                  VerticalOptions="Center">
-
-                <Image Source="menu_icon.png"
-                       HeightRequest="24"
-                       WidthRequest="24"
-                       Grid.Column="0"/>
+            <!-- Header -->
+            <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto">
+                <ImageButton Source="menu_icon.png"
+                             HeightRequest="28"
+                             WidthRequest="28"
+                             VerticalOptions="Center"
+                             HorizontalOptions="Start"/>
 
                 <Label Text="CHARACTERS"
-                       Grid.Column="1"
+                       TextColor="White"
+                       FontSize="22"
+                       FontAttributes="Bold"
                        HorizontalOptions="Center"
                        VerticalOptions="Center"
-                       FontSize="20"
-                       FontAttributes="Bold"
-                       TextColor="White"/>
+                       Grid.Column="1"/>
 
-                <BoxView WidthRequest="24"
-                         HeightRequest="24"
-                         Grid.Column="2"
-                         Opacity="0"/>
-
+                <BoxView Grid.Column="2" 
+                         WidthRequest="28" 
+                         Opacity="0" />
             </Grid>
 
-            <Border BackgroundColor="White"
-                    StrokeShape="RoundRectangle 20"
-                    Shadow="{x:Null}"
-                    Padding="10,5"
-                    Margin="0,15,0,0">
-                <Grid ColumnDefinitions="Auto,*">
-                    <Image Source="filter_icon.png"
-                           HeightRequest="20"
-                           WidthRequest="20"
-                           Grid.Column="0"/>
-                    <SearchBar Placeholder="Search Characters"
-                               Grid.Column="1"
-                               BackgroundColor="Transparent"
-                               PlaceholderColor="Gray"
-                               TextColor="Black"/>
+            <!-- Search Bar -->
+            <Border Grid.Row="1"
+                    BackgroundColor="#CEDCA1"
+                    StrokeShape="RoundRectangle 25"
+                    StrokeThickness="0"
+                    HeightRequest="55">
+
+                <Grid ColumnDefinitions="Auto, *, Auto" Padding="20,0">
+                    <Image Source="filter_icon.png" 
+                           HeightRequest="20" 
+                           VerticalOptions="Center"
+                           Grid.Column="0"
+                           Opacity="0.5"/>
+
+                    <Entry Placeholder="Search Characters"
+                           PlaceholderColor="#7A855C"
+                           TextColor="#3B4728"
+                           FontSize="15"
+                           BackgroundColor="Transparent"
+                           VerticalOptions="Center"
+                           VerticalTextAlignment="Center"
+                           Grid.Column="1"
+                           Margin="10,0"/>
+
+                    <Image Source="search_icon.png" 
+                           HeightRequest="20" 
+                           VerticalOptions="Center"
+                           Grid.Column="2"
+                           Opacity="0.5"/>
                 </Grid>
             </Border>
-        </VerticalStackLayout>
 
-        <ScrollView Grid.Row="1">
-            <CollectionView ItemsLayout="HorizontalList"
-                            Margin="15"
-                            BackgroundColor="#C6D87C">
-                <CollectionView.ItemsSource>
-                    <x:Array Type="{x:Type x:String}">
-                        <x:String>Reynold</x:String>
-                        <x:String>Oswell</x:String>
-                        <x:String>Mell</x:String>
-                    </x:Array>
-                </CollectionView.ItemsSource>
-
+            <!-- Character List -->
+            <!-- FIX ADDED: SelectionMode="None" prevents the blue highlight on tap -->
+            <CollectionView Grid.Row="2"
+                            SelectionMode="None"
+                            ItemsSource="{Binding CharacterList}"
+                            ItemsLayout="VerticalGrid, 3">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Border x:DataType="x:String"
-                                WidthRequest="100"
-                                HeightRequest="140"
-                                Padding="5"
-                                Margin="10"
-                                BackgroundColor="White"
-                                StrokeShape="RoundRectangle 15">
-                            <Border.Shadow>
-                                <Shadow Opacity="0.5"
-                                        Radius="10"
-                                        Offset="0,5" />
-                            </Border.Shadow>
-                            <VerticalStackLayout>
-                                <Image Source="character_placeholder.png"
-                                       HeightRequest="80"
-                                       Aspect="AspectFill"/>
+                        <VerticalStackLayout Padding="5">
 
-                                <Label Text="{Binding .}"
-                                       FontSize="14"
-                                       FontAttributes="Bold"
-                                       HorizontalOptions="Center"
-                                       VerticalOptions="End"
-                                       TextColor="Black"/>
-                            </VerticalStackLayout>
-                        </Border>
+                            <Border HeightRequest="110"
+                                    WidthRequest="90"
+                                    BackgroundColor="#EFEDD3"
+                                    Stroke="{Binding BorderColor}"
+                                    StrokeThickness="3"
+                                    StrokeShape="RoundRectangle 10">
+                                <Grid>
+                                    <Image Source="{Binding Image}"
+                                           Aspect="AspectFill"
+                                           VerticalOptions="End"
+                                           Margin="0,10,0,0"/>
+                                </Grid>
+                            </Border>
+
+                            <Label Text="{Binding Name}"
+                                   TextColor="#4A5238"
+                                   FontSize="12"
+                                   FontAttributes="Bold"
+                                   HorizontalTextAlignment="Center"
+                                   Margin="0,5,0,0"/>
+
+                        </VerticalStackLayout>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
-        </ScrollView>
-    </Grid>
+
+        </Grid>
+    </Border>
 </ContentPage>

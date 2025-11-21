@@ -1,35 +1,33 @@
-using gatchapon.Models; // To find UserModel
+using gatchapon.Models;
 
 namespace gatchapon
 {
     public partial class Shop : ContentPage
     {
-        // Get your services for auth and database
         private readonly FirebaseDatabaseService _dbService = new();
-        private readonly FirebaseAuthService _authService = new();
-
         private string _currentUserId;
-        private UserModel _currentUser; // We'll store the user's data here
+        private UserModel _currentUser;
 
         public Shop()
         {
             InitializeComponent();
         }
-
-        // This runs every time you open the shop page
+        private async void OnBackClicked(object sender, EventArgs e)
+        {
+            await Navigation.PopAsync();
+        }
         protected override async void OnAppearing()
         {
             base.OnAppearing();
 
-            // Get the User ID, just like we do in the Dashboard
             _currentUserId = await SecureStorage.GetAsync("userId");
             if (string.IsNullOrEmpty(_currentUserId))
             {
-                await DisplayAlert("Error", "You must be logged in to see the shop.", "OK");
+                // If this happens, your login session is lost
+                await DisplayAlert("Error", "No User ID found. Please log in again.", "OK");
                 return;
             }
 
-            // Load the user's gold and gems
             await LoadUserData();
         }
 
@@ -37,87 +35,100 @@ namespace gatchapon
         {
             try
             {
-                // Get the user's data from Firebase
+                // 1. Fetch User from Firebase
                 _currentUser = await _dbService.GetUserAsync<UserModel>(_currentUserId);
+
+                // 2. Update UI
                 if (_currentUser != null)
                 {
-                    // Update the "9999999" labels with the REAL data
-                    GoldLabel.Text = _currentUser.Gold.ToString();
-                    GemLabel.Text = _currentUser.Gems.ToString();
+                    // Force update on Main Thread to ensure TitleView updates correctly
+                    MainThread.BeginInvokeOnMainThread(() =>
+                    {
+                        GoldLabel.Text = _currentUser.Gold.ToString();
+                    });
+                }
+                else
+                {
+                    // Debugging: If this shows, your User ID exists but DB data is empty
+                    Console.WriteLine("User data not found in database for this ID.");
                 }
             }
             catch (Exception ex)
             {
-                await DisplayAlert("Error", $"Could not load user data: {ex.Message}", "OK");
+                await DisplayAlert("Error", $"Could not load data: {ex.Message}", "OK");
             }
         }
 
-        // This runs when you tap "Streak Saver"
-        private async void OnBuyStreakSaverClicked(object sender, TappedEventArgs e)
+        // --- BUY STREAM GEAR CRATE (1000 GOLD) ---
+        private async void OnBuyCrateClicked(object sender, TappedEventArgs e)
         {
-            int itemCost = 1000; // The price of the item
             if (_currentUser == null) return;
 
-            // Check if the user has enough gold
-            if (_currentUser.Gold >= itemCost)
+            if (_currentUser.HasStreamGearCrate)
             {
-                bool confirm = await DisplayAlert("Confirm Purchase",
-                    $"Buy 'Streak Saver' for {itemCost} gold?", "Yes", "No");
+                await DisplayAlert("Owned", "You already own this item!", "OK");
+                return;
+            }
 
+            int itemCost = 1000;
+            await ProcessPurchase(itemCost, "Stream Gear Crate", () => _currentUser.HasStreamGearCrate = true);
+        }
+
+        // --- BUY SKY-HIGH SCARF (300 GOLD) ---
+        private async void OnBuyScarfClicked(object sender, TappedEventArgs e)
+        {
+            if (_currentUser == null) return;
+
+            if (_currentUser.HasSkyHighScarf)
+            {
+                await DisplayAlert("Owned", "You already own this item!", "OK");
+                return;
+            }
+
+            int itemCost = 300;
+            await ProcessPurchase(itemCost, "Sky-High Scarf", () => _currentUser.HasSkyHighScarf = true);
+        }
+
+        // --- BUY WOVEN CLOUD TAPESTRY (2000 GOLD) ---
+        private async void OnBuyTapestryClicked(object sender, TappedEventArgs e)
+        {
+            if (_currentUser == null) return;
+
+            if (_currentUser.HasWovenCloudTapestry)
+            {
+                await DisplayAlert("Owned", "You already own this item!", "OK");
+                return;
+            }
+
+            int itemCost = 2000;
+            await ProcessPurchase(itemCost, "Woven Cloud Tapestry", () => _currentUser.HasWovenCloudTapestry = true);
+        }
+
+        // --- HELPER FUNCTION TO AVOID REPEATING CODE ---
+        private async Task ProcessPurchase(int cost, string itemName, Action setOwned)
+        {
+            if (_currentUser.Gold >= cost)
+            {
+                bool confirm = await DisplayAlert("Confirm", $"Buy '{itemName}' for {cost} gold?", "Yes", "No");
                 if (confirm)
                 {
-                    // 1. Subtract the gold
-                    _currentUser.Gold -= itemCost;
+                    _currentUser.Gold -= cost;
+                    setOwned(); // Execute the action to set the specific item to true
 
-                    // 2. Save the updated user back to Firebase
                     await _dbService.SaveUserAsync(_currentUserId, _currentUser);
 
-                    // 3. Update the UI to show the new gold amount
-                    GoldLabel.Text = _currentUser.Gold.ToString();
+                    // Force UI Update
+                    MainThread.BeginInvokeOnMainThread(() =>
+                    {
+                        GoldLabel.Text = _currentUser.Gold.ToString();
+                    });
 
-                    await DisplayAlert("Success", "You bought a Streak Saver!", "OK");
-
-                    // (Future code would add the item to your inventory here)
+                    await DisplayAlert("Success", "Item added to Inventory!", "OK");
                 }
             }
             else
             {
-                // Not enough gold
-                await DisplayAlert("Not Enough Gold",
-                    $"You need {itemCost} gold, but you only have {_currentUser.Gold}.", "OK");
-            }
-        }
-
-        // This runs when you tap "2x Boost"
-        private async void OnBuyBoostClicked(object sender, TappedEventArgs e)
-        {
-            int itemCost = 50; // This item costs GEMS
-            if (_currentUser == null) return;
-
-            // Check for GEMS, not gold
-            if (_currentUser.Gems >= itemCost)
-            {
-                bool confirm = await DisplayAlert("Confirm Purchase",
-                    $"Buy '2x Boost (3day)' for {itemCost} gems?", "Yes", "No");
-
-                if (confirm)
-                {
-                    // 1. Subtract the gems
-                    _currentUser.Gems -= itemCost;
-
-                    // 2. Save the updated user back to Firebase
-                    await _dbService.SaveUserAsync(_currentUserId, _currentUser);
-
-                    // 3. Update the UI
-                    GemLabel.Text = _currentUser.Gems.ToString();
-
-                    await DisplayAlert("Success", "You bought a 2x Boost!", "OK");
-                }
-            }
-            else
-            {
-                await DisplayAlert("Not Enough Gems",
-                    $"You need {itemCost} gems, but you only have {_currentUser.Gems}.", "OK");
+                await DisplayAlert("Not Enough Gold", "You need more gold.", "OK");
             }
         }
     }

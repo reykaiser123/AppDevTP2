@@ -231,5 +231,9 @@ namespace gatchapon
         {
             await Shell.Current.GoToAsync("News");
         }
+        private async void OnClickedInventory(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new Inventory());
+        }
     }
 }

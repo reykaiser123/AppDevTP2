@@ -3,77 +3,125 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="gatchapon.Shop"
              Title="Shop"
-             BackgroundColor="#ADC179">
+             BackgroundColor="#ADC179"
+             Shell.NavBarIsVisible="False"
+             Shell.TabBarIsVisible="False">
+    <!-- 1. HIDE SYSTEM BARS -->
 
-    <Grid RowDefinitions="Auto, *, Auto">
+    <Grid RowDefinitions="Auto, *">
 
-        <Border Grid.Row="0" BackgroundColor="#ADC179" StrokeShape="RoundRectangle 0,0,10,10" Padding="10">
-            <Grid RowDefinitions="Auto, Auto" ColumnDefinitions="30, *, 30">
+        <!-- 2. CUSTOM HEADER (Replaces TitleView) -->
+        <Grid Grid.Row="0" 
+              BackgroundColor="#ADC179"
+              HeightRequest="60"
+              Padding="15,0">
 
-                <BoxView Grid.Row="0" Grid.Column="0" Color="White" WidthRequest="30" HeightRequest="30" CornerRadius="5" HorizontalOptions="Start" VerticalOptions="Center" Margin="0,0,10,0" />
-                <Label Grid.Row="0" Grid.Column="1" Text="SHOP" FontSize="20" TextColor="White" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center" />
-                <HorizontalStackLayout Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Spacing="10" HorizontalOptions="End" Margin="0,5,0,0">
+            <!-- Back Button -->
+            <ImageButton Source="back_icon.png"
+                         HeightRequest="30"
+                         WidthRequest="30"
+                         HorizontalOptions="Start"
+                         VerticalOptions="Center"
+                         BackgroundColor="Transparent"
+                         Clicked="OnBackClicked"/>
 
-                    <Border BackgroundColor="#6C584D" StrokeShape="RoundRectangle 10" Padding="5" >
-                        <HorizontalStackLayout Spacing="5">
-                            <BoxView Color="#FFFFFFB2" WidthRequest="20" HeightRequest="20" CornerRadius="10" />
-                            <Label x:Name="GoldLabel" 
-                                   Text="0" 
-                                   TextColor="White" FontSize="16" VerticalOptions="Center" />
-                        </HorizontalStackLayout>
-                    </Border>
+            <!-- SHOP Title -->
+            <Label Text="SHOP" 
+                   TextColor="White" 
+                   FontSize="22" 
+                   FontAttributes="Bold" 
+                   HorizontalOptions="Center" 
+                   VerticalOptions="Center"
+                   Margin="-50,0,0,0"/>
 
-                    <Border BackgroundColor="#6C584D" StrokeShape="RoundRectangle 10" Padding="5">
-                        <HorizontalStackLayout Spacing="5">
-                            <BoxView Color="#FFFFFFB2" WidthRequest="20" HeightRequest="20" CornerRadius="10" />
-                            <Label x:Name="GemLabel" 
-                                   Text="0" 
-                                   TextColor="White" FontSize="16" VerticalOptions="Center" />
-                        </HorizontalStackLayout>
-                    </Border>
+            <!-- Gold Pill (Right Side) -->
+            <Border BackgroundColor="#6C584D" 
+                    StrokeShape="RoundRectangle 15" 
+                    HeightRequest="30"
+                    StrokeThickness="0"
+                    Padding="12,0"
+                    HorizontalOptions="End"
+                    VerticalOptions="Center">
+
+                <HorizontalStackLayout Spacing="5" VerticalOptions="Center">
+                    <Image Source="goldcoin_icon.png" 
+                           Aspect="AspectFit"
+                           HeightRequest="18" 
+                           WidthRequest="18" 
+                           VerticalOptions="Center"/>
+
+                    <Label x:Name="GoldLabel" 
+                           Text="0" 
+                           TextColor="White" 
+                           FontSize="14" 
+                           FontAttributes="Bold"
+                           VerticalOptions="Center" />
                 </HorizontalStackLayout>
-            </Grid>
-        </Border>
+            </Border>
+        </Grid>
 
-        <ScrollView Grid.Row="1" BackgroundColor="#ADC179" Padding="15">
-            <VerticalStackLayout Spacing="15" HorizontalOptions="Fill">
+        <!-- 3. MAIN CONTENT -->
+        <ScrollView Grid.Row="1" 
+                    Padding="10" 
+                    VerticalOptions="Fill">
 
-                <HorizontalStackLayout Spacing="15" HorizontalOptions="CenterAndExpand">
+            <FlexLayout Wrap="Wrap" 
+                        JustifyContent="SpaceEvenly" 
+                        Direction="Row"
+                        Padding="0,10,0,50">
 
-                    <Border BackgroundColor="#DDE5B6" StrokeShape="RoundRectangle 10" Padding="10" WidthRequest="160" HeightRequest="210">
-                        <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="10">
-                            <BoxView Color="#F0EAD2" WidthRequest="90" HeightRequest="90" CornerRadius="10" />
-                            <Label Text="Streak Saver" FontSize="18" TextColor="#333333" FontAttributes="Bold" HorizontalTextAlignment="Center" />
-                            <HorizontalStackLayout Spacing="5" HorizontalOptions="Center">
-                                <BoxView Color="#FFFFFFB2" WidthRequest="18" HeightRequest="18" CornerRadius="9" />
-                                <Label Text="1000" FontSize="16" TextColor="#333333" />
-                            </HorizontalStackLayout>
-                        </VerticalStackLayout>
+                <!-- CARD 1: Stream Gear Crate -->
+                <Border BackgroundColor="#F2EED5" StrokeShape="RoundRectangle 15" WidthRequest="155" HeightRequest="220" StrokeThickness="0" Margin="0,0,0,15">
+                    <Grid RowDefinitions="*, Auto, Auto" Padding="10">
+                        <Border Grid.Row="0" Stroke="#A335EE" StrokeThickness="3" StrokeShape="RoundRectangle 12" BackgroundColor="Black" Padding="5" HeightRequest="100" WidthRequest="100" HorizontalOptions="Center" VerticalOptions="Center">
+                            <Image Source="epic_item_marisol.png" Aspect="AspectFill"/>
+                        </Border>
+                        <Label Grid.Row="1" Text="Stream Gear Crate" FontSize="15" TextColor="#5A4D41" FontAttributes="Bold" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Margin="0,5,0,5"/>
+                        <HorizontalStackLayout Grid.Row="2" Spacing="4" HorizontalOptions="Center" Margin="0,0,0,5">
+                            <Image Source="goldcoin_icon.png" HeightRequest="14" WidthRequest="14" VerticalOptions="Center"/>
+                            <Label Text="1000" FontSize="13" TextColor="#5A4D41" FontAttributes="Bold" VerticalOptions="Center"/>
+                        </HorizontalStackLayout>
+                    </Grid>
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnBuyCrateClicked"/>
+                    </Border.GestureRecognizers>
+                </Border>
 
-                        <Border.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="OnBuyStreakSaverClicked"/>
-                        </Border.GestureRecognizers>
-                    </Border>
+                <!-- CARD 2: Sky-High Scarf -->
+                <Border BackgroundColor="#F2EED5" StrokeShape="RoundRectangle 15" WidthRequest="155" HeightRequest="220" StrokeThickness="0" Margin="0,0,0,15">
+                    <Grid RowDefinitions="*, Auto, Auto" Padding="10">
+                        <Border Grid.Row="0" Stroke="#A335EE" StrokeThickness="3" StrokeShape="RoundRectangle 12" BackgroundColor="Black" Padding="5" HeightRequest="100" WidthRequest="100" HorizontalOptions="Center" VerticalOptions="Center">
+                            <Image Source="epic_item_roberto.png" Aspect="AspectFill"/>
+                        </Border>
+                        <Label Grid.Row="1" Text="Sky-High Scarf" FontSize="15" TextColor="#5A4D41" FontAttributes="Bold" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Margin="0,5,0,5"/>
+                        <HorizontalStackLayout Grid.Row="2" Spacing="4" HorizontalOptions="Center" Margin="0,0,0,5">
+                            <Image Source="goldcoin_icon.png" HeightRequest="14" WidthRequest="14" VerticalOptions="Center"/>
+                            <Label Text="300" FontSize="13" TextColor="#5A4D41" FontAttributes="Bold" VerticalOptions="Center"/>
+                        </HorizontalStackLayout>
+                    </Grid>
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnBuyScarfClicked"/>
+                    </Border.GestureRecognizers>
+                </Border>
 
-                    <Border BackgroundColor="#DDE5B6" StrokeShape="RoundRectangle 10" Padding="10" WidthRequest="160" HeightRequest="210">
-                        <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="10">
-                            <BoxView Color="#F0EAD2" WidthRequest="90" HeightRequest="90" CornerRadius="10" />
-                            <Label Text="2x Boost (3day)" FontSize="18" TextColor="#333333" FontAttributes="Bold" HorizontalTextAlignment="Center" />
-                            <HorizontalStackLayout Spacing="5" HorizontalOptions="Center">
-                                <BoxView Color="#FFFFFFB2" WidthRequest="18" HeightRequest="18" CornerRadius="9" />
-                                <Label Text="50" FontSize="16" TextColor="#333333" />
-                            </HorizontalStackLayout>
-                        </VerticalStackLayout>
+                <!-- CARD 3: Woven Cloud Tapestry -->
+                <Border BackgroundColor="#F2EED5" StrokeShape="RoundRectangle 15" WidthRequest="155" HeightRequest="220" StrokeThickness="0" Margin="0,0,0,15">
+                    <Grid RowDefinitions="*, Auto, Auto" Padding="10">
+                        <Border Grid.Row="0" Stroke="#FFD700" StrokeThickness="3" StrokeShape="RoundRectangle 12" BackgroundColor="Black" Padding="5" HeightRequest="100" WidthRequest="100" HorizontalOptions="Center" VerticalOptions="Center">
+                            <Image Source="legendary_item.png" Aspect="AspectFill"/>
+                        </Border>
+                        <Label Grid.Row="1" Text="Woven Cloud Tapestry" FontSize="15" TextColor="#5A4D41" FontAttributes="Bold" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Margin="0,5,0,5"/>
+                        <HorizontalStackLayout Grid.Row="2" Spacing="4" HorizontalOptions="Center" Margin="0,0,0,5">
+                            <Image Source="goldcoin_icon.png" HeightRequest="14" WidthRequest="14" VerticalOptions="Center"/>
+                            <Label Text="2000" FontSize="13" TextColor="#5A4D41" FontAttributes="Bold" VerticalOptions="Center"/>
+                        </HorizontalStackLayout>
+                    </Grid>
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnBuyTapestryClicked"/>
+                    </Border.GestureRecognizers>
+                </Border>
 
-                        <Border.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="OnBuyBoostClicked"/>
-                        </Border.GestureRecognizers>
-                    </Border>
-                </HorizontalStackLayout>
-
-            </VerticalStackLayout>
+            </FlexLayout>
         </ScrollView>
-
-        <Grid Grid.Row="2" BackgroundColor="#ADC179" HeightRequest="10" />
     </Grid>
 </ContentPage>

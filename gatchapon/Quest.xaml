@@ -3,137 +3,145 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="gatchapon.Quest"
              Title="QUEST"
-             BackgroundColor="#ADC179">
+             BackgroundColor="#ADC179"
+             Shell.NavBarIsVisible="False"
+             Shell.TabBarIsVisible="False">
+   
 
-    <ScrollView>
-        <VerticalStackLayout Padding="20" Spacing="20">
+    <Grid RowDefinitions="Auto, *">
 
-            <Border BackgroundColor="#DDE5B6" StrokeShape="RoundRectangle 10" Padding="15">
-                <VerticalStackLayout Spacing="15">
+        <!-- CUSTOM HEADER (Matches Shop/Profile) -->
+        <Grid Grid.Row="0" 
+              BackgroundColor="#ADC179"
+              HeightRequest="60"
+              Padding="15,0">
 
-                    <Label Text="Daily Check-In"
-                           FontSize="16"
-                           FontAttributes="Bold"
-                           HorizontalOptions="Center"
-                           TextColor="#433832"/>
-                    <HorizontalStackLayout HorizontalOptions="Center" Spacing="10">
+            <!-- Manual Back Button -->
+            <ImageButton Source="back_icon.png"
+                         HeightRequest="20"
+                         WidthRequest="20"
+                         HorizontalOptions="Start"
+                         VerticalOptions="Center"
+                         BackgroundColor="Transparent"
+                         Clicked="OnBackClicked"/>
 
-                        <VerticalStackLayout Spacing="5" HorizontalOptions="Center">
-                            <Label Text="SUN" FontAttributes="Bold" FontSize="10" HorizontalOptions="Center" TextColor="#433832"/>
-                            <Border x:Name="SunFrame" BackgroundColor="White" WidthRequest="35" HeightRequest="35" 
-                 StrokeShape="RoundRectangle 18" Padding="5" HorizontalOptions="Center"
-                 StrokeThickness="0">
-                                <Image x:Name="SunImage" Source="check_placeholder.png" Aspect="AspectFit" BackgroundColor="Transparent" IsVisible="False"/>
-                            </Border>
-                        </VerticalStackLayout>
+            <!-- Title -->
+            <Label Text="QUEST"
+                   TextColor="White"
+                   FontSize="20"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"/>
+        </Grid>
 
-                        <VerticalStackLayout Spacing="5" HorizontalOptions="Center">
-                            <Label Text="MON" FontAttributes="Bold" FontSize="10" HorizontalOptions="Center" TextColor="#433832"/>
-                            <Border x:Name="MonFrame" BackgroundColor="White" WidthRequest="35" HeightRequest="35" 
-                 StrokeShape="RoundRectangle 18" Padding="5" HorizontalOptions="Center"
-                 StrokeThickness="0">
-                                <Image x:Name="MonImage" Source="check_placeholder.png" Aspect="AspectFit" BackgroundColor="Transparent" IsVisible="False"/>
-                            </Border>
-                        </VerticalStackLayout>
+        <!-- MAIN CONTENT -->
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="20" Spacing="20">
 
-                        <VerticalStackLayout Spacing="5" HorizontalOptions="Center">
-                            <Label Text="TUE" FontAttributes="Bold" FontSize="10" HorizontalOptions="Center" TextColor="#433832"/>
-                            <Border x:Name="TueFrame" BackgroundColor="White" WidthRequest="35" HeightRequest="35" 
-                 StrokeShape="RoundRectangle 18" Padding="5" HorizontalOptions="Center"
-                 StrokeThickness="0">
-                                <Image x:Name="TueImage" Source="check_placeholder.png" Aspect="AspectFit" BackgroundColor="Transparent" IsVisible="False"/>
-                            </Border>
-                        </VerticalStackLayout>
+                <!-- DAILY CHECK-IN CARD -->
+                <Border BackgroundColor="#DDE5B6" StrokeShape="RoundRectangle 10" Padding="15">
+                    <VerticalStackLayout Spacing="15">
+                        <Label Text="Daily Check-In" FontSize="16" FontAttributes="Bold" HorizontalOptions="Center" TextColor="#433832"/>
 
-                        <VerticalStackLayout Spacing="5" HorizontalOptions="Center">
-                            <Label Text="WED" FontAttributes="Bold" FontSize="10" HorizontalOptions="Center" TextColor="#433832"/>
-                            <Border x:Name="WedFrame" BackgroundColor="White" WidthRequest="35" HeightRequest="35" 
-                 StrokeShape="RoundRectangle 18" Padding="5" HorizontalOptions="Center"
-                 StrokeThickness="0">
-                                <Image x:Name="WedImage" Source="check_placeholder.png" Aspect="AspectFit" BackgroundColor="Transparent" IsVisible="False"/>
-                            </Border>
-                        </VerticalStackLayout>
+                        <!-- Days of the Week -->
+                        <HorizontalStackLayout HorizontalOptions="Center" Spacing="10">
+                            <!-- SUN -->
+                            <VerticalStackLayout Spacing="5" HorizontalOptions="Center">
+                                <Label Text="SUN" FontAttributes="Bold" FontSize="10" HorizontalOptions="Center" TextColor="#433832"/>
+                                <Border x:Name="SunFrame" BackgroundColor="White" WidthRequest="35" HeightRequest="35" StrokeShape="RoundRectangle 18" Padding="5" HorizontalOptions="Center" StrokeThickness="0">
+                                    <Image x:Name="SunImage" Source="check_placeholder.png" Aspect="AspectFit" BackgroundColor="Transparent" IsVisible="False"/>
+                                </Border>
+                            </VerticalStackLayout>
+                            <!-- MON -->
+                            <VerticalStackLayout Spacing="5" HorizontalOptions="Center">
+                                <Label Text="MON" FontAttributes="Bold" FontSize="10" HorizontalOptions="Center" TextColor="#433832"/>
+                                <Border x:Name="MonFrame" BackgroundColor="White" WidthRequest="35" HeightRequest="35" StrokeShape="RoundRectangle 18" Padding="5" HorizontalOptions="Center" StrokeThickness="0">
+                                    <Image x:Name="MonImage" Source="check_placeholder.png" Aspect="AspectFit" BackgroundColor="Transparent" IsVisible="False"/>
+                                </Border>
+                            </VerticalStackLayout>
+                            <!-- TUE -->
+                            <VerticalStackLayout Spacing="5" HorizontalOptions="Center">
+                                <Label Text="TUE" FontAttributes="Bold" FontSize="10" HorizontalOptions="Center" TextColor="#433832"/>
+                                <Border x:Name="TueFrame" BackgroundColor="White" WidthRequest="35" HeightRequest="35" StrokeShape="RoundRectangle 18" Padding="5" HorizontalOptions="Center" StrokeThickness="0">
+                                    <Image x:Name="TueImage" Source="check_placeholder.png" Aspect="AspectFit" BackgroundColor="Transparent" IsVisible="False"/>
+                                </Border>
+                            </VerticalStackLayout>
+                            <!-- WED -->
+                            <VerticalStackLayout Spacing="5" HorizontalOptions="Center">
+                                <Label Text="WED" FontAttributes="Bold" FontSize="10" HorizontalOptions="Center" TextColor="#433832"/>
+                                <Border x:Name="WedFrame" BackgroundColor="White" WidthRequest="35" HeightRequest="35" StrokeShape="RoundRectangle 18" Padding="5" HorizontalOptions="Center" StrokeThickness="0">
+                                    <Image x:Name="WedImage" Source="check_placeholder.png" Aspect="AspectFit" BackgroundColor="Transparent" IsVisible="False"/>
+                                </Border>
+                            </VerticalStackLayout>
+                            <!-- THU -->
+                            <VerticalStackLayout Spacing="5" HorizontalOptions="Center">
+                                <Label Text="THU" FontAttributes="Bold" FontSize="10" HorizontalOptions="Center" TextColor="#433832"/>
+                                <Border x:Name="ThuFrame" BackgroundColor="White" WidthRequest="35" HeightRequest="35" StrokeShape="RoundRectangle 18" Padding="5" HorizontalOptions="Center" StrokeThickness="0">
+                                    <Image x:Name="ThuImage" Source="check_placeholder.png" Aspect="AspectFit" BackgroundColor="Transparent" IsVisible="False"/>
+                                </Border>
+                            </VerticalStackLayout>
+                            <!-- FRI -->
+                            <VerticalStackLayout Spacing="5" HorizontalOptions="Center">
+                                <Label Text="FRI" FontAttributes="Bold" FontSize="10" HorizontalOptions="Center" TextColor="#433832"/>
+                                <Border x:Name="FriFrame" BackgroundColor="White" WidthRequest="35" HeightRequest="35" StrokeShape="RoundRectangle 18" Padding="5" HorizontalOptions="Center" StrokeThickness="0">
+                                    <Image x:Name="FriImage" Source="check_placeholder.png" Aspect="AspectFit" BackgroundColor="Transparent" IsVisible="False"/>
+                                </Border>
+                            </VerticalStackLayout>
+                            <!-- SAT -->
+                            <VerticalStackLayout Spacing="5" HorizontalOptions="Center">
+                                <Label Text="SAT" FontAttributes="Bold" FontSize="10" HorizontalOptions="Center" TextColor="#433832"/>
+                                <Border x:Name="SatFrame" BackgroundColor="White" WidthRequest="35" HeightRequest="35" StrokeShape="RoundRectangle 18" Padding="5" HorizontalOptions="Center" StrokeThickness="0">
+                                    <Image x:Name="SatImage" Source="check_placeholder.png" Aspect="AspectFit" BackgroundColor="Transparent" IsVisible="False"/>
+                                </Border>
+                            </VerticalStackLayout>
+                        </HorizontalStackLayout>
 
-                        <VerticalStackLayout Spacing="5" HorizontalOptions="Center">
-                            <Label Text="THU" FontAttributes="Bold" FontSize="10" HorizontalOptions="Center" TextColor="#433832"/>
-                            <Border x:Name="ThuFrame" BackgroundColor="White" WidthRequest="35" HeightRequest="35" 
-                 StrokeShape="RoundRectangle 18" Padding="5" HorizontalOptions="Center"
-                 StrokeThickness="0">
-                                <Image x:Name="ThuImage" Source="check_placeholder.png" Aspect="AspectFit" BackgroundColor="Transparent" IsVisible="False"/>
-                            </Border>
-                        </VerticalStackLayout>
-
-                        <VerticalStackLayout Spacing="5" HorizontalOptions="Center">
-                            <Label Text="FRI" FontAttributes="Bold" FontSize="10" HorizontalOptions="Center" TextColor="#433832"/>
-                            <Border x:Name="FriFrame" BackgroundColor="White" WidthRequest="35" HeightRequest="35" 
-                 StrokeShape="RoundRectangle 18" Padding="5" HorizontalOptions="Center"
-                 StrokeThickness="0">
-                                <Image x:Name="FriImage" Source="check_placeholder.png" Aspect="AspectFit" BackgroundColor="Transparent" IsVisible="False"/>
-                            </Border>
-                        </VerticalStackLayout>
-
-                        <VerticalStackLayout Spacing="5" HorizontalOptions="Center">
-                            <Label Text="SAT" FontAttributes="Bold" FontSize="10" HorizontalOptions="Center" TextColor="#433832"/>
-                            <Border x:Name="SatFrame" BackgroundColor="White" WidthRequest="35" HeightRequest="35" 
-                 StrokeShape="RoundRectangle 18" Padding="5" HorizontalOptions="Center"
-                 StrokeThickness="0">
-                                <Image x:Name="SatImage" Source="check_placeholder.png" Aspect="AspectFit" BackgroundColor="Transparent" IsVisible="False"/>
-                            </Border>
-                        </VerticalStackLayout>
-
-                    </HorizontalStackLayout>
-
-                    <Button x:Name="CheckInButton"
-                            Text="Check-In for Today"
-                            BackgroundColor="#A48E66"
-                            TextColor="White"
-                            FontAttributes="Bold"
-                            CornerRadius="20"
-                            Clicked="OnCheckInClicked"/>
-
-                </VerticalStackLayout>
-            </Border>
-
-            <Border BackgroundColor="#DDE5B6" StrokeShape="RoundRectangle 10" Padding="15">
-                <VerticalStackLayout Spacing="25">
-                    <Label Text="Quests"
-                           FontSize="16"
-                           FontAttributes="Bold"
-                           HorizontalOptions="Center"
-                           TextColor="#433832"/>
-
-                    <VerticalStackLayout Spacing="5">
-                        <Label x:Name="StreakQuestLabel" Text="Check in for 7 days in a row." FontSize="14" TextColor="#433832"/>
-                        <ProgressBar x:Name="StreakQuestProgress" Progress="0" HeightRequest="6" ProgressColor="Brown"/>
-                        <Label Text="Rewards: 100 Gold" FontSize="13" TextColor="Brown"/>
-                        <Button x:Name="StreakQuestButton"
-                                Text="Claim"
-                                Clicked="OnClaimStreakQuestClicked"
-                                IsEnabled="False"/>
+                        <Button x:Name="CheckInButton"
+                                Text="Check-In for Today"
+                                BackgroundColor="#A48E66"
+                                TextColor="White"
+                                FontAttributes="Bold"
+                                CornerRadius="20"
+                                Clicked="OnCheckInClicked"/>
                     </VerticalStackLayout>
+                </Border>
 
-                    <VerticalStackLayout Spacing="5">
-                        <Label x:Name="MonthQuestLabel" Text="Check in every day for this month." FontSize="14" TextColor="#433832"/>
-                        <ProgressBar x:Name="MonthQuestProgress" Progress="0" HeightRequest="6" ProgressColor="Brown"/>
-                        <Label Text="Rewards: 500 Gold" FontSize="13" TextColor="Brown"/>
-                        <Button x:Name="MonthQuestButton"
-                                Text="Claim"
-                                Clicked="OnClaimMonthQuestClicked"
-                                IsEnabled="False"/>
+                <!-- QUESTS LIST CARD -->
+                <Border BackgroundColor="#DDE5B6" StrokeShape="RoundRectangle 10" Padding="15">
+                    <VerticalStackLayout Spacing="25">
+                        <Label Text="Quests" FontSize="16" FontAttributes="Bold" HorizontalOptions="Center" TextColor="#433832"/>
+
+                        <!-- Quest 1 -->
+                        <VerticalStackLayout Spacing="5">
+                            <Label x:Name="StreakQuestLabel" Text="Check in for 7 days in a row." FontSize="14" TextColor="#433832"/>
+                            <ProgressBar x:Name="StreakQuestProgress" Progress="0" HeightRequest="6" ProgressColor="Brown"/>
+                            <Label Text="Rewards: 100 Gold" FontSize="13" TextColor="Brown"/>
+                            <Button x:Name="StreakQuestButton" Text="Claim" Clicked="OnClaimStreakQuestClicked" IsEnabled="False" BackgroundColor="#8B7E74"/>
+                        </VerticalStackLayout>
+
+                        <!-- Quest 2 -->
+                        <VerticalStackLayout Spacing="5">
+                            <Label x:Name="MonthQuestLabel" Text="Check in every day for this month." FontSize="14" TextColor="#433832"/>
+                            <ProgressBar x:Name="MonthQuestProgress" Progress="0" HeightRequest="6" ProgressColor="Brown"/>
+                            <Label Text="Rewards: 500 Gold" FontSize="13" TextColor="Brown"/>
+                            <Button x:Name="MonthQuestButton" Text="Claim" Clicked="OnClaimMonthQuestClicked" IsEnabled="False" BackgroundColor="#8B7E74"/>
+                        </VerticalStackLayout>
+
+                        <!-- Quest 3 -->
+                        <VerticalStackLayout Spacing="5">
+                            <Label x:Name="TasksQuestLabel" Text="Complete 3 Daily Tasks" FontSize="14" TextColor="#433832"/>
+                            <ProgressBar x:Name="TasksQuestProgress" Progress="0" HeightRequest="6" ProgressColor="Brown"/>
+                            <Label Text="Rewards: 50 Gold" FontSize="13" TextColor="Brown"/>
+                            <Button x:Name="TasksQuestButton" Text="Claim" Clicked="OnClaimTasksQuestClicked" IsEnabled="False" BackgroundColor="#8B7E74"/>
+                        </VerticalStackLayout>
+
                     </VerticalStackLayout>
+                </Border>
 
-                    <VerticalStackLayout Spacing="5">
-                        <Label x:Name="TasksQuestLabel" Text="Complete 3 Daily Tasks" FontSize="14" TextColor="#433832"/>
-                        <ProgressBar x:Name="TasksQuestProgress" Progress="0" HeightRequest="6" ProgressColor="Brown"/>
-                        <Label Text="Rewards: 50 Gold" FontSize="13" TextColor="Brown"/>
-                        <Button x:Name="TasksQuestButton"
-                                Text="Claim"
-                                Clicked="OnClaimTasksQuestClicked"
-                                IsEnabled="False"/>
-                    </VerticalStackLayout>
+                <!-- Bottom Spacer -->
+                <BoxView HeightRequest="50" Color="Transparent"/>
 
-                </VerticalStackLayout>
-            </Border>
-        </VerticalStackLayout>
-    </ScrollView>
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
 </ContentPage>

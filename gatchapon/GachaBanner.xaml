@@ -3,96 +3,95 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="gatchapon.GachaBanner"
              Title="GACHABANNER"
-             BackgroundColor="#ADC179">
-    <Grid RowDefinitions="Auto,*,Auto">
+             BackgroundColor="#ADC179"
+             Shell.NavBarIsVisible="False"
+             Shell.TabBarIsVisible="False">
 
-        <VerticalStackLayout Grid.Row="0" Spacing="10">
-            <Border BackgroundColor="#DDE5B6"
-                    Padding="10">
-                <HorizontalStackLayout Spacing="8"
-                                       HorizontalOptions="End">
-                   
-                    <Border BackgroundColor="#6C584D"
-                            StrokeShape="RoundRectangle 10"
-                            Padding="5">
-                        <HorizontalStackLayout Spacing="5">
-                            <Image Source="primogem.png" WidthRequest="20" HeightRequest="20"/>
-                            <Label Text="9999999" TextColor="#F2F0D5" FontSize="18" FontAttributes="Bold"/>
-                        </HorizontalStackLayout>
-                    </Border>
+    <Grid RowDefinitions="Auto, *">
+
+        <!-- 1. CUSTOM HEADER (ZIndex=1 ensures it stays on top) -->
+        <Grid Grid.Row="0" 
+              BackgroundColor="#ADC179"
+              HeightRequest="60"
+              Padding="15,0"
+              ZIndex="1">
+
+            <ImageButton Source="back_icon.png"
+                         HeightRequest="30"
+                         WidthRequest="30"
+                         HorizontalOptions="Start"
+                         VerticalOptions="Center"
+                         BackgroundColor="Transparent"
+                         Clicked="OnBackClicked"/>
+
+            <Label Text="LIMITED BANNER"
+                   TextColor="White"
+                   FontSize="20"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"
+                   Margin="-50,0,0,0"/>
+
+            <Border BackgroundColor="#6C584D" 
+                    StrokeShape="RoundRectangle 15" 
+                    HeightRequest="30"
+                    StrokeThickness="0"
+                    Padding="12,0"
+                    HorizontalOptions="End"
+                    VerticalOptions="Center">
+                <HorizontalStackLayout Spacing="5" VerticalOptions="Center">
+                    <Image Source="goldcoin_icon.png" Aspect="AspectFit" HeightRequest="18" WidthRequest="18" VerticalOptions="Center"/>
+                    <Label x:Name="goldcoin" Text="0" TextColor="White" FontSize="14" FontAttributes="Bold" VerticalOptions="Center" />
                 </HorizontalStackLayout>
             </Border>
-        </VerticalStackLayout>
-
-        <Grid Grid.Row="1" BackgroundColor="#ADC179">
-            <Image Source="marisol.png"
-                   Aspect="AspectFill"
-                   Opacity="1.0"  
-                   HorizontalOptions="Fill"
-                   VerticalOptions="Fill"/>
-            <Grid Padding="10" RowDefinitions="Auto,*" ColumnDefinitions="Auto,*">
-                <VerticalStackLayout Grid.Row="0" Grid.Column="0"
-                                     Spacing="10" VerticalOptions="Start"
-                                     Margin="5,20,0,0">
-                </VerticalStackLayout>
-
-                <VerticalStackLayout Grid.Row="1" Grid.ColumnSpan="2"
-                                     VerticalOptions="End"
-                                     HorizontalOptions="Center"
-                                     Margin="0,0,0,0">
-                    <Label Text="Mario"
-                           FontSize="36"
-                           TextColor="White"
-                           FontAttributes="Bold"
-                           HorizontalTextAlignment="Center"/>
-                    <HorizontalStackLayout HorizontalOptions="Center" Spacing="2">
-                        <Label Text="★" TextColor="Yellow" FontSize="25"/>
-                        <Label Text="★" TextColor="Yellow" FontSize="25"/>
-                        <Label Text="★" TextColor="Yellow" FontSize="25"/>
-                        <Label Text="★" TextColor="Yellow" FontSize="25"/>
-                        <Label Text="★" TextColor="Yellow" FontSize="25"/>
-                    </HorizontalStackLayout>
-                    <Label Text="God of Games"
-                           FontSize="18"
-                           TextColor="Black"
-                           HorizontalTextAlignment="Center"/>
-                </VerticalStackLayout>
-            </Grid>
         </Grid>
 
-        <!-- this is the buttons supposedly. -->
-        <Border Grid.Row="2"
-                BackgroundColor="#DDE5B6"
-                Padding="15">
-            <Grid ColumnDefinitions="Auto,Auto,Auto"
-                  ColumnSpacing="10"
-                  HorizontalOptions="End">
+        <!-- 2. MAIN CONTENT (Full Screen Grid) -->
+        <Grid Grid.Row="1">
 
-                <Button 
-                    Grid.Column="1"
-                    WidthRequest="140"
-                    VerticalOptions="Center"
-                    Text="1x Pull" 
-                    FontSize="20"
-                    FontAttributes="Bold"
-                    Clicked="OnSinglePullClicked" 
-                    Padding="15,10"
-                    Background="#6C584D"
-                    TextColor="White"
-                    />
-                <Button 
-                    Grid.Column="2"
-                    WidthRequest="140"
-                    VerticalOptions="Center"
-                    Text="10x Pull" 
-                    FontSize="20"
-                    FontAttributes="Bold"
-                    Clicked="OnTenPullClicked" 
-                    Padding="15,10"
-                    Background="#6C584D"
-                    TextColor="White"
-                    />
-            </Grid>
-        </Border>
+            <!-- LAYER 1: BACKGROUND IMAGE -->
+            <!-- Fills the entire space behind the card -->
+            <Image Source="marisol_bannercompact.png"
+                   Aspect="AspectFill"
+                   HorizontalOptions="Fill"
+                   VerticalOptions="Fill"/>
+
+            <!-- LAYER 2: BOTTOM CARD (The "Pop-up") -->
+            <!-- Pinned to the bottom with VerticalOptions="End" -->
+            <Border BackgroundColor="#DDE5B6" 
+                    StrokeShape="RoundRectangle 20,20,0,0" 
+                    Padding="20"
+                    StrokeThickness="0"
+                    VerticalOptions="End"
+                    Margin="0,0,0,0">
+
+                <VerticalStackLayout Spacing="15">
+                    <!-- Timer or Title Area -->
+                    <Label Text="Summon" 
+                           FontSize="18" 
+                           FontAttributes="Bold" 
+                           TextColor="#433832"
+                           HorizontalOptions="Center"/>
+
+                    <!-- OPTIONAL: Add Time Remaining here if you want -->
+                    <!-- <Label Text="Time Remaining: 00:00:00" ... /> -->
+
+                    <Grid ColumnDefinitions="*, *" ColumnSpacing="15">
+                        <Button Grid.Column="0" Text="1x Pull" FontSize="16" FontAttributes="Bold" BackgroundColor="#6C584D" TextColor="White" CornerRadius="12" HeightRequest="50" Clicked="OnSinglePullClicked"/>
+                        <Button Grid.Column="1" Text="10x Pull" FontSize="16" FontAttributes="Bold" BackgroundColor="#6C584D" TextColor="White" CornerRadius="12" HeightRequest="50" Clicked="OnTenPullClicked"/>
+                    </Grid>
+
+                    <Label Text="*Guaranteed Epic every 80 pulls" 
+                           FontSize="12" 
+                           TextColor="#6C584D" 
+                           HorizontalOptions="Center"
+                           Opacity="0.8"/>
+
+                    <!-- Extra bottom padding for safe area -->
+                    <BoxView HeightRequest="10" Color="Transparent"/>
+                </VerticalStackLayout>
+            </Border>
+
+        </Grid>
     </Grid>
 </ContentPage>

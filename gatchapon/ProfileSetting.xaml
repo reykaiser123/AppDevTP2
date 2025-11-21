@@ -2,125 +2,220 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="gatchapon.ProfileSetting"
-             Title="ProfileSetting"
-             Shell.BackgroundColor="#ADC179"
-             Shell.TitleColor="White"
-             Shell.ForegroundColor="White"
-             
-             BackgroundColor="#E5F0C4">
+             BackgroundColor="#ADC179"
+             NavigationPage.HasNavigationBar="False"
+             Shell.NavBarIsVisible="False">
 
-    <ScrollView>
-        <VerticalStackLayout Padding="10" Spacing="15">
-            <Border BackgroundColor="#DDE5B6" StrokeShape="RoundRectangle 10" Padding="25">
-                <VerticalStackLayout Spacing="30">
+    <Grid RowDefinitions="Auto, *">
 
-                    <HorizontalStackLayout Spacing="10">
-                        <!-- Profile Picture Border -->
-                        <Border
-                            WidthRequest="94"
-                            HeightRequest="94"
-                            StrokeShape="RoundRectangle 47"
-                            Background="#C1B7A1"
-                            HorizontalOptions="Start"
-                            VerticalOptions="Center">
-                            <ImageButton
-                                x:Name="ProfileImageButton"
-                                Source="profile_placeholder.png"
-                                BackgroundColor="Transparent"
-                                Aspect="AspectFill"
-                                CornerRadius="47"
-                                Clicked="OnProf" />
+        <!-- 1. CUSTOM HEADER -->
+        <Grid Grid.Row="0" 
+              BackgroundColor="#ADC179"
+              HeightRequest="60"
+              Padding="15,0">
+
+            <!-- Back Button -->
+            <ImageButton Source="back_icon.png"
+                         HeightRequest="30"
+                         WidthRequest="30"
+                         HorizontalOptions="Start"
+                         VerticalOptions="Center"
+                         BackgroundColor="Transparent"
+                         Clicked="OnBackClicked"/>
+
+            <!-- Title -->
+            <Label Text="SETTINGS"
+                   TextColor="White"
+                   FontSize="20"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"/>
+        </Grid>
+
+        <!-- 2. MAIN CONTENT -->
+        <ScrollView Grid.Row="1" Padding="20">
+            <VerticalStackLayout Spacing="20">
+
+                <!-- A. PROFILE HEADER -->
+                <Grid ColumnDefinitions="Auto, *" ColumnSpacing="15">
+                    <!-- Avatar Container -->
+                    <Grid Grid.Column="0" 
+                          HeightRequest="84" 
+                          WidthRequest="84"
+                          HorizontalOptions="Start"
+                          VerticalOptions="Center">
+
+                        <!-- Main Profile Picture -->
+                        <Border HeightRequest="80"
+                                WidthRequest="80"
+                                StrokeShape="RoundRectangle 40"
+                                StrokeThickness="0"
+                                BackgroundColor="#F1EED8"
+                                HorizontalOptions="Center"
+                                VerticalOptions="Center">
+                            <ImageButton x:Name="ProfileImageButton"
+                                         Source="profile_placeholder.png"
+                                         Aspect="AspectFill"
+                                         Clicked="OnProf"/>
                         </Border>
 
-                        <!-- Username + Change Username Button -->
-                        <VerticalStackLayout VerticalOptions="Center">
-                            <Label x:Name="Userlabel"
-                                   Text="Username Placeholder"
-                                   TextColor="Black"
-                                   FontAttributes="Bold"
-                                   FontSize="20" />
-                            <Button
-                                Text="Change Username"
-                                BackgroundColor="#8B6F4E"
+                        <!-- Edit Icon Overlay -->
+                        <Border BackgroundColor="#8C7051"
+                                StrokeShape="RoundRectangle 12"
+                                StrokeThickness="0"
+                                HeightRequest="24"
+                                WidthRequest="24"
+                                HorizontalOptions="End"
+                                VerticalOptions="End"
+                                Margin="0,0,0,0">
+                            <ImageButton Source="edit_icon.png"
+                                          Padding="5"
+                                          BackgroundColor="Transparent"
+                                          Clicked="OnProf"/>
+                        </Border>
+                    </Grid>
+
+                    <!-- Name & Edit Info -->
+                    <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="5">
+                        <Label x:Name="Userlabel"
+                               Text="Loading..."
+                               TextColor="#4A3B32"
+                               FontSize="18"
+                               FontAttributes="Bold"/>
+
+                        <Button Text="Change Username"
+                                BackgroundColor="#A58668"
                                 TextColor="White"
-                                Padding="5,2"
-                                Margin="10,0,0,0"
-                                Clicked="Cnamebtn" />
-                        </VerticalStackLayout>
-                    </HorizontalStackLayout>
-
-                    <VerticalStackLayout Spacing="5">
-                        <Label Text="Email" TextColor="Black" FontAttributes="Bold"/>
-
-                        <!-- ==== THIS IS THE LINE I FIXED ==== -->
-                        <Label x:Name="EmailDisplayLabel" 
-                               Text="example.google@gmail.com" 
-                               TextColor="Gray"/>
-
-                        <Label Text="Phone number" TextColor="Black" FontAttributes="Bold"/>
-                        <Label Text="+0901 234 5678" TextColor="Gray"/>
-                        <Button Text="Change Phone Number"
-                                BackgroundColor="#8B6F4E" 
-                                TextColor="White"
-                                Margin="10"
-                                Padding="5,2"
-                                Clicked="Cphonebtn"/>
+                                FontSize="12"
+                                Padding="10,0"
+                                HeightRequest="30"
+                                HorizontalOptions="Start"
+                                CornerRadius="5"
+                                Clicked="Cnamebtn"/>
                     </VerticalStackLayout>
+                </Grid>
 
-                    <Button Text="Log-out"
-                            BackgroundColor="#E57373" 
-                            TextColor="White" 
-                            Padding="8"
-                            Clicked="OnLogout"/>
+                <!-- B. ACCOUNT CARD -->
+                <Border BackgroundColor="#F1EED8" 
+                        StrokeShape="RoundRectangle 15" 
+                        StrokeThickness="0" 
+                        Padding="20">
+                    <VerticalStackLayout Spacing="20">
 
-                </VerticalStackLayout>
-            </Border>
+                        <!-- Email Section -->
+                        <VerticalStackLayout Spacing="5">
+                            <Label Text="Email" TextColor="#5D4037" FontAttributes="Bold"/>
+                            <Label x:Name="EmailDisplayLabel" Text="..." TextColor="#8D7B6F"/>
+                            <Button Text="Change Email"
+                                    BackgroundColor="#6E5C4D"
+                                    TextColor="White"
+                                    FontSize="12"
+                                    HorizontalOptions="Start"
+                                    Padding="10,0"
+                                    HeightRequest="32"
+                                    CornerRadius="8"
+                                    Clicked="OnUpdateEmailClicked"/>
+                        </VerticalStackLayout>
 
-            <!-- Settings section -->
-            <Border BackgroundColor="#DDE5B6" StrokeShape="RoundRectangle 10" Padding="15">
-                <VerticalStackLayout>
-                    <Label Text="Settings" TextColor="#6C584D" FontAttributes="Bold" FontSize="16" Margin="0,0,0,10"/>
-                    <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
-                        <Image Source="question_icon.png" WidthRequest="32" HeightRequest="32"
-                               VerticalOptions="Center" />
-                        <Label Text="Dark Mode" TextColor="#6C584D" VerticalOptions="Center"/>
-                        <Switch IsToggled="False"/>
-                    </HorizontalStackLayout>
-                    <HorizontalStackLayout Spacing="10" Margin="0,10,0,0">
-                        <Image Source="question_icon.png" WidthRequest="32" HeightRequest="32"
-                               VerticalOptions="Center" />
-                        <Label Text="Push Notifications" TextColor="#6C584D" VerticalOptions="Center"/>
-                        <Switch IsToggled="False"/>
-                    </HorizontalStackLayout>
-                </VerticalStackLayout>
-            </Border>
+                        <BoxView HeightRequest="1" Color="#DCD6C0"/>
 
-            <!-- Information section -->
-            <Border BackgroundColor="#DDE5B6" StrokeShape="RoundRectangle 10" Padding="15">
-                <VerticalStackLayout>
-                    <Label Text="Information" TextColor="#6C584D" FontAttributes="Bold" FontSize="16" Margin="0,0,0,10"/>
-                    <HorizontalStackLayout Spacing="10" Margin="0,5">
-                        <HorizontalStackLayout.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="OnAppV" />
-                        </HorizontalStackLayout.GestureRecognizers>
-                        <Image Source="question_icon.png" WidthRequest="32" HeightRequest="32"
-                               VerticalOptions="Center" />
-                        <Label Text="App Version" TextColor="#6C584D" VerticalOptions="Center"/>
-                        <Label Text="v0.1" TextColor="#6C584D" VerticalOptions="Center" HorizontalOptions="End"/>
-                    </HorizontalStackLayout>
+                        <!-- Password Section -->
+                        <VerticalStackLayout Spacing="5">
+                            <Label Text="Password" TextColor="#5D4037" FontAttributes="Bold"/>
+                            <Label Text="****************" TextColor="#8D7B6F"/>
+                            <Button Text="Change Password"
+                                    BackgroundColor="#6E5C4D"
+                                    TextColor="White"
+                                    FontSize="12"
+                                    HorizontalOptions="Start"
+                                    Padding="10,0"
+                                    HeightRequest="32"
+                                    CornerRadius="8"
+                                    Clicked="OnUpdatePasswordClicked"/>
+                        </VerticalStackLayout>
 
-                    <HorizontalStackLayout Spacing="10" Margin="0,5">
-                        <HorizontalStackLayout.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="OnSup" />
-                        </HorizontalStackLayout.GestureRecognizers>
-                        <Image Source="question_icon.png" WidthRequest="32" HeightRequest="32"
-                               VerticalOptions="Center" />
-                        <Label Text="Support" TextColor="#6C584D" VerticalOptions="Center"/>
-                        <Label Text=">" TextColor="#6C584D" VerticalOptions="Center" HorizontalOptions="End"/>
-                    </HorizontalStackLayout>
-                </VerticalStackLayout>
-            </Border>
+                        <BoxView HeightRequest="1" Color="#DCD6C0"/>
 
-        </VerticalStackLayout>
-    </ScrollView>
+                        <!-- Phone Section -->
+                        <VerticalStackLayout Spacing="5">
+                            <Label Text="Phone number (2FA)" TextColor="#5D4037" FontAttributes="Bold"/>
+                            <Label x:Name="PhoneLabel" Text="No Phone Set" TextColor="#8D7B6F"/>
+                            <Button Text="Change Phone Number"
+                                    BackgroundColor="#6E5C4D"
+                                    TextColor="White"
+                                    FontSize="12"
+                                    HorizontalOptions="Start"
+                                    Padding="10,0"
+                                    HeightRequest="32"
+                                    CornerRadius="8"
+                                    Clicked="Cphonebtn"/>
+                        </VerticalStackLayout>
+
+                        <!-- Logout Button -->
+                        <Button Text="Log-out"
+                                BackgroundColor="#D66F6F"
+                                TextColor="White"
+                                FontAttributes="Bold"
+                                CornerRadius="8"
+                                Margin="0,10,0,0"
+                                Clicked="OnLogout"/>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- C. SETTINGS CARD -->
+                <Label Text="Settings" TextColor="#5D4037" FontAttributes="Bold" FontSize="16" Margin="0,5,0,0"/>
+                <Border BackgroundColor="#F1EED8" StrokeShape="RoundRectangle 15" StrokeThickness="0" Padding="15">
+                    <VerticalStackLayout Spacing="0">
+                        <!-- Dark Mode -->
+                        <Grid ColumnDefinitions="30, *, Auto" HeightRequest="40">
+                            <Image Source="moon_icon.png" Aspect="AspectFit" HeightRequest="20"/>
+                            <Label Grid.Column="1" Text="Dark Mode" TextColor="#5D4037" VerticalOptions="Center" Margin="10,0,0,0"/>
+                            <Switch Grid.Column="2" OnColor="#A58668" IsToggled="False"/>
+                        </Grid>
+
+                        <BoxView HeightRequest="1" Color="#DCD6C0" Margin="0,10"/>
+
+                        <!-- Push Notifications -->
+                        <Grid ColumnDefinitions="30, *, Auto" HeightRequest="40">
+                            <Image Source="bell_icon.png" Aspect="AspectFit" HeightRequest="20"/>
+                            <Label Grid.Column="1" Text="Push Notifications" TextColor="#5D4037" VerticalOptions="Center" Margin="10,0,0,0"/>
+                            <Switch Grid.Column="2" OnColor="#A58668" IsToggled="True"/>
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- D. INFORMATION CARD -->
+                <Label Text="Information" TextColor="#5D4037" FontAttributes="Bold" FontSize="16" Margin="0,5,0,0"/>
+                <Border BackgroundColor="#F1EED8" StrokeShape="RoundRectangle 15" StrokeThickness="0" Padding="15">
+                    <VerticalStackLayout Spacing="0">
+
+                        <!-- App Version -->
+                        <Grid ColumnDefinitions="30, *, Auto" HeightRequest="40">
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnAppV"/>
+                            </Grid.GestureRecognizers>
+                            <Image Source="info_icon.png" Aspect="AspectFit" HeightRequest="20"/>
+                            <Label Grid.Column="1" Text="App Version" TextColor="#5D4037" VerticalOptions="Center" Margin="10,0,0,0"/>
+                            <Label Grid.Column="2" Text="v0.1" TextColor="#A58668" FontAttributes="Bold" VerticalOptions="Center"/>
+                        </Grid>
+
+                        <BoxView HeightRequest="1" Color="#DCD6C0" Margin="0,10"/>
+
+                        <!-- Support -->
+                        <Grid ColumnDefinitions="30, *, Auto" HeightRequest="40">
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnSup"/>
+                            </Grid.GestureRecognizers>
+                            <Image Source="question_icon.png" Aspect="AspectFit" HeightRequest="20"/>
+                            <Label Grid.Column="1" Text="Support" TextColor="#5D4037" VerticalOptions="Center" Margin="10,0,0,0"/>
+                            <Label Grid.Column="2" Text=">" TextColor="#A58668" FontAttributes="Bold" VerticalOptions="Center"/>
+                        </Grid>
+
+                    </VerticalStackLayout>
+                </Border>
+
+                <BoxView HeightRequest="50" Color="Transparent"/>
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
 </ContentPage>

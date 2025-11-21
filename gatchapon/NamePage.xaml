@@ -2,34 +2,52 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="gatchapon.NamePage"
-               BackgroundColor="#ADC179">
+             Title="Character Name"
+             BackgroundColor="#ADC179"
+             NavigationPage.HasNavigationBar="False">
 
-    <VerticalStackLayout Spacing="25" Padding="40" VerticalOptions="Center">
+    <Border BackgroundColor="#F2EED5" 
+            StrokeShape="RoundRectangle 20"
+            Margin="30"
+            Padding="25"
+            VerticalOptions="Center">
 
-        <Label Text="Welcome!"
-               FontSize="26"
-               FontAttributes="Bold"
-               HorizontalOptions="Center" />
+        <VerticalStackLayout Spacing="20">
 
-        <Label Text="What should we call you?"
-               FontSize="18"
-               HorizontalOptions="Center" />
-        <Border StrokeThickness="0" BackgroundColor="#FFF8E1">
-            <Border.StrokeShape>
-                <RoundRectangle CornerRadius="12" />
-            </Border.StrokeShape>
+            <Label Text="What should we call you?" 
+                   FontSize="22" 
+                   FontAttributes="Bold" 
+                   TextColor="#6C584D"
+                   HorizontalOptions="Center"
+                   HorizontalTextAlignment="Center"/>
 
-            <Entry Placeholder="Enter your name"
-           BackgroundColor="Transparent"
-           x:Name="Name123"
-           Margin="10,8" />
-        </Border>
+            <Label Text="This will be your display name in the game." 
+                   FontSize="14" 
+                   TextColor="#8C7B70"
+                   HorizontalOptions="Center"
+                   HorizontalTextAlignment="Center"/>
 
+            <!-- Name Entry -->
+            <Border Stroke="#6C584D"
+                    StrokeThickness="1"
+                    StrokeShape="RoundRectangle 10"
+                    BackgroundColor="White"
+                    Padding="10,0">
+                <Entry x:Name="Name123" 
+                       Placeholder="Enter Name..."
+                       TextColor="#4A3A32"
+                       PlaceholderColor="#B0A090"
+                       FontSize="16"/>
+            </Border>
 
-        <Button Text="Continue"
-                BackgroundColor="#5E4529"
-                TextColor="White"
-                CornerRadius="12"
-                Clicked="OnContinueClicked" />
-    </VerticalStackLayout>
+            <Button Text="Begin Adventure!" 
+                    BackgroundColor="#6C584D"
+                    TextColor="White"
+                    CornerRadius="12"
+                    HeightRequest="50"
+                    FontAttributes="Bold"
+                    Clicked="OnContinueClicked"/>
+
+        </VerticalStackLayout>
+    </Border>
 </ContentPage>

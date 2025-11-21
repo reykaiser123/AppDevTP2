@@ -1,12 +1,11 @@
-using Microsoft.Maui.Controls;
-using System;
-using gatchapon.Models; // 1. ADD THIS to get your UserModel
+using gatchapon.Models;
 
 namespace gatchapon
 {
     public partial class Register : ContentPage
     {
         private readonly FirebaseAuthService _authService = new();
+        private readonly FirebaseDatabaseService _dbService = new();
 
         public Register()
         {
@@ -19,11 +18,9 @@ namespace gatchapon
             string password = passwordEntryReg.Text;
             string confirm = confirmPass.Text;
 
-            if (string.IsNullOrWhiteSpace(email) ||
-                string.IsNullOrWhiteSpace(password) ||
-                string.IsNullOrWhiteSpace(confirm))
+            if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(password))
             {
-                await DisplayAlert("Error", "Please enter all fields.", "OK");
+                await DisplayAlert("Error", "Please fill in all fields.", "OK");
                 return;
             }
 
@@ -33,57 +30,52 @@ namespace gatchapon
                 return;
             }
 
-            // We already have _authService defined in the class, no need for a new one
-            var result = await _authService.SignUpWithEmailPasswordAsync(email, password);
-
-            if (result == null)
+            try
             {
-                await DisplayAlert("Error", "Registration failed. Check your email format or try again.", "OK");
-                return;
+                // --- UPDATED SECTION FOR YOUR SERVICE ---
+
+                // 1. Call your custom HTTP method
+                var authResponse = await _authService.SignUpWithEmailPasswordAsync(email, password);
+
+                // 2. Check if it was successful
+                if (authResponse != null && !string.IsNullOrEmpty(authResponse.localId))
+                {
+                    string userId = authResponse.localId;
+
+                    // 3. Create User Model (5000 Gold Bonus)
+                    var newUser = new UserModel
+                    {
+                        UserId = userId,
+                        Email = email,
+                        Username = "Traveler",
+                        Gold = 5000, // 50 Pulls
+                        Gems = 0,
+                        UnlockedCharacters = new List<string>(),
+                        HasStreamGearCrate = false,
+                        HasSkyHighScarf = false,
+                        HasWovenCloudTapestry = false
+                    };
+
+                    // 4. Save to Database
+                    await _dbService.SaveUserAsync(userId, newUser);
+
+                    // 5. Go to NamePage
+                    await Navigation.PushAsync(new NamePage(userId));
+                }
+                else
+                {
+                    await DisplayAlert("Error", "Registration failed. Please try again.", "OK");
+                }
             }
-
-            await _authService.SaveUserSessionAsync(result); // this saves refresh_token and user_email
-
-            // --- 2. THIS IS THE UPDATED SECTION ---
-            var dbService = new FirebaseDatabaseService();
-
-            // Create a new user using your proper UserModel
-            var newUser = new UserModel
+            catch (Exception ex)
             {
-                UserId = result.localId,
-                Email = result.email,
-                // We set Username to blank, because the 'NamePage' will fill it in
-                Username = "",
-
-                // Set the default values for your game
-                Gold = 0,
-                Gems = 0,
-                CheckInStreak = 0,
-                LastCheckInDate = "",
-                LastTaskCompletionDate = "",
-                TasksCompletedToday = 0,
-                MonthlyCheckIns = new List<string>(), // Initialize the list
-                Claimed3Tasks = false,
-                Claimed7DayStreak = false,
-                ClaimedMonthly = false
-            };
-
-            // Save the new, complete user object to Firebase
-            await dbService.SaveUserAsync(result.localId, newUser);
-            // --- END OF UPDATED SECTION ---
-
-            //Store UserId securely on device
-            await SecureStorage.SetAsync("userId", result.localId);
-
-            await DisplayAlert("Success", "Account created successfully!", "OK");
-
-            // Navigate to the NamePage to ask for their username
-            await Shell.Current.GoToAsync($"{nameof(NamePage)}?userId={result.localId}");
+                await DisplayAlert("Registration Failed", ex.Message, "OK");
+            }
         }
 
-        private async void Clkhere(object sender, EventArgs e)
+        private async void Clkhere(object sender, TappedEventArgs e)
         {
-            await Shell.Current.GoToAsync("//Login");
+            await Navigation.PopAsync();
         }
     }
 }

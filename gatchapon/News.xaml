@@ -3,93 +3,140 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="gatchapon.News"
              Title="NEWS"
-             BackgroundColor="#ADC179">
+             BackgroundColor="#ADC179"
+             Shell.NavBarIsVisible="False"
+             Shell.TabBarIsVisible="False">
+    <!-- Hides the Tab Bar -->
 
-    <ScrollView>
-        <VerticalStackLayout Padding="15" Spacing="20">
+    <Grid RowDefinitions="Auto, *">
 
-            <!-- Header -->
-            <Grid ColumnDefinitions="Auto,*,Auto" VerticalOptions="Center">
-                <Label Grid.Column="1"
-                       Text="NEWS"
-                       FontAttributes="Bold"
-                       HorizontalOptions="Center"
-                       VerticalOptions="Center"
-                       TextColor="White"
-                       FontSize="18"/>
+        <!-- CUSTOM HEADER -->
+        <Grid Grid.Row="0" 
+              BackgroundColor="#95A564"
+              HeightRequest="60"
+              Padding="15,0">
 
-                <!-- Sort Button -->
-                <Button Grid.Column="2"
-                        Text="Sort"
-                        FontSize="14"
-                        TextColor="White"
-                        BackgroundColor="#6C534D"
-                        CornerRadius="8"
-                        WidthRequest="60"
-                        HeightRequest="28"
-                        VerticalOptions="Center"
-                        HorizontalOptions="End"/>
-            </Grid>
+            <!-- Back Button -->
+            <ImageButton Source="back_icon.png"
+                         HeightRequest="30"
+                         WidthRequest="30"
+                         HorizontalOptions="Start"
+                         VerticalOptions="Center"
+                         BackgroundColor="Transparent"
+                         Clicked="OnBackClicked"/>
 
-            <!-- News Card -->
-            <Border BackgroundColor="#DCE5B6"
-                    Padding="12"
-                    StrokeThickness="0">
-                <Border.StrokeShape>
-                    <RoundRectangle CornerRadius="16"/>
-                </Border.StrokeShape>
+            <!-- Title -->
+            <Label Text="NEWS"
+                   TextColor="White"
+                   FontSize="20"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"/>
+        </Grid>
 
-                <VerticalStackLayout Spacing="12">
+        <!-- SCROLLABLE CONTENT -->
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="20" Spacing="0">
 
-                    <!-- IMAGE SECTION (PAIMON AREA) -->
-                    <Border Padding="0"
-                            BackgroundColor="Transparent"
-                            StrokeThickness="0">
-                        <Border.StrokeShape>
-                            <RoundRectangle CornerRadius="12" />
-                        </Border.StrokeShape>
+                <!-- NEWS STICKER HEADER SECTION -->
+                <Grid ColumnDefinitions="*, Auto" 
+                      HeightRequest="140"
+                      VerticalOptions="End"
+                      ZIndex="1"
+                      Margin="0,10,0,-30">
 
-                        <!-- The actual image -->
-                        <Image Source="news_img.png"
-                               Aspect="AspectFill"
-                               HeightRequest="170">
-                            <Image.Clip>
-                                <RoundRectangleGeometry CornerRadius="12"/>
-                            </Image.Clip>
-                        </Image>
-                    </Border>
+                    <!-- News Sticker -->
+                    <Image Grid.Column="0"
+                           Grid.ColumnSpan="2"
+                           Source="news_title_sticker.png" 
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center"
+                           HeightRequest="130" 
+                           Aspect="AspectFit"/>
 
-                    <!-- TEXT SECTION -->
-                    <Border BackgroundColor="#F0EAD2"
-                            Padding="14">
-                        <Border.StrokeShape>
-                            <RoundRectangle CornerRadius="12"/>
-                        </Border.StrokeShape>
+                    <!-- Sort Button -->
+                    <Button Grid.Column="1"
+                            Text="Sort"
+                            FontSize="12"
+                            TextColor="White"
+                            BackgroundColor="#6C534D"
+                            CornerRadius="8"
+                            WidthRequest="60"
+                            HeightRequest="30"
+                            VerticalOptions="Start"
+                            HorizontalOptions="End"
+                            Margin="0,20,10,0"
+                            Clicked="OnSortClicked"/>
+                </Grid>
 
-                        <VerticalStackLayout Spacing="8">
+                <!-- MAIN CONTENT CARD -->
+                <Border BackgroundColor="#DCE5B6"
+                        Padding="12"
+                        StrokeThickness="0"
+                        Margin="0,0,0,20">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="16"/>
+                    </Border.StrokeShape>
 
-                            <Label Text="News Title"
-                                   FontAttributes="Bold"
-                                   FontSize="17"
-                                   TextColor="#5A4A42"/>
+                    <VerticalStackLayout Spacing="12">
 
-                            <Label Text="dd / mm / yy"
-                                   FontSize="13"
-                                   TextColor="#6C534D"/>
+                        <!-- Inner Image Card -->
+                        <Border HeightRequest="180"
+                                HorizontalOptions="Fill"
+                                Padding="0"
+                                BackgroundColor="#C9D4AA"
+                                StrokeThickness="0">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="12"/>
+                            </Border.StrokeShape>
 
-                            <Label Text="Body text for your whole article or post. We'll put in some lorem ipsum to show how a filled-out page might look:"
-                                   FontSize="13"
-                                   TextColor="Black"/>
+                            <Image Source="news_img.png"
+                                   Aspect="AspectFill" 
+                                   VerticalOptions="Fill"
+                                   HorizontalOptions="Fill"/>
+                        </Border>
 
-                            <Label Text="Excepteur efficient emerging, minim veniam anim aute carefully curated Ginza conversation exquisite perfect nostrud nisi intricate Content. Qui international first-class nulla ut. Punctual adipiscing, essential lovely queen tempor eiusmod irure. Exclusive izakaya charming Scandinavian impeccable aute quality of life soft power pariatur Melbourne occaecat discerning. Qui wardrobe aliquip, et Porter destination Toto remarkable officia Helsinki excepteur Basset hound. Zürich sleepy perfect consectetur."
-                                   FontSize="13"
-                                   TextColor="Black"/>
-                        </VerticalStackLayout>
-                    </Border>
+                        <!-- Text Content -->
+                        <Border BackgroundColor="#F0EAD2"
+                                Padding="15">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="12"/>
+                            </Border.StrokeShape>
 
-                </VerticalStackLayout>
-            </Border>
+                            <VerticalStackLayout Spacing="8">
+                                <!-- Header Row -->
+                                <Grid ColumnDefinitions="*, Auto">
+                                    <Label Grid.Column="0" 
+                                           Text="Version 1.004"
+                                           FontAttributes="Bold"
+                                           FontSize="18"
+                                           TextColor="#5A4A42"/>
 
-        </VerticalStackLayout>
-    </ScrollView>
+                                    <Label Grid.Column="1" 
+                                           Text="19 / 11 / 25"
+                                           FontSize="12"
+                                           TextColor="#8C7B70"
+                                           VerticalOptions="Center"/>
+                                </Grid>
+
+                                <BoxView HeightRequest="1" Color="#D4CDB8" Margin="0,2"/>
+
+                                <Label Text="We've pushed a script update in version 1.004 containing vital backend changes, quality-of-life additions, and stability fixes:"
+                                       FontSize="14"
+                                       TextColor="#4A3A32"
+                                       LineHeight="1.2"/>
+
+                                <Label Text="• Script Optimization: Enhanced core processing routines, resulting in a 10% reduction in average load times.&#10;• Balance Changes: Adjusted loot table weights for rare drops.&#10;• Bug Fixes: Resolved an issue causing the 'Sort' button to occasionally fail."
+                                       FontSize="13"
+                                       TextColor="#5A4A42"
+                                       LineHeight="1.4"/>
+                            </VerticalStackLayout>
+                        </Border>
+
+                    </VerticalStackLayout>
+                </Border>
+
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
 </ContentPage>

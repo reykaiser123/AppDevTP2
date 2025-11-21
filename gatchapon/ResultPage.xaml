@@ -5,19 +5,26 @@
              Title="ResultPage"
              Background="#ADC179">
     <ScrollView>
-        <Grid RowDefinitions="Auto,*,Auto,Auto" Padding="20">
+        <Grid RowDefinitions="Auto,*,Auto,Auto,Auto" Padding="20">
 
-            <!-- Pull counter -->
+
+            <Label x:Name="goldcoin"
+                Grid.Row="0"
+                   Text=""
+                TextColor="White"
+                FontSize="18"
+                HorizontalOptions="Center"
+                Margin="0,0,0,10"/>      
             <Label x:Name="PullCountLabel"
-               Grid.Row="0"
+               Grid.Row="1"
                TextColor="White"
                FontSize="18"
                HorizontalOptions="Center"
                Margin="0,0,0,10"/>
 
-            <!-- Result grid -->
+            
             <CollectionView x:Name="ResultCollection"
-                        Grid.Row="1"
+                        Grid.Row="2"
                         HorizontalOptions="Center"
                         VerticalOptions="Center"
                         ItemsLayout="HorizontalGrid, 2">
@@ -38,8 +45,8 @@
                 </CollectionView.ItemTemplate>
             </CollectionView>
 
-            <!-- Pull Again button -->
-            <Button Grid.Row="2"
+            
+            <Button Grid.Row="3"
                 Text="Pull Again"
                 Clicked="OnPullAgainClicked"
                 BackgroundColor="#6B63FF"
@@ -50,8 +57,8 @@
                 WidthRequest="200"
                 Margin="0,10,0,0"/>
 
-            <!-- Close button -->
-            <Button Grid.Row="3"
+            
+            <Button Grid.Row="4"
                 Text="Close"
                 Clicked="OnCloseClicked"
                 BackgroundColor="#9B84EE"

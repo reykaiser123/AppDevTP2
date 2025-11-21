@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="gatchapon.Inventory"
+             BackgroundColor="#ADC179"
+             Shell.NavBarIsVisible="False"
+             Shell.TabBarIsVisible="False">
+
+    <Grid RowDefinitions="Auto, *">
+        <Grid Grid.Row="0" 
+       BackgroundColor="#ADC179"
+       HeightRequest="60"
+       Padding="15,0">
+
+            <!-- Back Button -->
+            <ImageButton Source="back_icon.png"
+                  HeightRequest="30"
+                  WidthRequest="30"
+                  HorizontalOptions="Start"
+                  VerticalOptions="Center"
+                  BackgroundColor="Transparent"
+                  Clicked="OnBackClicked"/>
+
+            <!-- Title -->
+            <Label Text="INVENTORY"
+            TextColor="White"
+            FontSize="20"
+            FontAttributes="Bold"
+            HorizontalOptions="Center"
+            VerticalOptions="Center"/>
+        </Grid>
+
+        <ScrollView Grid.Row="1" Padding="20">
+            <FlexLayout Wrap="Wrap" 
+                        JustifyContent="Start" 
+                        Direction="Row">
+
+                <!-- ITEM 1: CRATE (Hidden by default) -->
+                <Border x:Name="CrateItem"
+                        IsVisible="False" 
+                        BackgroundColor="#F2EED5"
+                        StrokeShape="RoundRectangle 15"
+                        WidthRequest="100"
+                        HeightRequest="130"
+                        Margin="5">
+                    <VerticalStackLayout Spacing="5" Padding="10" VerticalOptions="Center">
+                        <Image Source="epic_item_marisol.png" HeightRequest="60" Aspect="AspectFit"/>
+                        <Label Text="Gear Crate" FontSize="12" HorizontalTextAlignment="Center" TextColor="#5A4D41" FontAttributes="Bold"/>
+                    </VerticalStackLayout>
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnCrateClicked"/>
+                    </Border.GestureRecognizers>
+                </Border>
+
+                <!-- ITEM 2: SCARF (Hidden by default) -->
+                <Border x:Name="ScarfItem"
+                        IsVisible="False"
+                        BackgroundColor="#F2EED5"
+                        StrokeShape="RoundRectangle 15"
+                        WidthRequest="100"
+                        HeightRequest="130"
+                        Margin="5">
+                    <VerticalStackLayout Spacing="5" Padding="10" VerticalOptions="Center">
+                        <Image Source="epic_item_roberto.png" HeightRequest="60" Aspect="AspectFit"/>
+                        <Label Text="Sky Scarf" FontSize="12" HorizontalTextAlignment="Center" TextColor="#5A4D41" FontAttributes="Bold"/>
+                    </VerticalStackLayout>
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnScarfClicked"/>
+                    </Border.GestureRecognizers>
+                </Border>
+
+                <!-- ITEM 3: TAPESTRY (Hidden by default) -->
+                <Border x:Name="TapestryItem"
+                        IsVisible="False"
+                        BackgroundColor="#F2EED5"
+                        StrokeShape="RoundRectangle 15"
+                        WidthRequest="100"
+                        HeightRequest="130"
+                        Margin="5">
+                    <VerticalStackLayout Spacing="5" Padding="10" VerticalOptions="Center">
+                        <Image Source="legendary_item.png" HeightRequest="60" Aspect="AspectFit"/>
+                        <Label Text="Tapestry" FontSize="12" HorizontalTextAlignment="Center" TextColor="#5A4D41" FontAttributes="Bold"/>
+                    </VerticalStackLayout>
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnTapestryClicked"/>
+                    </Border.GestureRecognizers>
+                </Border>
+
+            </FlexLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

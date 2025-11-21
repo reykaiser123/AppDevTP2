@@ -2,9 +2,14 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="gatchapon.TodoPage"
-             Title="Add New Task" BackgroundColor="#ADC179">
+             Title="Add New Task" 
+             BackgroundColor="#ADC179"
+             Shell.NavBarIsVisible="False"  
+             Shell.TabBarIsVisible="False">
+    <!-- Added these two lines -->
+
     <VerticalStackLayout Padding="30" Spacing="15"
-                         VerticalOptions="Center">
+                          VerticalOptions="Center">
 
         <Label x:Name="TitleLabel"
                Text="Create a New Task"
@@ -21,7 +26,7 @@
                    TextColor="#6C584D"
                    PlaceholderColor="#8a7970"/>
         </Border>
-        
+
         <VerticalStackLayout Spacing="5">
             <Label Text="Difficulty"
                    FontAttributes="Bold"
@@ -39,7 +44,7 @@
                              GroupName="Difficulty"/>
             </HorizontalStackLayout>
         </VerticalStackLayout>
-        
+
         <Button x:Name="SaveButton"
                 Text="Save Task"
                 BackgroundColor="#6C584D"
@@ -48,6 +53,13 @@
                 FontAttributes="Bold"
                 Clicked="OnSaveTaskClicked"
                 HorizontalOptions="Fill"/>
+
+        <!-- Optional: Add a Cancel/Back button since we hid the nav bar -->
+        <Button Text="Cancel"
+                BackgroundColor="Transparent"
+                TextColor="#6C584D"
+                FontAttributes="Bold"
+                Clicked="OnCancelClicked"/>
 
     </VerticalStackLayout>
 </ContentPage>
