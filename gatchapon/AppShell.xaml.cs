@@ -35,6 +35,7 @@ namespace gatchapon
             Routing.RegisterRoute(nameof(FriendsPage), typeof(FriendsPage));
             Routing.RegisterRoute(nameof(CharacterDetail), typeof(CharacterDetail));
             Routing.RegisterRoute(nameof(ImageDisplayPage), typeof(ImageDisplayPage));
+            Routing.RegisterRoute(nameof(Dashboard), typeof(Dashboard));
             
             // ❌ REMOVED: Routing.RegisterRoute(nameof(Dashboard)... 
             // WHY: Dashboard is already defined in AppShell.xaml with Route="DashboardPage"
@@ -52,13 +53,14 @@ namespace gatchapon
                 {
                     // ✅ FIX: Use the Route name defined in AppShell.xaml ("DashboardPage")
                     // The "///" forces it to reset the stack and go to the main tab
-                    await Shell.Current.GoToAsync("///DashboardPage");
+
+                    await Shell.Current.GoToAsync("//Dashboard");
                 }
                 else
                 {
                     // ✅ LOGIC UPDATE: If not logged in, usually go to Login?
                     // If you really want GachaBanner, keep it, but Login is standard.
-                    await Shell.Current.GoToAsync(nameof(Login));
+                    await Shell.Current.GoToAsync("//Login");
                 }
             }
             catch (Exception ex)

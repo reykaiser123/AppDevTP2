@@ -2,10 +2,19 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:models="clr-namespace:gatchapon.Models" 
+             xmlns:converters="clr-namespace:gatchapon.Converters"
              x:Class="gatchapon.Dashboard"
              NavigationPage.HasNavigationBar="False"
              
              BackgroundColor="{AppThemeBinding Light=#ADC179, Dark=#141C12}">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:BoolToClaimTextConverter x:Key="BoolToClaimTextConverter"/>
+            <converters:BoolToClaimColorConverter x:Key="BoolToClaimColorConverter"/>
+            <converters:InvertedBoolConverter x:Key="InvertedBoolConverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
 
     <Grid>
         <ScrollView>
@@ -57,7 +66,16 @@
                                                 <Label Text="{Binding TaskName}" FontSize="16" FontAttributes="Bold" TextColor="{AppThemeBinding Light=#6C584D, Dark=White}"/>
                                                 <Label Text="{Binding Reward, StringFormat='💰 {0}'}" FontSize="12" TextColor="#B8860B"/>
                                             </VerticalStackLayout>
-                                            <Button Grid.Column="2" Text="Claim" Clicked="OnClaimRewardClicked" CommandParameter="{Binding .}" HeightRequest="30" FontSize="10" BackgroundColor="#8B7E74" TextColor="#F0EAD2"/>
+                                            <Button
+                                                Grid.Column="2"
+                                                Text="{Binding IsCompletedToday, Converter={StaticResource BoolToClaimTextConverter}}"
+                                                BackgroundColor="{Binding IsCompletedToday, Converter={StaticResource BoolToClaimColorConverter}}"
+                                                IsEnabled="{Binding IsCompletedToday, Converter={StaticResource InvertedBoolConverter}}"
+                                                Clicked="OnClaimRewardClicked"
+                                                CommandParameter="{Binding .}"
+                                                HeightRequest="30"
+                                                FontSize="10"
+                                                TextColor="#F0EAD2"/>   
                                         </Grid>
                                     </Border>
                                 </DataTemplate>

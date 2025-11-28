@@ -74,17 +74,6 @@
 		</None>
 	</ItemGroup>
 
-
-
-	<ItemGroup>
-		<AndroidResource Remove="NewFolder1\**" />
-		<Compile Remove="NewFolder1\**" />
-		<EmbeddedResource Remove="NewFolder1\**" />
-		<MauiCss Remove="NewFolder1\**" />
-		<MauiXaml Remove="NewFolder1\**" />
-		<None Remove="NewFolder1\**" />
-	</ItemGroup>
-
 	<ItemGroup>
 		<PackageReference Include="CommunityToolkit.Maui" Version="12.2.0" />
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />

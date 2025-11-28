@@ -41,7 +41,7 @@ namespace gatchapon
                     }
                 }
 
-                await Shell.Current.GoToAsync("Login");
+                await Shell.Current.GoToAsync("//Login");
             }
             catch (Exception ex)
             {

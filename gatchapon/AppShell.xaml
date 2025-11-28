@@ -18,8 +18,8 @@
         ContentTemplate="{DataTemplate local:Login}" />
 
     <ShellContent
-        Title="Dashboard"
-        Route="DashboardPage" 
-        ContentTemplate="{DataTemplate local:Dashboard}" />
+    Title="Dashboard"
+    Route="DashboardPage" 
+    ContentTemplate="{DataTemplate local:Dashboard}" />
 
 </Shell>
