@@ -1,4 +1,4 @@
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Reactive.Linq;
 using Firebase.Database;
 using Firebase.Database.Query;
@@ -10,6 +10,8 @@ namespace gatchapon
 {
     public partial class Dashboard : ContentPage
     {
+        private bool _isNavigating = false;
+
         private readonly FirebaseAuthService _authService = new();
         private FirebaseClient _firebaseClient;
         public ObservableCollection<UserTask> TodayTasks { get; set; } = new ObservableCollection<UserTask>();
@@ -36,6 +38,7 @@ namespace gatchapon
             // 2. Engagement Logic (Notifications)
             var notifService = new NotificationService();
             notifService.ScheduleDailyReminder();
+            TodayTasks = new ObservableCollection<UserTask>();
 
             try
             {
@@ -57,6 +60,25 @@ namespace gatchapon
             {
                 Console.WriteLine($"Error checking tasks: {ex.Message}");
             }
+
+            // 2. Dynamically create/load tasks
+            var firebaseTasks = await _firebaseClient.Child("tasks").Child(_currentUserId).OnceAsync<UserTask>();
+
+            foreach (var firebaseTask in firebaseTasks)
+            {
+                var task = new UserTask
+                {
+                    TaskId = Guid.NewGuid().ToString(),
+                    TaskName = "Daily Gold Task",
+                    Reward = 100,
+                    IsCompletedToday = false                     // ✅ reset
+                };
+
+                
+            }
+
+            // 3. Bind to CollectionView
+            TasksCollectionView.ItemsSource = TodayTasks;
         }
 
         protected override void OnDisappearing()
@@ -104,6 +126,7 @@ namespace gatchapon
         // This is already correct, using the new logic where ChatPage defaults to equipped char
         private async void OnCompanionChatClicked(object sender, EventArgs e)
         {
+            await Task.Delay(100);
             await Shell.Current.GoToAsync(nameof(ChatPage));
         }
         // --- END UPDATED CHAT HANDLER ---
@@ -190,10 +213,12 @@ namespace gatchapon
             button.IsEnabled = false;
             button.Text = "Claimed";
             button.BackgroundColor = Color.FromArgb("#4CAF50");
+
         }
 
         private async void OnTasksClicked(object sender, EventArgs e)
         {
+            await Task.Delay(100);
             await NavigationHelper.SafeGoToAsync(nameof(TodoPage));
         }
 
@@ -226,15 +251,134 @@ namespace gatchapon
         }
 
         // --- NAVIGATION ---
-        private async void OnNotificationsClicked(object sender, EventArgs e) => await NavigationHelper.SafeGoToAsync(nameof(NotificationsPage));
-        private async void OnCommunityClicked(object sender, EventArgs e) => await NavigationHelper.SafeGoToAsync(nameof(Page));
-        private async void OnclickedShop(object sender, EventArgs e) => await Shell.Current.GoToAsync("Shop");
+        private async void OnNotificationsClicked(object sender, EventArgs e)
+        {
+            if (_isNavigating) return;
+            _isNavigating = true;
+
+            try
+            {
+                await Shell.Current.GoToAsync("NotificationsPage");
+            }
+            finally
+            {
+                _isNavigating = false;
+            }
+            
+        }
+        private async void OnCommunityClicked(object sender, EventArgs e)
+        {
+            if (_isNavigating) return;
+            _isNavigating = true;
+
+            try
+            {
+                await Shell.Current.GoToAsync("SocialPage");
+            }
+            finally
+            {
+                _isNavigating = false;
+            }
+        }
+        private async void OnclickedShop(object sender, EventArgs e)
+        {
+            if (_isNavigating) return;
+            _isNavigating = true;
+
+            try
+            {
+                await Shell.Current.GoToAsync("Shop");
+            }
+            finally
+            {
+                _isNavigating = false;
+            }
+        }
         private void TapGestureRecognizer_Tapped(object sender, TappedEventArgs e) { }
-        private async void OnBannerTapped(object sender, EventArgs e) => await Shell.Current.GoToAsync("GachaBanner");
-        private async void OnProfileClicked(object sender, EventArgs e) => await Shell.Current.GoToAsync("ProfileSetting");
-        private async void OnclickedQuest(object sender, EventArgs e) => await Shell.Current.GoToAsync("Quest");
-        private async void OnclickedCharacter(object? sender, EventArgs e) => await Shell.Current.GoToAsync("Characters");
-        private async void OnclickedNews(object? sender, EventArgs e) => await Shell.Current.GoToAsync("News");
-        private async void OnClickedInventory(object sender, EventArgs e) => await NavigationHelper.SafeGoToAsync(nameof(Inventory));
+        private async void OnBannerTapped(object sender, EventArgs e)
+        {
+            if (_isNavigating) return;
+            _isNavigating = true;
+
+            try
+            {
+                await Shell.Current.GoToAsync("GachaBanner");
+            }
+            finally
+            {
+                _isNavigating = false;
+            }
+        }
+        private async void OnProfileClicked(object sender, EventArgs e)
+        {
+            if (_isNavigating) return;
+            _isNavigating = true;
+
+            try
+            {
+                await Shell.Current.GoToAsync("ProfileSetting");
+            }
+            finally
+            {
+                _isNavigating = false;
+            }
+            
+        }
+        private async void OnclickedQuest(object sender, EventArgs e)
+        {
+            if (_isNavigating) return;
+            _isNavigating = true;
+
+            try
+            {
+                await Shell.Current.GoToAsync("Quest");
+            }
+            finally
+            {
+                _isNavigating = false;
+            }
+        }
+        private async void OnclickedCharacter(object? sender, EventArgs e)
+        {
+            if (_isNavigating) return;
+            _isNavigating = true;
+
+            try
+            {
+                await Shell.Current.GoToAsync("Characters");
+            }
+            finally
+            {
+                _isNavigating = false;
+            }
+        }
+        private async void OnclickedNews(object? sender, EventArgs e)
+        {
+            if (_isNavigating) return;
+            _isNavigating = true;
+
+            try
+            {
+                await Shell.Current.GoToAsync("News");
+            }
+            finally
+            {
+                _isNavigating = false;
+            }
+        }
+        private async void OnClickedInventory(object sender, EventArgs e)
+        {
+            if (_isNavigating) return;
+            _isNavigating = true;
+
+            try
+            {
+                await Shell.Current.GoToAsync("Inventory");
+            }
+            finally
+            {
+                _isNavigating = false;
+            }
+        }
     }
 }
