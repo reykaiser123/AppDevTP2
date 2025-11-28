@@ -18,6 +18,7 @@ namespace gatchapon
         public ObservableCollection<UserItem> DisplayedUsers { get; set; } = new ObservableCollection<UserItem>();
 
         private HashSet<string> _myFriendIds = new HashSet<string>();
+        private HashSet<string> _myPendingRequestIds = new HashSet<string>();
 
         public SocialPage()
         {
@@ -38,10 +39,26 @@ namespace gatchapon
             _currentUserName = await SecureStorage.GetAsync("userName");
 
             await LoadMyFriendIds();
+            await LoadMyPendingRequestIds();
             await PreloadUsers();
 
             // first search run
             RefreshSearch(UserSearchEntry.Text);
+        }
+        private async Task LoadMyPendingRequestIds()
+        {
+            _myPendingRequestIds.Clear();
+            if (string.IsNullOrEmpty(_currentUserId)) return;
+
+            // Note: Assumes you save requests sent on your own profile under 'requests_sent'
+            var requestsSent = await _firebaseClient
+                .Child("users")
+                .Child(_currentUserId)
+                .Child("requests_sent") // <--- NEW NODE YOU NEED TO ADD WHEN SENDING REQUEST
+                .OnceAsync<object>();
+
+            foreach (var r in requestsSent)
+                _myPendingRequestIds.Add(r.Key);
         }
 
         private async Task LoadMyFriendIds()
@@ -97,13 +114,20 @@ namespace gatchapon
             foreach (var u in results)
             {
                 bool isFriend = _myFriendIds.Contains(u.UserId);
+                bool isPending = _myPendingRequestIds.Contains(u.UserId);
+
+                string status = "Add Friend";
+                if (isFriend)
+                    status = "Friends";
+                else if (isPending)
+                    status = "Requested";
 
                 DisplayedUsers.Add(new UserItem
                 {
                     UserId = u.UserId,
                     Username = u.Username,
                     ProfilePictureUrl = u.ProfilePictureUrl ?? "profile_placeholder.png",
-                    FriendStatus = isFriend ? "Friends" : "Add Friend"
+                    FriendStatus = status
                 });
             }
         }
@@ -131,6 +155,13 @@ namespace gatchapon
                     .Child("friend_requests_received")
                     .PostAsync(new { FromId = _currentUserId, FromName = myName });
 
+                await _firebaseClient // <--- NEW WRITE
+                    .Child("users")
+                    .Child(_currentUserId)
+                    .Child("requests_sent")
+                    .Child(item.UserId)
+                    .PutAsync(new { Sent = DateTime.UtcNow });
+              
                 item.FriendStatus = "Requested";
 
                 await DisplayAlert("Success", "Friend request sent!", "OK");
@@ -161,7 +192,7 @@ namespace gatchapon
 
         private async void OnBackClicked(object sender, EventArgs e)
         {
-            await Navigation.PopAsync();
+            await NavigationHelper.SafeGoToAsync("..");
         }
 
         public class UserItem

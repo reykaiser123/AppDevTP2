@@ -23,6 +23,7 @@ namespace gatchapon
         public FriendsPage()
         {
             InitializeComponent();
+            this.BindingContext = this;
             // Assuming ContactsList is the x:Name of your CollectionView in XAML
             // ContactsList.ItemsSource = Contacts; 
         }
@@ -121,7 +122,7 @@ namespace gatchapon
 
         private async void OnBackClicked(object sender, EventArgs e)
         {
-            await Navigation.PopAsync();
+            await NavigationHelper.SafeGoToAsync("..");
         }
 
         // --- START OF REQUIRED HELPER CLASSES ---

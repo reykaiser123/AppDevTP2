@@ -194,7 +194,7 @@ namespace gatchapon
 
         private async void OnTasksClicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new TodoPage());
+            await NavigationHelper.SafeGoToAsync(nameof(TodoPage));
         }
 
         private async void OnTaskTapped(object sender, TappedEventArgs e)
@@ -204,7 +204,7 @@ namespace gatchapon
 
             string action = await DisplayActionSheet("Task Options", "Cancel", "Delete", "Edit");
 
-            if (action == "Edit") await Navigation.PushAsync(new TodoPage(task));
+            if (action == "Edit") await NavigationHelper.SafeGoToAsync(nameof(TodoPage));
             else if (action == "Delete")
             {
                 bool confirm = await DisplayAlert("Delete Task", $"Delete '{task.TaskName}'?", "Yes", "No");
@@ -226,8 +226,8 @@ namespace gatchapon
         }
 
         // --- NAVIGATION ---
-        private async void OnNotificationsClicked(object sender, EventArgs e) => await Navigation.PushAsync(new NotificationsPage());
-        private async void OnCommunityClicked(object sender, EventArgs e) => await Navigation.PushAsync(new SocialPage());
+        private async void OnNotificationsClicked(object sender, EventArgs e) => await NavigationHelper.SafeGoToAsync(nameof(NotificationsPage));
+        private async void OnCommunityClicked(object sender, EventArgs e) => await NavigationHelper.SafeGoToAsync(nameof(Page));
         private async void OnclickedShop(object sender, EventArgs e) => await Shell.Current.GoToAsync("Shop");
         private void TapGestureRecognizer_Tapped(object sender, TappedEventArgs e) { }
         private async void OnBannerTapped(object sender, EventArgs e) => await Shell.Current.GoToAsync("GachaBanner");
@@ -235,6 +235,6 @@ namespace gatchapon
         private async void OnclickedQuest(object sender, EventArgs e) => await Shell.Current.GoToAsync("Quest");
         private async void OnclickedCharacter(object? sender, EventArgs e) => await Shell.Current.GoToAsync("Characters");
         private async void OnclickedNews(object? sender, EventArgs e) => await Shell.Current.GoToAsync("News");
-        private async void OnClickedInventory(object sender, EventArgs e) => await Navigation.PushAsync(new Inventory());
+        private async void OnClickedInventory(object sender, EventArgs e) => await NavigationHelper.SafeGoToAsync(nameof(Inventory));
     }
 }

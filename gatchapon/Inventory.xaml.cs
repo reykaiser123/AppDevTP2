@@ -13,7 +13,7 @@ namespace gatchapon
         }
         private async void OnBackClicked(object sender, EventArgs e)
         {
-            await Navigation.PopAsync();
+            await NavigationHelper.SafeGoToAsync("..");
         }
         protected override async void OnAppearing()
         {

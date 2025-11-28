@@ -55,12 +55,12 @@ namespace gatchapon
                         HasSkyHighScarf = false,
                         HasWovenCloudTapestry = false
                     };
-
-                    // 4. Save to Database
-                    await _dbService.SaveUserAsync(userId, newUser);
+                    // 4. Save the full Firebase session data to SecureStorage
+                    await _authService.SaveUserSessionAsync(authResponse);
 
                     // 5. Go to NamePage
-                    await Navigation.PushAsync(new NamePage(userId));
+                    // FIX: Use SafeGoToAsync if you implement the helper, or use Shell navigation.
+                    await NavigationHelper.SafeGoToAsync($"{nameof(NamePage)}?userId={userId}");
                 }
                 else
                 {

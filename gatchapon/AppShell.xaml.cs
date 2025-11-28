@@ -20,7 +20,6 @@ namespace gatchapon
 
             // Game Pages
             Routing.RegisterRoute(nameof(Characters), typeof(Characters));
-            Routing.RegisterRoute(nameof(ChatPage), typeof(ChatPage)); // Don't forget ChatPage!
             Routing.RegisterRoute(nameof(ResultPage), typeof(ResultPage));
             Routing.RegisterRoute(nameof(ResultPageSingle), typeof(ResultPageSingle));
             Routing.RegisterRoute(nameof(NamePage), typeof(NamePage));

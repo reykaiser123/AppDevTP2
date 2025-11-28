@@ -1,4 +1,4 @@
-using Firebase.Database;
+﻿using Firebase.Database;
 using Firebase.Database.Query;
 using gatchapon.Models;
 using Microsoft.Maui.Controls;
@@ -106,11 +106,18 @@ namespace gatchapon
                 }
 
                 // Set Header Image after _targetProfilePic is defined
-                if (_targetProfilePic.Contains("/") || _targetProfilePic.Contains("\\"))
-                    HeaderFaceImage.Source = ImageSource.FromFile(_targetProfilePic);
+                // Assuming remote URL images are stored in _targetProfilePic if the image is from a user (contains http)
+                if (_targetProfilePic.StartsWith("http", StringComparison.OrdinalIgnoreCase))
+                {
+                    HeaderFaceImage.Source = ImageSource.FromUri(new Uri(_targetProfilePic));
+                }
                 else
+                {
+                    // Must be a local file path or resource name (for bots/defaults)
                     HeaderFaceImage.Source = _targetProfilePic;
+                }
             }
+
             catch { }
         }
 
@@ -257,9 +264,18 @@ namespace gatchapon
                     string newAns = await DisplayPromptAsync("Teach", "What should I say?");
                     if (!string.IsNullOrEmpty(newAns))
                     {
-                        // FIX 2: Pass the TargetUserName when teaching the AI
-                        await _brainService.TeachAsync(text, newAns, TargetUserName);
-                        ReceiveMessage("Thanks! I learned it.");
+                        // FIX: Check the result of TeachAsync
+                        bool learned = await _brainService.TeachAsync(text, newAns, TargetUserName);
+
+                        if (learned)
+                        {
+                            ReceiveMessage("Thanks! I learned it.");
+                        }
+                        else
+                        {
+                            // 🛑 NEW: Notify user that the content was inappropriate
+                            await DisplayAlert("Content Rejected", "Sorry, that phrase contains inappropriate language and cannot be saved.", "OK");
+                        }
                     }
                 }
             }

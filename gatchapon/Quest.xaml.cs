@@ -50,7 +50,7 @@ namespace gatchapon
         // --- NAVIGATION FIX ---
         private async void OnBackClicked(object sender, EventArgs e)
         {
-            await Navigation.PopAsync();
+            await NavigationHelper.SafeGoToAsync("..");
         }
 
         private async Task LoadAndDisplayUserData()

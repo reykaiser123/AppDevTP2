@@ -1,18 +1,26 @@
+﻿using Firebase.Auth;
 using gatchapon.Models;
 using Microsoft.Maui.Storage;
 
 namespace gatchapon
 {
+    // 🛑 ADD THE QUERY PROPERTY ATTRIBUTE
+    [QueryProperty(nameof(UserId), "userId")]
     public partial class NamePage : ContentPage
     {
         private readonly FirebaseDatabaseService _dbService = new();
         private string _userId;
+        public string UserId
+        {
+            get => _userId;
+            set => _userId = value;
+        }
 
         // Constructor accepts the UserId passed from RegisterPage
         public NamePage(string userId)
         {
             InitializeComponent();
-            _userId = userId;
+            
         }
 
         private async void OnContinueClicked(object sender, EventArgs e)
@@ -45,8 +53,7 @@ namespace gatchapon
                     await DisplayAlert("Nice!", $"Welcome to the world, {name}!", "OK");
 
                     // 5. Navigate to Dashboard (Resetting the stack so they can't go back)
-                    Application.Current.MainPage = new AppShell();
-                    await Shell.Current.GoToAsync("///DashboardPage");
+                    await Shell.Current.GoToAsync("///DashboardPage"); // <--- KEEP ONLY THIS LINE (The "///" resets the stack)
                 }
                 else
                 {

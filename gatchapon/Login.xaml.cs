@@ -66,7 +66,7 @@ namespace gatchapon
                 await SecureStorage.SetAsync("userName", displayName);
 
                 await DisplayAlert("Welcome", $"Welcome back, {displayName}!", "OK");
-
+                await _authService.SaveUserSessionAsync(signInResult);
                 // 5. NAVIGATE TO DASHBOARD
                 // Using '///DashboardPage' to match your AppShell Route
                 await Shell.Current.GoToAsync("///DashboardPage");

@@ -11,7 +11,12 @@ namespace gatchapon
     {
         private readonly FirebaseClient _firebaseClient;
         private List<QuestionItem> _localKnowledgeBase = new List<QuestionItem>();
-
+        // 🛑 ADD: List of terms to filter against
+        private readonly List<string> _forbiddenWords = new List<string>
+       {
+        "badword1", "swearword2", "inappropriatephrase3" // Replace with actual profanity/harsh terms
+        // Ensure this list is lowercase for case-insensitive checking
+    };
         public BrainService()
         {
             _firebaseClient = new FirebaseClient("https://gatchapon-d7cd9-default-rtdb.firebaseio.com/");
@@ -34,6 +39,17 @@ namespace gatchapon
                         }
                     }
                 });
+        }
+        private bool ContainsInappropriateContent(string text)
+        {
+            if (string.IsNullOrEmpty(text))
+            {
+                return false;
+            }
+            string lowerText = text.ToLower();
+
+            // Check if the input contains any of the forbidden phrases
+            return _forbiddenWords.Any(word => lowerText.Contains(word));
         }
 
         // --- UPDATED: GET ANSWER WITH CHARACTER FILTERING ---
@@ -69,12 +85,22 @@ namespace gatchapon
 
         // --- UPDATED: TEACH WITH CHARACTER TAGGING ---
         // charName is added here to tag the owner of the new knowledge
-        public async Task TeachAsync(string question, string answer, string charName)
+        // --- UPDATED: TEACH WITH CHARACTER TAGGING AND FILTERING ---
+        public async Task<bool> TeachAsync(string question, string answer, string charName) // Changed return type to bool
         {
+            if (ContainsInappropriateContent(question) || ContainsInappropriateContent(answer))
+            {
+                // Return false if filtering failed
+                return false;
+            }
+
+            // If content is clean, proceed with learning
             var newItem = new QuestionItem { Question = question, Answer = answer, Character = charName };
             await _firebaseClient.Child("knowledge_base").PostAsync(newItem);
-        }
 
+            // Return true if learning was successful
+            return true;
+        }
         // --- MATH: (Levenshtein Distance calculation methods remain the same) ---
         private double CalculateSimilarity(string source, string target)
         {
