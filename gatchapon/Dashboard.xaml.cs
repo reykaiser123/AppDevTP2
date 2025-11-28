@@ -28,7 +28,35 @@ namespace gatchapon
         protected override async void OnAppearing()
         {
             base.OnAppearing();
+
+            // 1. Load Data
             await LoadTasks();
+            await LoadActiveCompanion(); // This will now load the correct image/name to the button
+
+            // 2. Engagement Logic (Notifications)
+            var notifService = new NotificationService();
+            notifService.ScheduleDailyReminder();
+
+            try
+            {
+                if (!string.IsNullOrEmpty(_currentUserId))
+                {
+                    var user = await _dbService.GetUserAsync<UserModel>(_currentUserId);
+
+                    if (user != null && user.TasksCompletedToday < 3)
+                    {
+                        notifService.ScheduleTaskReminder();
+                    }
+                    else
+                    {
+                        notifService.CancelTaskReminder();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error checking tasks: {ex.Message}");
+            }
         }
 
         protected override void OnDisappearing()
@@ -38,13 +66,54 @@ namespace gatchapon
             TodayTasks.Clear();
         }
 
+        // --- COMPANION FACE LOGIC ---
+        private async Task LoadActiveCompanion()
+        {
+            _currentUserId = await SecureStorage.GetAsync("userId");
+            if (string.IsNullOrEmpty(_currentUserId)) return;
+
+            try
+            {
+                var user = await _dbService.GetUserAsync<UserModel>(_currentUserId);
+
+                string characterImage = "chat_bubble_default.png";
+                string charName = "LOCKED";
+
+                if (user != null && !string.IsNullOrEmpty(user.EquippedCharacter))
+                {
+                    // Use the equipped character's name to find the asset
+                    characterImage = $"{user.EquippedCharacter.ToLower()}_char.png";
+                    charName = user.EquippedCharacter;
+                }
+
+                if (CompanionButton != null)
+                {
+                    CompanionButton.Source = characterImage;
+                    // Note: We don't actually need the CommandParameter anymore, 
+                    // but keeping it here for debugging/future reference.
+                    CompanionButton.CommandParameter = charName;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error loading companion: {ex.Message}");
+            }
+        }
+
+        // --- UPDATED CHAT HANDLER ---
+        // This is already correct, using the new logic where ChatPage defaults to equipped char
+        private async void OnCompanionChatClicked(object sender, EventArgs e)
+        {
+            await Shell.Current.GoToAsync(nameof(ChatPage));
+        }
+        // --- END UPDATED CHAT HANDLER ---
+
+
+        // --- TASK LOGIC ---
         private async Task LoadTasks()
         {
             _currentUserId = await SecureStorage.GetAsync("userId");
-            if (string.IsNullOrEmpty(_currentUserId))
-            {
-                return;
-            }
+            if (string.IsNullOrEmpty(_currentUserId)) return;
 
             TodayTasks.Clear();
 
@@ -65,22 +134,12 @@ namespace gatchapon
 
                             if (d.EventType == Firebase.Database.Streaming.FirebaseEventType.InsertOrUpdate)
                             {
-                                if (existingTask == null)
-                                {
-                                    TodayTasks.Add(task);
-                                }
-                                else
-                                {
-                                    int index = TodayTasks.IndexOf(existingTask);
-                                    TodayTasks[index] = task;
-                                }
+                                if (existingTask == null) TodayTasks.Add(task);
+                                else TodayTasks[TodayTasks.IndexOf(existingTask)] = task;
                             }
                             else if (d.EventType == Firebase.Database.Streaming.FirebaseEventType.Delete)
                             {
-                                if (existingTask != null)
-                                {
-                                    TodayTasks.Remove(existingTask);
-                                }
+                                if (existingTask != null) TodayTasks.Remove(existingTask);
                             }
                         }
                     });
@@ -98,41 +157,27 @@ namespace gatchapon
                 return;
             }
 
-            // 1. Update the Task
             task.IsCompletedToday = true;
-            // We need to save the date it was completed
-            task.LastUpdated = DateTime.Today.ToString("o"); // <-- REQUIRES 'public string LastUpdated { get; set; }' in UserTask.cs
+            await _firebaseClient.Child("tasks").Child(_currentUserId).Child(task.TaskId).PutAsync(task);
 
-            await _firebaseClient
-                .Child("tasks")
-                .Child(_currentUserId)
-                .Child(task.TaskId)
-                .PutAsync(task);
-
-            // 2. Give Gold Reward & Update Quest Counter
             try
             {
                 var user = await _dbService.GetUserAsync<UserModel>(_currentUserId);
                 if (user != null)
                 {
-                    // --- Give Gold ---
                     user.Gold += task.Reward;
 
-                    // --- Update Quest Counter ---
                     string todayString = DateTime.Today.ToString("o");
                     if (user.LastTaskCompletionDate != todayString)
                     {
-                        // First task of the day, reset count
                         user.TasksCompletedToday = 1;
                         user.LastTaskCompletionDate = todayString;
                     }
                     else
                     {
-                        // Not the first task, increment
                         user.TasksCompletedToday++;
                     }
 
-                    // --- Save User ---
                     await _dbService.SaveUserAsync(_currentUserId, user);
                     await DisplayAlert("Reward Claimed!", $"You earned {task.Reward} gold!", "OK");
                 }
@@ -142,12 +187,10 @@ namespace gatchapon
                 await DisplayAlert("Error", $"Failed to give reward: {ex.Message}", "OK");
             }
 
-            // 3. Update Button State
             button.IsEnabled = false;
             button.Text = "Claimed";
-            button.BackgroundColor = Color.FromArgb("#4CAF50"); // Green color
+            button.BackgroundColor = Color.FromArgb("#4CAF50");
         }
-        // --- ALL OTHER METHODS ARE UNCHANGED ---
 
         private async void OnTasksClicked(object sender, EventArgs e)
         {
@@ -159,45 +202,22 @@ namespace gatchapon
             var task = e.Parameter as UserTask;
             if (task == null) return;
 
-            string action = await DisplayActionSheet(
-                "Task Options",
-                "Cancel",
-                "Delete",
-                "Edit");
+            string action = await DisplayActionSheet("Task Options", "Cancel", "Delete", "Edit");
 
-            switch (action)
+            if (action == "Edit") await Navigation.PushAsync(new TodoPage(task));
+            else if (action == "Delete")
             {
-                case "Edit":
-                    await Navigation.PushAsync(new TodoPage(task));
-                    break;
-
-                case "Delete":
-                    bool confirm = await DisplayAlert(
-                        "Delete Task",
-                        $"Are you sure you want to delete '{task.TaskName}'?",
-                        "Yes, Delete",
-                        "No");
-
-                    if (confirm)
-                    {
-                        await DeleteTask(task);
-                    }
-                    break;
+                bool confirm = await DisplayAlert("Delete Task", $"Delete '{task.TaskName}'?", "Yes", "No");
+                if (confirm) await DeleteTask(task);
             }
         }
 
         private async Task DeleteTask(UserTask task)
         {
-            if (string.IsNullOrEmpty(_currentUserId) || string.IsNullOrEmpty(task.TaskId))
-                return;
-
+            if (string.IsNullOrEmpty(_currentUserId) || string.IsNullOrEmpty(task.TaskId)) return;
             try
             {
-                await _firebaseClient
-                    .Child("tasks")
-                    .Child(_currentUserId)
-                    .Child(task.TaskId)
-                    .DeleteAsync();
+                await _firebaseClient.Child("tasks").Child(_currentUserId).Child(task.TaskId).DeleteAsync();
             }
             catch (Exception ex)
             {
@@ -205,35 +225,16 @@ namespace gatchapon
             }
         }
 
-        // Navigation methods
-        private async void OnclickedShop(object sender, EventArgs e)
-        {
-            await Shell.Current.GoToAsync("Shop");
-        }
+        // --- NAVIGATION ---
+        private async void OnNotificationsClicked(object sender, EventArgs e) => await Navigation.PushAsync(new NotificationsPage());
+        private async void OnCommunityClicked(object sender, EventArgs e) => await Navigation.PushAsync(new SocialPage());
+        private async void OnclickedShop(object sender, EventArgs e) => await Shell.Current.GoToAsync("Shop");
         private void TapGestureRecognizer_Tapped(object sender, TappedEventArgs e) { }
-        private async void OnBannerTapped(object sender, EventArgs e)
-        {
-            await Shell.Current.GoToAsync("GachaBanner");
-        }
-        private async void OnProfileClicked(object sender, EventArgs e)
-        {
-            await Shell.Current.GoToAsync("ProfileSetting");
-        }
-        private async void OnclickedQuest(object sender, EventArgs e)
-        {
-            await Shell.Current.GoToAsync("Quest");
-        }
-        private async void OnclickedCharacter(object? sender, EventArgs e)
-        {
-            await Shell.Current.GoToAsync("Characters");
-        }
-        private async void OnclickedNews(object? sender, EventArgs e)
-        {
-            await Shell.Current.GoToAsync("News");
-        }
-        private async void OnClickedInventory(object sender, EventArgs e)
-        {
-            await Navigation.PushAsync(new Inventory());
-        }
+        private async void OnBannerTapped(object sender, EventArgs e) => await Shell.Current.GoToAsync("GachaBanner");
+        private async void OnProfileClicked(object sender, EventArgs e) => await Shell.Current.GoToAsync("ProfileSetting");
+        private async void OnclickedQuest(object sender, EventArgs e) => await Shell.Current.GoToAsync("Quest");
+        private async void OnclickedCharacter(object? sender, EventArgs e) => await Shell.Current.GoToAsync("Characters");
+        private async void OnclickedNews(object? sender, EventArgs e) => await Shell.Current.GoToAsync("News");
+        private async void OnClickedInventory(object sender, EventArgs e) => await Navigation.PushAsync(new Inventory());
     }
 }

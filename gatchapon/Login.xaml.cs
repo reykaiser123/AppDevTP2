@@ -2,7 +2,8 @@
 using Microsoft.Maui.Controls;
 using System;
 using System.Threading.Tasks;
-using gatchapon.Models; // <-- 1. MAKE SURE THIS IS ADDED
+using gatchapon.Models;
+using Microsoft.Maui.Storage; // Needed for SecureStorage
 
 namespace gatchapon
 {
@@ -22,55 +23,53 @@ namespace gatchapon
             string email = emailEntry.Text;
             string password = passwordEntry.Text;
 
+            // 1. Basic Validation
             if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(password))
             {
                 await DisplayAlert("Error", "Please enter both email and password.", "OK");
                 return;
             }
 
+            // 2. Attempt Sign In
             var signInResult = await _authService.SignInResponseAsync(email, password);
 
             if (signInResult != null)
             {
-                //save userID locally
                 string userId = signInResult.localId;
+
+                // CRITICAL: Save the ID so Dashboard can use it!
                 await SecureStorage.SetAsync("userId", userId);
 
-                // --- 2. THIS IS THE FIXED SECTION ---
-                // Get user data from Firebase as a UserModel
+                // 3. Fetch User Profile (Self-Healing Logic)
+                var userModel = await _dbService.GetUserAsync<UserModel>(userId);
 
-                // --- THIS IS THE NEW, FIXED CODE ---
-                var userData = await _dbService.GetUserAsync<Dictionary<string, object>>(userId);
-                string username = null; // Start with no username
-
-                if (userData != null)
+                // If the account exists in Auth but has NO data in the Database (Realtime DB), fix it now:
+                if (userModel == null)
                 {
-                    // Try to get the Capitalized version first
-                    if (userData.ContainsKey("Username"))
+                    userModel = new UserModel
                     {
-                        username = userData["Username"].ToString();
-                    }
-                    // If that fails, try to get the lowercase version
-                    else if (userData.ContainsKey("username"))
-                    {
-                        username = userData["username"].ToString();
-                    }
+                        UserId = userId,
+                        Email = email,
+                        Username = "Traveler", // Default Name
+                        Gold = 5000,           // Welcome Bonus
+                        Gems = 0,
+                        UnlockedCharacters = new List<string>(),
+                        FriendsCount = 0
+                    };
+
+                    // Save this new/restored profile to Firebase
+                    await _dbService.SaveUserAsync(userId, userModel);
                 }
 
-                // Now, check if we successfully found a username
-                if (!string.IsNullOrEmpty(username))
-                {
-                    await SecureStorage.SetAsync("userName", username);
-                    await DisplayAlert("Welcome Back", $"Welcome back, {username}!", "OK");
-                }
-                else
-                {
-                    await DisplayAlert("Login", "No username found for this account.", "OK");
-                }
-                // --- END OF NEW CODE ---
-                // --- END OF FIXED SECTION ---
+                // 4. Save Name locally for easy access
+                string displayName = !string.IsNullOrEmpty(userModel.Username) ? userModel.Username : "Traveler";
+                await SecureStorage.SetAsync("userName", displayName);
 
-                await Shell.Current.GoToAsync("//Dashboard");
+                await DisplayAlert("Welcome", $"Welcome back, {displayName}!", "OK");
+
+                // 5. NAVIGATE TO DASHBOARD
+                // Using '///DashboardPage' to match your AppShell Route
+                await Shell.Current.GoToAsync("///DashboardPage");
             }
             else
             {
@@ -80,11 +79,13 @@ namespace gatchapon
 
         private async void Createhere(object sender, EventArgs e)
         {
+            // Navigate to Register Page
             await Shell.Current.GoToAsync("Register");
         }
 
         private async void onForgotPassBTN(object sender, EventArgs e)
         {
+            // Navigate to Forgot Password Page
             await Shell.Current.GoToAsync("ForgotPass");
         }
     }

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="gatchapon.NotificationsPage"
+             BackgroundColor="#ADC179"
+             NavigationPage.HasNavigationBar="False">
+
+    <Border BackgroundColor="#ADC179" StrokeThickness="0" Padding="25">
+        <Grid RowDefinitions="Auto, *">
+
+            <Grid Grid.Row="0" HeightRequest="60">
+                <ImageButton Source="back_icon.png" 
+                             HeightRequest="30" 
+                             WidthRequest="30" 
+                             HorizontalOptions="Start" 
+                             VerticalOptions="Center" 
+                             BackgroundColor="Transparent"
+                             Clicked="OnBackClicked"/>
+
+                <Label Text="NOTIFICATIONS" 
+                       TextColor="White" 
+                       FontSize="20" 
+                       FontAttributes="Bold" 
+                       HorizontalOptions="Center" 
+                       VerticalOptions="Center"/>
+            </Grid>
+
+            <CollectionView x:Name="RequestsList" Grid.Row="1" Margin="0,20">
+                <CollectionView.EmptyView>
+                    <Label Text="No new notifications." TextColor="White" HorizontalOptions="Center" VerticalOptions="Center"/>
+                </CollectionView.EmptyView>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Border BackgroundColor="#f5f1d6" StrokeShape="RoundRectangle 15" Padding="15" Margin="0,5">
+                            <Grid ColumnDefinitions="*, Auto, Auto" ColumnSpacing="10">
+                                <VerticalStackLayout VerticalOptions="Center">
+                                    <Label Text="{Binding FromName}" FontAttributes="Bold" TextColor="#6C584D"/>
+                                    <Label Text="wants to be friends." FontSize="12" TextColor="Gray"/>
+                                </VerticalStackLayout>
+
+                                <Button Grid.Column="1" Text="Accept" BackgroundColor="#4CAF50" TextColor="White" FontSize="12" HeightRequest="35" CornerRadius="10" Clicked="OnAcceptClicked" CommandParameter="{Binding .}"/>
+
+                                <Button Grid.Column="2" Text="X" BackgroundColor="#D66F6F" TextColor="White" FontSize="12" HeightRequest="35" WidthRequest="40" CornerRadius="10" Clicked="OnDeclineClicked" CommandParameter="{Binding .}"/>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </Grid>
+    </Border>
+</ContentPage>

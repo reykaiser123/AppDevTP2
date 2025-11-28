@@ -1,6 +1,9 @@
+using Firebase.Database;
+using Firebase.Database.Query;
 using gatchapon.Models;
-using Microsoft.Maui.Storage;
 using Microsoft.Maui.Media;
+using Microsoft.Maui.Storage;
+using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace gatchapon
@@ -12,9 +15,16 @@ namespace gatchapon
         private string _currentUserId;
         private UserModel _currentUser;
 
+        // --- INITIALIZATION ---
+        private readonly FirebaseClient _firebaseClient = new FirebaseClient("https://gatchapon-d7cd9-default-rtdb.firebaseio.com/");
+        public ObservableCollection<FriendItem> FriendsList { get; set; } = new ObservableCollection<FriendItem>();
+        // --- END INITIALIZATION ---
+
         public ProfileSetting()
         {
             InitializeComponent();
+            // Ensure you have bound this CollectionView in XAML: x:Name="FriendsCollectionView"
+            FriendsCollectionView.ItemsSource = FriendsList;
         }
 
         protected override async void OnAppearing()
@@ -22,6 +32,82 @@ namespace gatchapon
             base.OnAppearing();
             _currentUserId = await SecureStorage.GetAsync("userId");
             await LoadUserProfile();
+            await LoadFriendsList(); // Load friends list first
+            LoadSettingsState();
+        }
+
+        // --- NEW: LOAD FRIENDS LIST METHOD (FIXES DUPLICATION ISSUE) ---
+        private async Task LoadFriendsList()
+        {
+            FriendsList.Clear();
+            if (string.IsNullOrEmpty(_currentUserId)) return;
+
+            try
+            {
+                // Retrieve friends using OnceAsync
+                var friendsData = await _firebaseClient
+                    .Child("users")
+                    .Child(_currentUserId)
+                    .Child("friends")
+                    .OnceAsync<FriendItem>();
+
+                foreach (var item in friendsData)
+                {
+                    // The item.Key is the actual FriendId (from the PutAsync fix in NotificationsPage)
+                    FriendsList.Add(new FriendItem
+                    {
+                        FriendId = item.Key,
+                        Name = item.Object.Name
+                    });
+                }
+
+                // Update the visible friend count label based on the actual list size
+                if (FriendsLabel != null)
+                {
+                    FriendsLabel.Text = $"{FriendsList.Count} Friends";
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error loading friends list: {ex.Message}");
+                if (FriendsLabel != null) FriendsLabel.Text = "Error Loading Friends";
+            }
+        }
+        // --- END LOAD FRIENDS LIST METHOD ---
+
+        // --- NEW: CHAT FRIEND HANDLER ---
+        private async void OnChatFriendClicked(object sender, EventArgs e)
+        {
+            var friend = (sender as Button)?.CommandParameter as FriendItem;
+            if (friend == null) return;
+
+            // Navigate to the ChatPage, passing the user ID to trigger _isHumanChat = true
+            await Shell.Current.GoToAsync($"{nameof(ChatPage)}?targetId={friend.FriendId}&targetName={friend.Name}");
+        }
+        // --- END CHAT FRIEND HANDLER ---
+
+
+        private void LoadSettingsState()
+        {
+            bool isDark = Preferences.Get("isDarkMode", false);
+            DarkModeSwitch.IsToggled = isDark;
+            bool isNotifEnabled = Preferences.Get("isNotifEnabled", true);
+            NotifSwitch.IsToggled = isNotifEnabled;
+        }
+
+        private void OnDarkModeToggled(object sender, ToggledEventArgs e)
+        {
+            bool isDark = e.Value;
+            Application.Current.UserAppTheme = isDark ? AppTheme.Dark : AppTheme.Light;
+            Preferences.Set("isDarkMode", isDark);
+        }
+
+        private async void OnNotificationsToggled(object sender, ToggledEventArgs e)
+        {
+            bool isEnabled = e.Value;
+            Preferences.Set("isNotifEnabled", isEnabled);
+            if (isEnabled) await DisplayAlert("Notifications", "Notifications ON", "OK");
+            else await DisplayAlert("Notifications", "Notifications OFF", "OK");
         }
 
         private async void OnBackClicked(object sender, EventArgs e)
@@ -38,30 +124,22 @@ namespace gatchapon
                 _currentUser = await _dbService.GetUserAsync<UserModel>(_currentUserId);
                 if (_currentUser != null)
                 {
-                    // Update UI with database values
                     Userlabel.Text = !string.IsNullOrEmpty(_currentUser.Username) ? _currentUser.Username : "Traveler";
                     EmailDisplayLabel.Text = !string.IsNullOrEmpty(_currentUser.Email) ? _currentUser.Email : "No Email";
 
-                    // Load Phone Number
-                    if (!string.IsNullOrEmpty(_currentUser.PhoneNumber))
-                        PhoneLabel.Text = _currentUser.PhoneNumber;
-                    else
-                        PhoneLabel.Text = "No Phone Set";
+                    if (!string.IsNullOrEmpty(_currentUser.PhoneNumber)) PhoneLabel.Text = _currentUser.PhoneNumber;
+                    else PhoneLabel.Text = "No Phone Set";
 
-                    // Load Profile Picture
+                    // Note: FriendsLabel text is updated by LoadFriendsList() to use the actual list count.
+                    // The line below uses the stored count, which may be outdated, so LoadFriendsList is preferred.
+                    // if (FriendsLabel != null) FriendsLabel.Text = $"{_currentUser.FriendsCount} Friends"; 
+
                     if (!string.IsNullOrEmpty(_currentUser.ProfilePictureUrl))
                     {
-                        // Check if it's a local file path (from device) or a resource name (from game)
                         if (_currentUser.ProfilePictureUrl.Contains("/") || _currentUser.ProfilePictureUrl.Contains("\\"))
-                        {
-                            // It's a file path from the device
-                            ProfileImageButton.Source = ImageSource.FromFile(_currentUser.ProfilePictureUrl);
-                        }
+                            AvatarButton.Source = ImageSource.FromFile(_currentUser.ProfilePictureUrl);
                         else
-                        {
-                            // It's a character name from resources (e.g., "marisol_char.png")
-                            ProfileImageButton.Source = _currentUser.ProfilePictureUrl;
-                        }
+                            AvatarButton.Source = _currentUser.ProfilePictureUrl;
                     }
                 }
             }
@@ -71,7 +149,6 @@ namespace gatchapon
             }
         }
 
-        // --- 1. CHANGE USERNAME ---
         private async void Cnamebtn(object sender, EventArgs e)
         {
             string newName = await DisplayPromptAsync("Change Username", "Enter your new username:");
@@ -83,7 +160,6 @@ namespace gatchapon
             }
         }
 
-        // --- 2. CHANGE PHONE NUMBER ---
         private async void Cphonebtn(object sender, EventArgs e)
         {
             string newPhone = await DisplayPromptAsync("Change Phone", "Enter new phone number:", keyboard: Keyboard.Telephone);
@@ -95,11 +171,9 @@ namespace gatchapon
             }
         }
 
-        // --- 3. CHANGE EMAIL ---
         private async void OnUpdateEmailClicked(object sender, EventArgs e)
         {
             string newEmail = await DisplayPromptAsync("Update Email", "Enter new email address:", keyboard: Keyboard.Email);
-
             if (!string.IsNullOrWhiteSpace(newEmail) && newEmail.Contains("@"))
             {
                 await _dbService.UpdateUserFieldAsync(_currentUserId, "email", newEmail);
@@ -112,21 +186,35 @@ namespace gatchapon
             }
         }
 
-        // --- 4. CHANGE PASSWORD ---
         private async void OnUpdatePasswordClicked(object sender, EventArgs e)
         {
-            bool confirm = await DisplayAlert("Reset Password", "Send a password reset email to your address?", "Yes", "Cancel");
-            if (confirm)
-            {
-                await DisplayAlert("Sent", "Check your email inbox.", "OK");
-            }
+            bool confirm = await DisplayAlert("Reset Password", "Send a password reset email?", "Yes", "Cancel");
+            if (confirm) await DisplayAlert("Sent", "Check your email inbox.", "OK");
         }
 
-        // --- 5. CHANGE PROFILE PICTURE ---
         private async void OnProf(object sender, EventArgs e)
         {
-            string action = await DisplayActionSheet("Change Profile Picture", "Cancel", null, "Pick from Device", "Select Character Avatar");
+            // 1. Get the URL of the CURRENTLY DISPLAYED IMAGE
+            string currentImageUrl = _currentUser?.ProfilePictureUrl;
 
+            // 2. Build the Menu Options
+            List<string> actions = new List<string> { "Pick from Device", "Select Character Avatar" };
+
+            // Add a "View Current" option ONLY if a picture is set
+            if (!string.IsNullOrEmpty(currentImageUrl))
+            {
+                actions.Insert(0, "View Current Picture");
+            }
+
+            string action = await DisplayActionSheet("Change Profile Picture", "Cancel", null, actions.ToArray());
+
+            if (action == "View Current Picture")
+            {
+                await Shell.Current.GoToAsync("ImageDisplayPage?imageUrl=" + Uri.EscapeDataString(currentImageUrl));
+                return;
+            }
+
+            // --- EXISTING LOGIC STARTS HERE ---
             if (action == "Pick from Device")
             {
                 try
@@ -136,20 +224,17 @@ namespace gatchapon
                     {
                         string localPath = result.FullPath;
                         await _dbService.UpdateUserFieldAsync(_currentUserId, "profilePictureUrl", localPath);
-                        ProfileImageButton.Source = ImageSource.FromFile(localPath);
-                        await DisplayAlert("Success", "Profile picture updated from device!", "OK");
+                        AvatarButton.Source = ImageSource.FromFile(localPath);
+                        await DisplayAlert("Success", "Profile picture updated!", "OK");
                     }
                 }
-                catch (Exception ex)
-                {
-                    // Permission denied or cancelled
-                }
+                catch (Exception ex) { /* Permission denied or cancelled */ }
             }
             else if (action == "Select Character Avatar")
             {
                 if (_currentUser == null || _currentUser.UnlockedCharacters == null || _currentUser.UnlockedCharacters.Count == 0)
                 {
-                    await DisplayAlert("No Characters", "You haven't unlocked any characters yet! Pull from the Gacha to get avatars.", "OK");
+                    await DisplayAlert("No Characters", "You haven't unlocked any characters yet!", "OK");
                     return;
                 }
 
@@ -159,7 +244,7 @@ namespace gatchapon
                 {
                     string imageFile = $"{charAction.ToLower()}_char.png";
                     await _dbService.UpdateUserFieldAsync(_currentUserId, "profilePictureUrl", imageFile);
-                    ProfileImageButton.Source = imageFile;
+                    AvatarButton.Source = imageFile;
                     await DisplayAlert("Updated", $"Profile picture set to {charAction}!", "OK");
                 }
             }
@@ -173,9 +258,7 @@ namespace gatchapon
                 SecureStorage.Remove("userId");
                 SecureStorage.Remove("userName");
                 await _authService.LogOut();
-
                 await DisplayAlert("Logged Out", "See you next time!", "OK");
-                Application.Current.MainPage = new AppShell();
                 await Shell.Current.GoToAsync("//Login");
             }
         }
@@ -189,5 +272,6 @@ namespace gatchapon
         {
             await DisplayAlert("Support", "Contact us at support@gatchapon.com", "OK");
         }
+
     }
 }

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="gatchapon.FriendsPage"
+             Title="My Contacts"
+             BackgroundColor="#ADC179"
+             NavigationPage.HasNavigationBar="False">
+
+    <Border BackgroundColor="#ADC179" StrokeThickness="0" Padding="25">
+        <Grid RowDefinitions="Auto, *">
+
+            <Grid Grid.Row="0" HeightRequest="60">
+                <ImageButton Source="back_icon.png" HorizontalOptions="Start" Clicked="OnBackClicked"/>
+                <Label Text="MESSAGES" TextColor="White" FontSize="20" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center"/>
+            </Grid>
+
+            <CollectionView x:Name="ContactsList" Grid.Row="1" Margin="0,20" SelectionMode="None">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Border BackgroundColor="#f5f1d6" StrokeShape="RoundRectangle 15" Padding="15" Margin="0,5">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnContactTapped" CommandParameter="{Binding .}"/>
+                            </Border.GestureRecognizers>
+
+                            <Grid ColumnDefinitions="Auto, *" ColumnSpacing="15">
+                                <Border StrokeShape="Ellipse" HeightRequest="50" WidthRequest="50" StrokeThickness="2" Stroke="White" BackgroundColor="#DDE5B6">
+                                    <Image Source="{Binding Image}" Aspect="AspectFill"/>
+                                </Border>
+
+                                <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
+                                    <Label Text="{Binding Name}" FontAttributes="Bold" FontSize="16" TextColor="#6C584D"/>
+                                    <Label Text="{Binding Status}" FontSize="12" TextColor="Gray"/>
+                                </VerticalStackLayout>
+
+                                <Label Grid.Column="1" Text=">" HorizontalOptions="End" VerticalOptions="Center" TextColor="#A98467" FontAttributes="Bold"/>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </Grid>
+    </Border>
+</ContentPage>

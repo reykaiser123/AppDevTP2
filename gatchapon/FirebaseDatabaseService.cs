@@ -5,15 +5,18 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Net.Http;
 using System.Net.Http.Json;
-
+using gatchapon.Models; // Ensure this is here to use UserTask
 
 namespace gatchapon
 {
     public class FirebaseDatabaseService
     {
         private readonly HttpClient _httpClient = new();
-        private const string DatabaseUrl = "https://gatchapon-d7cd9-default-rtdb.firebaseio.com/"; 
-        
+        private const string DatabaseUrl = "https://gatchapon-d7cd9-default-rtdb.firebaseio.com/";
+
+        // ---------------------------------------------------------
+        //  1. EXISTING USER METHODS
+        // ---------------------------------------------------------
         public async Task<bool> SaveUserAsync(string userId, object userData)
         {
             try
@@ -29,7 +32,6 @@ namespace gatchapon
             }
         }
 
-        // Get user data
         public async Task<T?> GetUserAsync<T>(string userId)
         {
             try
@@ -43,6 +45,7 @@ namespace gatchapon
                 return default;
             }
         }
+
         public async Task<bool> UpdateUserFieldAsync(string userId, string fieldName, object value)
         {
             try
@@ -58,5 +61,31 @@ namespace gatchapon
             }
         }
 
+        // ---------------------------------------------------------
+        //  2. NEW: SAVE TASK METHOD (Fixes your error!)
+        // ---------------------------------------------------------
+        public async Task<bool> SaveUserTaskAsync(string userId, UserTask task)
+        {
+            try
+            {
+                // If TaskId is empty, it's a NEW task -> Use POST (Firebase generates ID)
+                if (string.IsNullOrEmpty(task.TaskId))
+                {
+                    var response = await _httpClient.PostAsJsonAsync($"{DatabaseUrl}tasks/{userId}.json", task);
+                    return response.IsSuccessStatusCode;
+                }
+                // If TaskId exists, it's an UPDATE -> Use PUT (To specific ID)
+                else
+                {
+                    var response = await _httpClient.PutAsJsonAsync($"{DatabaseUrl}tasks/{userId}/{task.TaskId}.json", task);
+                    return response.IsSuccessStatusCode;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"SaveUserTaskAsync error: {ex.Message}");
+                return false;
+            }
+        }
     }
 }

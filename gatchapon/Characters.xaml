@@ -3,99 +3,84 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="gatchapon.Characters"
              BackgroundColor="#ADC179"
-             >
+             NavigationPage.HasNavigationBar="False">
 
-    <Border BackgroundColor="#ADC179"
-            StrokeShape="RoundRectangle 30"
-            StrokeThickness="0"
-            Padding="25">
+    <Border BackgroundColor="#ADC179" StrokeThickness="0" Padding="25">
+        <Grid RowDefinitions="Auto, Auto, *" RowSpacing="15">
 
-        <Grid RowDefinitions="Auto, Auto, *" RowSpacing="25">
+            <Grid Grid.Row="0" 
+                  BackgroundColor="#ADC179"
+                  HeightRequest="60"
+                  Padding="0,0">
 
-            <!-- Header -->
-            <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto">
-                <ImageButton Source="menu_icon.png"
-                             HeightRequest="28"
-                             WidthRequest="28"
+                <ImageButton Source="back_icon.png"
+                             HeightRequest="30"
+                             WidthRequest="30"
+                             HorizontalOptions="Start"
                              VerticalOptions="Center"
-                             HorizontalOptions="Start"/>
+                             BackgroundColor="Transparent"
+                             Clicked="OnBackClicked"/>
 
                 <Label Text="CHARACTERS"
                        TextColor="White"
                        FontSize="22"
                        FontAttributes="Bold"
                        HorizontalOptions="Center"
-                       VerticalOptions="Center"
-                       Grid.Column="1"/>
-
-                <BoxView Grid.Column="2" 
-                         WidthRequest="28" 
-                         Opacity="0" />
+                       VerticalOptions="Center"/>
             </Grid>
 
-            <!-- Search Bar -->
-            <Border Grid.Row="1"
-                    BackgroundColor="#CEDCA1"
-                    StrokeShape="RoundRectangle 25"
+            <Border Grid.Row="1" 
+                    BackgroundColor="#CEDCA1" 
+                    StrokeShape="RoundRectangle 25" 
+                    HeightRequest="50" 
                     StrokeThickness="0"
-                    HeightRequest="55">
-
-                <Grid ColumnDefinitions="Auto, *, Auto" Padding="20,0">
-                    <Image Source="filter_icon.png" 
-                           HeightRequest="20" 
-                           VerticalOptions="Center"
-                           Grid.Column="0"
-                           Opacity="0.5"/>
-
-                    <Entry Placeholder="Search Characters"
-                           PlaceholderColor="#7A855C"
-                           TextColor="#3B4728"
-                           FontSize="15"
-                           BackgroundColor="Transparent"
-                           VerticalOptions="Center"
-                           VerticalTextAlignment="Center"
-                           Grid.Column="1"
-                           Margin="10,0"/>
+                    Padding="15,0">
+                <Grid ColumnDefinitions="*, Auto">
+                    <Entry Placeholder="Search Characters" 
+                           PlaceholderColor="#7A855C" 
+                           TextColor="#3B4728" 
+                           FontSize="14"
+                           VerticalOptions="Center"/>
 
                     <Image Source="search_icon.png" 
+                           Grid.Column="1" 
                            HeightRequest="20" 
-                           VerticalOptions="Center"
-                           Grid.Column="2"
                            Opacity="0.5"/>
                 </Grid>
             </Border>
 
-            <!-- Character List -->
-            <!-- FIX ADDED: SelectionMode="None" prevents the blue highlight on tap -->
-            <CollectionView Grid.Row="2"
-                            SelectionMode="None"
-                            ItemsSource="{Binding CharacterList}"
-                            ItemsLayout="VerticalGrid, 3">
+            <CollectionView Grid.Row="2" 
+                            SelectionMode="None" 
+                            ItemsSource="{Binding CharacterList}">
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Vertical" Span="3" VerticalItemSpacing="15" HorizontalItemSpacing="10"/>
+                </CollectionView.ItemsLayout>
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <VerticalStackLayout Padding="5">
+                        <VerticalStackLayout Spacing="5">
 
-                            <Border HeightRequest="110"
-                                    WidthRequest="90"
-                                    BackgroundColor="#EFEDD3"
-                                    Stroke="{Binding BorderColor}"
-                                    StrokeThickness="3"
-                                    StrokeShape="RoundRectangle 10">
-                                <Grid>
-                                    <Image Source="{Binding Image}"
-                                           Aspect="AspectFill"
-                                           VerticalOptions="End"
-                                           Margin="0,10,0,0"/>
-                                </Grid>
+                            <Border HeightRequest="100" 
+                                    WidthRequest="90" 
+                                    BackgroundColor="#EFEDD3" 
+                                    Stroke="{Binding BorderColor}" 
+                                    StrokeThickness="3" 
+                                    StrokeShape="RoundRectangle 15">
+
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnCharacterTapped" CommandParameter="{Binding .}"/>
+                                </Border.GestureRecognizers>
+
+                                <Image Source="{Binding Image}" 
+                                       Aspect="AspectFill" 
+                                       VerticalOptions="End" 
+                                       Margin="0,10,0,0"/>
                             </Border>
 
-                            <Label Text="{Binding Name}"
-                                   TextColor="#4A5238"
-                                   FontSize="12"
-                                   FontAttributes="Bold"
-                                   HorizontalTextAlignment="Center"
-                                   Margin="0,5,0,0"/>
-
+                            <Label Text="{Binding Name}" 
+                                   TextColor="#4A5238" 
+                                   FontSize="12" 
+                                   FontAttributes="Bold" 
+                                   HorizontalTextAlignment="Center"/>
                         </VerticalStackLayout>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>

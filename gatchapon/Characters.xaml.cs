@@ -76,7 +76,8 @@ namespace gatchapon
                     {
                         Name = charDef.Name,
                         Image = imageFile,
-                        BorderColor = borderColor
+                        BorderColor = borderColor,
+                        IsUnlocked = isUnlocked
                     });
                 }
             }
@@ -84,6 +85,24 @@ namespace gatchapon
             {
                 await DisplayAlert("Error", "Could not load characters.", "OK");
             }
+        }
+        // Inside Characters.xaml.cs
+
+        private async void OnCharacterTapped(object sender, TappedEventArgs e)
+        {
+            var selectedChar = e.Parameter as CharacterDisplayItem;
+            if (selectedChar == null) return;
+
+            // 1. Check Lock Status
+            if (!selectedChar.IsUnlocked)
+            {
+                await DisplayAlert("Locked", "You haven't unlocked this character yet!", "OK");
+                return;
+            }
+
+            // 2. OPEN DETAIL PAGE
+            // Pass the name to the new page
+            await Shell.Current.GoToAsync($"{nameof(CharacterDetail)}?name={selectedChar.Name}");
         }
     }
 
@@ -100,5 +119,7 @@ namespace gatchapon
         public string Name { get; set; }
         public string Image { get; set; }
         public Color BorderColor { get; set; }
+        public bool IsUnlocked { get; set; }
     }
+
 }

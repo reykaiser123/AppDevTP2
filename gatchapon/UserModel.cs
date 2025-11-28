@@ -27,6 +27,12 @@ namespace gatchapon.Models
         [JsonPropertyName("gems")]
         public int Gems { get; set; }
 
+        [JsonPropertyName("equippedCharacter")]
+        public string EquippedCharacter { get; set; }
+
+        [JsonPropertyName("friendsCount")]
+        public int FriendsCount { get; set; } // <--- ADD THIS
+
         // ... Existing Quest/Shop properties ...
         public bool HasStreamGearCrate { get; set; }
         public bool HasSkyHighScarf { get; set; }
@@ -44,5 +50,7 @@ namespace gatchapon.Models
         public bool Claimed7DayStreak { get; set; }
         public bool ClaimedMonthly { get; set; }
         public bool Claimed3Tasks { get; set; }
+    
+
     }
 }

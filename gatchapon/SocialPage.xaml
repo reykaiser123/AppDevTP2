@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="gatchapon.SocialPage"
+             BackgroundColor="#ADC179"
+             NavigationPage.HasNavigationBar="False">
+
+    <Border BackgroundColor="#ADC179" StrokeThickness="0" Padding="25">
+        <Grid RowDefinitions="Auto, Auto, *" RowSpacing="25">
+
+            <Grid Grid.Row="0" BackgroundColor="#ADC179" HeightRequest="60" Padding="0,0">
+                <ImageButton Source="back_icon.png" 
+                             HeightRequest="24" 
+                             WidthRequest="24" 
+                             HorizontalOptions="Start" 
+                             VerticalOptions="Center"
+                             BackgroundColor="Transparent"
+                             Clicked="OnBackClicked"/>
+
+                <Label Text="COMMUNITY"
+                       TextColor="White"
+                       FontSize="22"
+                       FontAttributes="Bold"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center"/>
+            </Grid>
+
+            <Border Grid.Row="1" BackgroundColor="#CEDCA1" StrokeShape="RoundRectangle 25" HeightRequest="55" StrokeThickness="0">
+                <Grid ColumnDefinitions="Auto, *, Auto" Padding="20,0">
+                    <Image Source="search_icon.png" HeightRequest="20" Grid.Column="0" Opacity="0.5" Margin="0,0,10,0"/>
+                    <Entry x:Name="UserSearchEntry"
+                           Placeholder="Search for a player..." 
+                           PlaceholderColor="#7A855C" 
+                           TextColor="#3B4728" 
+                           Grid.Column="1"
+                           TextChanged="OnSearchBarTextChanged"/>
+                </Grid>
+            </Border>
+
+            <CollectionView x:Name="UserCollectionView" 
+                            Grid.Row="2" 
+                            SelectionMode="None">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid ColumnDefinitions="Auto, *, Auto, Auto" ColumnSpacing="10" Padding="5">
+                            <Image Grid.Column="0" Source="profile_placeholder.png" HeightRequest="40" WidthRequest="40" VerticalOptions="Center"/>
+                            <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
+                                <Label Text="{Binding Username}" FontAttributes="Bold" TextColor="#4A3B32" FontSize="16"/>
+                                <Label Text="Gatcha Player" TextColor="#6C584D" FontSize="12"/>
+                            </VerticalStackLayout>
+
+                            <Button Grid.Column="2" 
+                Text="Chat" 
+                BackgroundColor="#A58668" 
+                TextColor="White" 
+                CornerRadius="8" 
+                HeightRequest="35" 
+                WidthRequest="80"
+                IsVisible="{Binding FriendStatus, Converter={StaticResource IsFriendConverter}}" Clicked="OnChatUserClicked" 
+                CommandParameter="{Binding .}"/>
+
+                            <Button Grid.Column="3" 
+                Text="{Binding FriendStatus}" 
+                BackgroundColor="{Binding FriendStatus, Converter={StaticResource FriendStatusToColorConverter}}" TextColor="White" 
+                CornerRadius="8" 
+                HeightRequest="35" 
+                WidthRequest="100"
+                IsVisible="{Binding FriendStatus, Converter={StaticResource NotFriendConverter}}" Clicked="OnAddFriendClicked" 
+                CommandParameter="{Binding .}"/>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+
+                <CollectionView.EmptyView>
+                    <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="10">
+                        <Label Text="Search for a username to find friends." TextColor="White" HorizontalOptions="Center" Opacity="0.8"/>
+                    </VerticalStackLayout>
+                </CollectionView.EmptyView>
+            </CollectionView>
+
+        </Grid>
+    </Border>
+</ContentPage>

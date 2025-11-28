@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="gatchapon.ImageDisplayPage"
+             BackgroundColor="Black"
+             NavigationPage.HasNavigationBar="False">
+
+    <Grid>
+        <Image x:Name="FullScreenImage"
+               Aspect="AspectFit"
+               HorizontalOptions="Fill"
+               VerticalOptions="Fill"/>
+
+        <ImageButton Source="back_icon.png"
+                     HeightRequest="40"
+                     WidthRequest="40"
+                     HorizontalOptions="Start"
+                     VerticalOptions="Start"
+                     Margin="15,40,0,0"
+                     BackgroundColor="#00000080"
+                     CornerRadius="20"
+                     Padding="10"
+                     Clicked="OnCloseClicked"/>
+    </Grid>
+</ContentPage>

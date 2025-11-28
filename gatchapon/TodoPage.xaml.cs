@@ -1,145 +1,117 @@
-using Firebase.Database;
-using Firebase.Database.Query;
 using gatchapon.Models;
+using Microsoft.Maui.Storage;
 
 namespace gatchapon
 {
     public partial class TodoPage : ContentPage
     {
-        private readonly FirebaseClient _firebaseClient = new("https://gatchapon-d7cd9-default-rtdb.firebaseio.com/");
-
-        // This variable will hold the task we are editing.
-        // If it's NULL, we are creating a new task.
-        private UserTask _taskToEdit;
+        private readonly FirebaseDatabaseService _dbService = new();
         private string _currentUserId;
+        private UserTask _existingTask;
 
-        // Constructor for CREATING a new task
         public TodoPage()
         {
             InitializeComponent();
-            _taskToEdit = null; // We are creating
+            LoadUser();
         }
 
-        // Constructor for EDITING an existing task
-        public TodoPage(UserTask task)
+        public TodoPage(UserTask taskToEdit)
         {
             InitializeComponent();
-            _taskToEdit = task; // We are editing
+            _existingTask = taskToEdit;
+            LoadUser();
+            TitleLabel.Text = "EDIT TASK";
+            SaveButton.Text = "Update Task";
+            TaskNameEntry.Text = taskToEdit.TaskName;
+
+            if (taskToEdit.Difficulty == "Easy") EasyButton.IsChecked = true;
+            else if (taskToEdit.Difficulty == "Medium") MediumButton.IsChecked = true;
+            else HardButton.IsChecked = true;
         }
-        private async void OnCancelClicked(object sender, EventArgs e)
+
+        private async void LoadUser()
         {
-            await Navigation.PopAsync();
-        }
-        // Load data and set up the UI when the page appears
-        protected override async void OnAppearing()
-        {
-            base.OnAppearing();
             _currentUserId = await SecureStorage.GetAsync("userId");
-
-            if (_taskToEdit != null)
-            {
-                // --- EDIT MODE ---
-                Title = "Edit Task";
-                TitleLabel.Text = "Edit Your Task";
-                TaskNameEntry.Text = _taskToEdit.TaskName;
-                SaveButton.Text = "Update Task";
-
-                // --- NEW CODE: Set the correct radio button ---
-                if (_taskToEdit.Difficulty == "Medium")
-                    MediumButton.IsChecked = true;
-                else if (_taskToEdit.Difficulty == "Hard")
-                    HardButton.IsChecked = true;
-                else
-                    EasyButton.IsChecked = true; // Default to Easy
-            }
-            else
-            {
-                // --- CREATE MODE ---
-                Title = "Add New Task";
-                TitleLabel.Text = "Create a New Task";
-                SaveButton.Text = "Save Task";
-
-                // --- NEW CODE: Default to Easy ---
-                EasyButton.IsChecked = true;
-            }
         }
 
-        // This one button click now handles BOTH saving and updating
         private async void OnSaveTaskClicked(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(TaskNameEntry.Text))
+            string taskName = TaskNameEntry.Text;
+
+            if (string.IsNullOrWhiteSpace(taskName))
             {
                 await DisplayAlert("Error", "Please enter a task name.", "OK");
                 return;
             }
 
-            if (string.IsNullOrEmpty(_currentUserId))
-            {
-                await DisplayAlert("Error", "Could not find User ID. You may be logged out.", "OK");
-                return;
-            }
+            if (string.IsNullOrEmpty(_currentUserId)) return;
 
-            // --- NEW LOGIC: Check difficulty and set reward ---
-            string selectedDifficulty = "Easy";
-            int selectedReward = 10; // Gold for Easy
+            // --- UPDATED REWARD LOGIC ---
+            string difficulty = "Easy";
+            int reward = 50; // Easy = 50
 
             if (MediumButton.IsChecked)
             {
-                selectedDifficulty = "Medium";
-                selectedReward = 25; // Gold for Medium
+                difficulty = "Medium";
+                reward = 100; // Medium = 100
             }
             else if (HardButton.IsChecked)
             {
-                selectedDifficulty = "Hard";
-                selectedReward = 50; // Gold for Hard
+                difficulty = "Hard";
+                reward = 200; // Hard = 200
             }
-            // --- END OF NEW LOGIC ---
+            // ----------------------------
 
-            try
+            var task = new UserTask
             {
-                if (_taskToEdit != null)
+                TaskName = taskName,
+                Difficulty = difficulty,
+                Reward = reward,
+                IsCompletedToday = false,
+                Streak = _existingTask?.Streak ?? 0,
+                Total = _existingTask?.Total ?? 0,
+                TaskId = _existingTask?.TaskId,
+                UserId = _currentUserId,
+                LastUpdated = _existingTask?.LastUpdated ?? ""
+            };
+
+            bool success = await _dbService.SaveUserTaskAsync(_currentUserId, task);
+
+            if (success)
+            {
+                if (_existingTask != null)
                 {
-                    // --- UPDATE LOGIC ---
-                    _taskToEdit.TaskName = TaskNameEntry.Text;
-                    _taskToEdit.Difficulty = selectedDifficulty; // Add this
-                    _taskToEdit.Reward = selectedReward;         // Add this
-
-                    await _firebaseClient
-                        .Child("tasks")
-                        .Child(_currentUserId)
-                        .Child(_taskToEdit.TaskId) // Use the EXISTING TaskId
-                        .PutAsync(_taskToEdit);    // PutAsync UPDATES the data
-
-                    await DisplayAlert("Success", "Task updated!", "OK");
+                    await DisplayAlert("Updated", "Task updated successfully.", "OK");
+                    await Navigation.PopAsync();
                 }
                 else
                 {
-                    // --- CREATE LOGIC ---
-                    var newTask = new UserTask
+                    bool addAnother = await DisplayAlert("Task Saved!",
+                        "Do you want to add another task right now?",
+                        "Yes, Add Another",
+                        "No, I'm Done");
+
+                    if (addAnother)
                     {
-                        TaskName = TaskNameEntry.Text,
-                        Streak = 0,
-                        Total = 0,
-                        IsCompletedToday = false,
-                        UserId = _currentUserId,
-                        Difficulty = selectedDifficulty, // Add this
-                        Reward = selectedReward          // Add this
-                    };
-
-                    await _firebaseClient
-                        .Child("tasks")
-                        .Child(_currentUserId)
-                        .PostAsync(newTask); // PostAsync CREATES new data
-
-                    await DisplayAlert("Success", "Task saved!", "OK");
+                        TaskNameEntry.Text = string.Empty;
+                        EasyButton.IsChecked = true;
+                        TaskNameEntry.Focus();
+                    }
+                    else
+                    {
+                        await Navigation.PopAsync();
+                    }
                 }
-
-                await Navigation.PopAsync(); // Go back to the dashboard
             }
-            catch (Exception ex)
+            else
             {
-                await DisplayAlert("Save Failed", $"An error occurred: {ex.Message}", "OK");
+                await DisplayAlert("Error", "Failed to save task.", "OK");
             }
+        }
+
+        private async void OnCancelClicked(object sender, EventArgs e)
+        {
+            await Navigation.PopAsync();
         }
     }
 }

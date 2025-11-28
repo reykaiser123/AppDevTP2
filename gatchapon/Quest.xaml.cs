@@ -137,7 +137,6 @@ namespace gatchapon
         private async Task UpdateQuestsUI()
         {
             // --- Quest 1: 7-Day Streak ---
-            // Reward increased to 500 Gold
             double streakProgress = Math.Min(_currentUser.CheckInStreak / 7.0, 1.0);
             StreakQuestProgress.Progress = streakProgress;
             StreakQuestLabel.Text = $"Check in for 7 days in a row. ({_currentUser.CheckInStreak} / 7)";
@@ -145,7 +144,7 @@ namespace gatchapon
             if (_currentUser.CheckInStreak >= 7 && !_currentUser.Claimed7DayStreak)
             {
                 StreakQuestButton.IsEnabled = true;
-                StreakQuestButton.Text = "Claim (500 Gold)";
+                StreakQuestButton.Text = "Claim (7,000 Gold)"; // Updated Text
                 StreakQuestButton.BackgroundColor = Color.FromArgb("#4CAF50");
             }
             else if (_currentUser.Claimed7DayStreak)
@@ -162,7 +161,6 @@ namespace gatchapon
             }
 
             // --- Quest 2: Monthly Check-in ---
-            // Reward increased to 2000 Gold
             int daysInMonth = DateTime.DaysInMonth(_today.Year, _today.Month);
             int monthlyCheckins = _currentUser.MonthlyCheckIns.Count(d => DateTime.Parse(d).Month == _today.Month && DateTime.Parse(d).Year == _today.Year);
 
@@ -173,7 +171,7 @@ namespace gatchapon
             if (monthlyCheckins >= daysInMonth && !_currentUser.ClaimedMonthly)
             {
                 MonthQuestButton.IsEnabled = true;
-                MonthQuestButton.Text = "Claim (2000 Gold)";
+                MonthQuestButton.Text = "Claim (30,000 Gold)"; // Updated Text
                 MonthQuestButton.BackgroundColor = Color.FromArgb("#4CAF50");
             }
             else if (_currentUser.ClaimedMonthly)
@@ -190,24 +188,14 @@ namespace gatchapon
             }
 
             // --- Quest 3: Complete 3 Tasks ---
-            // DAILY RESET LOGIC: This ensures it repeats every day!
             string lastTaskDate = _currentUser.LastTaskCompletionDate;
-
-            // If "LastTaskCompletionDate" is NOT today (meaning it's yesterday or older), reset everything.
             bool isNewDay = string.IsNullOrEmpty(lastTaskDate) || DateTime.Parse(lastTaskDate).Date != _today.Date;
 
             if (isNewDay)
             {
-                // Reset the count to 0 for the new day
                 _currentUser.TasksCompletedToday = 0;
-
-                // Reset the "Claimed" status so they can claim it again today!
                 _currentUser.Claimed3Tasks = false;
-
-                // Set today as the new tracking date
                 _currentUser.LastTaskCompletionDate = _today.ToString("o");
-
-                // Save this reset state to Firebase so it persists
                 await _dbService.SaveUserAsync(_currentUserId, _currentUser);
             }
 
@@ -215,11 +203,10 @@ namespace gatchapon
             TasksQuestProgress.Progress = tasksProgress;
             TasksQuestLabel.Text = $"Complete 3 Daily Tasks today. ({_currentUser.TasksCompletedToday} / 3)";
 
-            // Reward increased to 300 Gold
             if (_currentUser.TasksCompletedToday >= 3 && !_currentUser.Claimed3Tasks)
             {
                 TasksQuestButton.IsEnabled = true;
-                TasksQuestButton.Text = "Claim (300 Gold)";
+                TasksQuestButton.Text = "Claim (500 Gold)"; // Updated Text
                 TasksQuestButton.BackgroundColor = Color.FromArgb("#4CAF50");
             }
             else if (_currentUser.Claimed3Tasks)
@@ -285,15 +272,14 @@ namespace gatchapon
         {
             if (_currentUser.CheckInStreak < 7 || _currentUser.Claimed7DayStreak) return;
 
-            _currentUser.Gold += 500; // UPDATED REWARD
-            _currentUser.Claimed7DayStreak = true;
+            _currentUser.Gold += 7000; // UPDATED: +7000
 
-            // Optional: Reset streak so they can earn it again?
-            // _currentUser.CheckInStreak = 0; 
-            // _currentUser.Claimed7DayStreak = false;
+            // RESET LOGIC: Reset streak to 0 so they can do it again next week
+            _currentUser.CheckInStreak = 0;
+            _currentUser.Claimed7DayStreak = false;
 
             await _dbService.SaveUserAsync(_currentUserId, _currentUser);
-            await DisplayAlert("Quest Complete!", "You earned 500 Gold!", "OK");
+            await DisplayAlert("Quest Complete!", "You earned 7,000 Gold! Streak reset.", "OK");
             await UpdateQuestsUI();
         }
 
@@ -304,11 +290,11 @@ namespace gatchapon
 
             if (monthlyCheckins < daysInMonth || _currentUser.ClaimedMonthly) return;
 
-            _currentUser.Gold += 2000; // UPDATED REWARD
+            _currentUser.Gold += 30000; // UPDATED: +30000
             _currentUser.ClaimedMonthly = true;
 
             await _dbService.SaveUserAsync(_currentUserId, _currentUser);
-            await DisplayAlert("Quest Complete!", "You earned 2000 Gold!", "OK");
+            await DisplayAlert("Quest Complete!", "You earned 30,000 Gold!", "OK");
             await UpdateQuestsUI();
         }
 
@@ -316,11 +302,11 @@ namespace gatchapon
         {
             if (_currentUser.TasksCompletedToday < 3 || _currentUser.Claimed3Tasks) return;
 
-            _currentUser.Gold += 300; // UPDATED REWARD
+            _currentUser.Gold += 500; // UPDATED: +500
             _currentUser.Claimed3Tasks = true;
 
             await _dbService.SaveUserAsync(_currentUserId, _currentUser);
-            await DisplayAlert("Quest Complete!", "You earned 300 Gold!", "OK");
+            await DisplayAlert("Quest Complete!", "You earned 500 Gold!", "OK");
             await UpdateQuestsUI();
         }
     }

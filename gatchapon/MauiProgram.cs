@@ -2,6 +2,7 @@
 using Firebase.Auth.Providers;
 using Microsoft.Extensions.Logging;
 using CommunityToolkit.Maui;
+using Plugin.LocalNotification;
 
 namespace gatchapon
 {
@@ -13,6 +14,8 @@ namespace gatchapon
             builder
                 .UseMauiApp<App>()
                 .UseMauiCommunityToolkit() // ✅ Enables popups and other toolkit features
+                .UseMauiApp<App>()
+                .UseLocalNotification()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");

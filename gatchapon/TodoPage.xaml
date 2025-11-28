@@ -2,64 +2,68 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="gatchapon.TodoPage"
-             Title="Add New Task" 
+             Title="Add Task" 
              BackgroundColor="#ADC179"
              Shell.NavBarIsVisible="False"  
              Shell.TabBarIsVisible="False">
-    <!-- Added these two lines -->
 
-    <VerticalStackLayout Padding="30" Spacing="15"
-                          VerticalOptions="Center">
+    <Grid RowDefinitions="Auto, *">
 
-        <Label x:Name="TitleLabel"
-               Text="Create a New Task"
-               FontSize="24"
-               FontAttributes="Bold"
-               TextColor="#6C584D"
-               HorizontalOptions="Center"/>
+        <Grid Grid.Row="0" BackgroundColor="#ADC179" HeightRequest="60" Padding="15,0">
+            <ImageButton Source="back_icon.png" 
+                         HeightRequest="30" 
+                         WidthRequest="30" 
+                         HorizontalOptions="Start" 
+                         VerticalOptions="Center" 
+                         BackgroundColor="Transparent" 
+                         Clicked="OnCancelClicked"/>
 
-        <Border BackgroundColor="#f5f1d6"
-                StrokeShape="RoundRectangle 10"
-                Padding="10">
-            <Entry x:Name="TaskNameEntry"
-                   Placeholder="Enter task name..."
-                   TextColor="#6C584D"
-                   PlaceholderColor="#8a7970"/>
-        </Border>
+            <Label x:Name="TitleLabel" 
+                   Text="CREATE TASK" 
+                   TextColor="White" 
+                   FontSize="20" 
+                   FontAttributes="Bold" 
+                   HorizontalOptions="Center" 
+                   VerticalOptions="Center"/>
+        </Grid>
 
-        <VerticalStackLayout Spacing="5">
-            <Label Text="Difficulty"
-                   FontAttributes="Bold"
-                   TextColor="#6C584D"/>
-            <HorizontalStackLayout Spacing="10" x:Name="DifficultyLayout">
-                <RadioButton x:Name="EasyButton"
-                             Content="Easy"
-                             GroupName="Difficulty"
-                             IsChecked="True"/>
-                <RadioButton x:Name="MediumButton"
-                             Content="Medium"
-                             GroupName="Difficulty"/>
-                <RadioButton x:Name="HardButton"
-                             Content="Hard"
-                             GroupName="Difficulty"/>
-            </HorizontalStackLayout>
+        <VerticalStackLayout Grid.Row="1" Padding="30" Spacing="20" VerticalOptions="Center">
+
+            <Border BackgroundColor="#f5f1d6" StrokeShape="RoundRectangle 10" Padding="15" StrokeThickness="0">
+                <Entry x:Name="TaskNameEntry" 
+                       Placeholder="Enter task name..." 
+                       TextColor="#6C584D" 
+                       PlaceholderColor="#8a7970" 
+                       FontSize="16"/>
+            </Border>
+
+            <VerticalStackLayout Spacing="10">
+                <Label Text="Select Difficulty" FontAttributes="Bold" TextColor="White" FontSize="16"/>
+
+                <Border BackgroundColor="#f5f1d6" StrokeShape="RoundRectangle 10" Padding="10" StrokeThickness="0">
+                    <HorizontalStackLayout Spacing="15" HorizontalOptions="Center">
+                        <RadioButton x:Name="EasyButton" Content="Easy" GroupName="Difficulty" IsChecked="True" TextColor="#6C584D"/>
+                        <RadioButton x:Name="MediumButton" Content="Medium" GroupName="Difficulty" TextColor="#6C584D"/>
+                        <RadioButton x:Name="HardButton" Content="Hard" GroupName="Difficulty" TextColor="#6C584D"/>
+                    </HorizontalStackLayout>
+                </Border>
+            </VerticalStackLayout>
+
+            <Button x:Name="SaveButton" 
+                    Text="Save Task" 
+                    BackgroundColor="#6C584D" 
+                    TextColor="#F0EAD2" 
+                    CornerRadius="20" 
+                    FontAttributes="Bold" 
+                    HeightRequest="50" 
+                    Clicked="OnSaveTaskClicked"/>
+
+            <Button Text="Cancel" 
+                    BackgroundColor="Transparent" 
+                    TextColor="White" 
+                    FontAttributes="Bold" 
+                    Clicked="OnCancelClicked"/>
+
         </VerticalStackLayout>
-
-        <Button x:Name="SaveButton"
-                Text="Save Task"
-                BackgroundColor="#6C584D"
-                TextColor="#F0EAD2"
-                CornerRadius="20"
-                FontAttributes="Bold"
-                Clicked="OnSaveTaskClicked"
-                HorizontalOptions="Fill"/>
-
-        <!-- Optional: Add a Cancel/Back button since we hid the nav bar -->
-        <Button Text="Cancel"
-                BackgroundColor="Transparent"
-                TextColor="#6C584D"
-                FontAttributes="Bold"
-                Clicked="OnCancelClicked"/>
-
-    </VerticalStackLayout>
+    </Grid>
 </ContentPage>

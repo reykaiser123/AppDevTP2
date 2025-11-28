@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="gatchapon.ChatPage"
+             Title="Chat"
+             BackgroundColor="#F0EAD2"
+             NavigationPage.HasNavigationBar="False">
+
+    <Grid RowDefinitions="Auto, *, Auto">
+
+        <Grid Grid.Row="0" BackgroundColor="#ADC179" HeightRequest="60" Padding="15,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <HorizontalStackLayout Spacing="15" VerticalOptions="Center">
+            <ImageButton Source="back_icon.png" 
+             HeightRequest="24" 
+             WidthRequest="24" 
+             HorizontalOptions="Start" 
+             VerticalOptions="Center"
+             BackgroundColor="Transparent"
+             Clicked="OnBackClicked"/>
+
+                <Border StrokeShape="Ellipse" HeightRequest="40" WidthRequest="40" Stroke="White" StrokeThickness="2" VerticalOptions="Center">
+                    <Image x:Name="HeaderFaceImage" Aspect="AspectFill" />
+                </Border>
+
+                <VerticalStackLayout VerticalOptions="Center">
+                    <Label x:Name="HeaderNameLabel" Text="Character Name" TextColor="White" FontAttributes="Bold" FontSize="18"/>
+                    <Label Text="Friend" TextColor="#DDE5B6" FontSize="12"/>
+                </VerticalStackLayout>
+            </HorizontalStackLayout>
+        </Grid>
+
+        <CollectionView x:Name="MessagesList" 
+                        Grid.Row="1" 
+                        Margin="10" 
+                        SelectionMode="None" 
+                        ItemsSource="{Binding Messages}">
+
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical" ItemSpacing="15"/>
+            </CollectionView.ItemsLayout>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Grid Padding="0" ColumnDefinitions="40, *, 40" ColumnSpacing="5">
+
+                        <Border Grid.Column="0" StrokeShape="Ellipse" HeightRequest="35" WidthRequest="35" StrokeThickness="0" VerticalOptions="End" BackgroundColor="Transparent">
+                            <Border.Triggers>
+                                <DataTrigger TargetType="Border" Binding="{Binding IsUser}" Value="True">
+                                    <Setter Property="IsVisible" Value="False"/>
+                                </DataTrigger>
+                            </Border.Triggers>
+                            <Image Source="{Binding DisplayImage}" Aspect="AspectFill"/>
+                        </Border>
+
+                        <Frame Grid.Column="1" CornerRadius="15" Padding="12" HasShadow="False" VerticalOptions="Start">
+                            <Frame.Triggers>
+                                <DataTrigger TargetType="Frame" Binding="{Binding IsUser}" Value="True">
+                                    <Setter Property="HorizontalOptions" Value="End"/>
+                                    <Setter Property="BackgroundColor" Value="#6C584D"/>
+                                </DataTrigger>
+                                <DataTrigger TargetType="Frame" Binding="{Binding IsUser}" Value="False">
+                                    <Setter Property="HorizontalOptions" Value="Start"/>
+                                    <Setter Property="BackgroundColor" Value="White"/>
+                                </DataTrigger>
+                            </Frame.Triggers>
+
+                            <VerticalStackLayout Spacing="2">
+                                <Label Text="{Binding Text}" FontSize="14">
+                                    <Label.Triggers>
+                                        <DataTrigger TargetType="Label" Binding="{Binding IsUser}" Value="True">
+                                            <Setter Property="TextColor" Value="White"/>
+                                        </DataTrigger>
+                                        <DataTrigger TargetType="Label" Binding="{Binding IsUser}" Value="False">
+                                            <Setter Property="TextColor" Value="#4A4A4A"/>
+                                        </DataTrigger>
+                                    </Label.Triggers>
+                                </Label>
+                                <Label Text="{Binding Timestamp}" FontSize="9" HorizontalOptions="End" Opacity="0.7" TextColor="Gray"/>
+                            </VerticalStackLayout>
+                        </Frame>
+
+                        <Border Grid.Column="2" StrokeShape="Ellipse" HeightRequest="35" WidthRequest="35" StrokeThickness="0" VerticalOptions="End" BackgroundColor="Transparent">
+                            <Border.Triggers>
+                                <DataTrigger TargetType="Border" Binding="{Binding IsUser}" Value="False">
+                                    <Setter Property="IsVisible" Value="False"/>
+                                </DataTrigger>
+                            </Border.Triggers>
+                            <Image Source="{Binding DisplayImage}" Aspect="AspectFill"/>
+                        </Border>
+
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <Grid Grid.Row="2" ColumnDefinitions="*, Auto" Padding="10" BackgroundColor="White">
+            <Entry x:Name="InputEntry" 
+                   Placeholder="Type a message..." 
+                   TextColor="Black" 
+                   PlaceholderColor="Gray" 
+                   BackgroundColor="Transparent" 
+                   Completed="OnSendClicked"/>
+
+            <ImageButton Grid.Column="1" 
+                         Source="send_icon.png" 
+                         HeightRequest="40" 
+                         WidthRequest="40" 
+                         Clicked="OnSendClicked" 
+                         Margin="10,0,0,0"/>
+        </Grid>
+    </Grid>
+</ContentPage>

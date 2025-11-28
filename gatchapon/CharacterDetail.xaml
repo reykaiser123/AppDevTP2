@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="gatchapon.CharacterDetail"
+             BackgroundColor="#ADC179"
+             NavigationPage.HasNavigationBar="False">
+
+    <Grid RowDefinitions="Auto, *">
+
+        <Grid Grid.Row="0" BackgroundColor="#ADC179" HeightRequest="60" Padding="15,0">
+            <ImageButton Source="back_icon.png" 
+             HeightRequest="24" 
+             WidthRequest="24" 
+             HorizontalOptions="Start" 
+             VerticalOptions="Center"
+             BackgroundColor="Transparent"
+             Clicked="OnBackClicked"/>
+            <Label Text="PROFILE" TextColor="White" FontSize="20" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center"/>
+        </Grid>
+
+        <ScrollView Grid.Row="1" Padding="0,0,0,20">
+            <VerticalStackLayout Spacing="15">
+
+                <Border BackgroundColor="#F1EED8" 
+                        StrokeThickness="0" 
+                        HeightRequest="400" 
+                        Margin="20,10" 
+                        StrokeShape="RoundRectangle 20">
+                    <Image x:Name="FullBodyImage" 
+                           Aspect="AspectFit"
+                           VerticalOptions="End"/>
+                </Border>
+
+                <VerticalStackLayout Padding="25,0" Spacing="10">
+                    <Label x:Name="NameLabel" 
+                           Text="Character Name" 
+                           FontSize="28" 
+                           FontAttributes="Bold" 
+                           TextColor="#4A3B32" 
+                           HorizontalOptions="Center"/>
+
+                    <Label x:Name="DescriptionLabel" 
+                           Text="Character description goes here..." 
+                           FontSize="16" 
+                           TextColor="#6C584D" 
+                           HorizontalTextAlignment="Center" 
+                           LineHeight="1.2"/>
+                </VerticalStackLayout>
+
+                <HorizontalStackLayout Spacing="15" HorizontalOptions="Center" Margin="0,20">
+                    <Button Text="Equip" 
+                            Clicked="OnEquipClicked" 
+                            BackgroundColor="#A58668" 
+                            TextColor="White" 
+                            FontAttributes="Bold" 
+                            CornerRadius="20" 
+                            HeightRequest="45" 
+                            WidthRequest="120"/>
+
+                    <Button Text="Chat" 
+                            Clicked="OnChatClicked" 
+                            BackgroundColor="#4CAF50" 
+                            TextColor="White" 
+                            FontAttributes="Bold" 
+                            CornerRadius="20" 
+                            HeightRequest="45" 
+                            WidthRequest="120"/>
+                </HorizontalStackLayout>
+
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

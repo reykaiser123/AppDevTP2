@@ -46,7 +46,7 @@ namespace gatchapon
 
                     // 5. Navigate to Dashboard (Resetting the stack so they can't go back)
                     Application.Current.MainPage = new AppShell();
-                    await Shell.Current.GoToAsync("//Dashboard");
+                    await Shell.Current.GoToAsync("///DashboardPage");
                 }
                 else
                 {

@@ -12,7 +12,7 @@
 
         <!-- CUSTOM HEADER -->
         <Grid Grid.Row="0" 
-              BackgroundColor="#95A564"
+              BackgroundColor="#ADC179"
               HeightRequest="60"
               Padding="15,0">
 

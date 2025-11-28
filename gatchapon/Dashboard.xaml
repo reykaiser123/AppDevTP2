@@ -4,253 +4,102 @@
              xmlns:models="clr-namespace:gatchapon.Models" 
              x:Class="gatchapon.Dashboard"
              NavigationPage.HasNavigationBar="False"
-             BackgroundColor="#ADC179"
-             Title="">
-    <ScrollView>
-        <VerticalStackLayout Padding="15" Spacing="20">
+             
+             BackgroundColor="{AppThemeBinding Light=#ADC179, Dark=#141C12}">
 
-            <Grid ColumnDefinitions="Auto,*,Auto" Padding="5" VerticalOptions="Start">
-                <Border StrokeShape="Ellipse"
-                        HeightRequest="36"
-                        WidthRequest="36"
-                        BackgroundColor="Transparent"
-                        VerticalOptions="Center"
-                        HorizontalOptions="Start">
-                    <ImageButton Source="menu1.png"
-                                 BackgroundColor="Transparent"
-                                 Aspect="AspectFit"
-                                 HeightRequest="28"
-                                 WidthRequest="28"/>
-                </Border>
-                <Label Grid.Column="1"
-                       Text="DASHBOARD"
-                       FontSize="22"
-                       FontAttributes="Bold"
-                       HorizontalOptions="Center"
-                       VerticalOptions="Center"
-                       TextColor="#6C584D"/>
-                <Border Grid.Column="2"
-                        StrokeShape="Ellipse"
-                        HeightRequest="36"
-                        WidthRequest="36"
-                        BackgroundColor="#433832"
-                        VerticalOptions="Center"
-                        HorizontalOptions="End">
-                    <ImageButton
-                        x:Name="ProfileButton"
-                        Source="profile.png"
-                        BackgroundColor="Transparent"
-                        Aspect="AspectFit"
-                        HeightRequest="28"
-                        WidthRequest="28"
-                        Clicked="OnProfileClicked"/>
-                </Border>
-            </Grid>
+    <Grid>
+        <ScrollView>
+            <VerticalStackLayout Padding="15" Spacing="20">
 
-            <Border BackgroundColor="#DDE5B6"
-                    StrokeShape="RoundRectangle 10"
-                    Padding="18">
-                <VerticalStackLayout Spacing="14">
-                    <Label Text="Tasks for Today"
-                           FontSize="20"
-                           FontAttributes="Bold"
-                           HorizontalOptions="Center"
-                           TextColor="#6C584D"/>
-                    <CollectionView x:Name="TasksCollectionView"
-                                    ItemsSource="{Binding TodayTasks}">
-                        <CollectionView.EmptyView>
-                            <Label Text="No tasks for today. Add one!"
-                                   HorizontalOptions="Center"
-                                   VerticalOptions="Center"
-                                   TextColor="#8a7970"
-                                   Padding="20"/>
-                        </CollectionView.EmptyView>
-                        <CollectionView.ItemTemplate>
-                            <DataTemplate x:DataType="models:UserTask">
-                                <Border BackgroundColor="#f5f1d6"
-                                        StrokeShape="RoundRectangle 12"
-                                        Stroke="#d1c9a6"
-                                        StrokeThickness="1"
-                                        Padding="10"
-                                        Margin="0,5">
-                                    <Grid ColumnDefinitions="Auto, *, Auto" ColumnSpacing="10">
-                                        <Image Grid.Column="0"
-                                               Source="goldcoin_icon.png" 
-                                               HeightRequest="40"
-                                               WidthRequest="40"
-                                               VerticalOptions="Center"/>
-                                        <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
-                                            <Label Text="{Binding TaskName}"
-                                                   FontSize="16"
-                                                   FontAttributes="Bold"
-                                                   TextColor="#6C584D"/>
-                                            <HorizontalStackLayout Spacing="10">
-                                                <Label Text="{Binding Reward, StringFormat='💰 {0}'}"
-                                                       FontSize="12"
-                                                       FontAttributes="Bold"
-                                                       TextColor="#B8860B"/>
-                                                <Label Text="{Binding Streak, StringFormat='Streak: {0}'}"
-                                                       FontSize="12"
-                                                       TextColor="#A98467"/>
-                                                <Label Text="{Binding Total, StringFormat='Total: {0}'}"
-                                                       FontSize="12"
-                                                       TextColor="#A98467"/>
-                                            </HorizontalStackLayout>
-                                        </VerticalStackLayout>
+                <Grid ColumnDefinitions="Auto,*,Auto" Padding="5" ColumnSpacing="15">
 
-                                        <Button Grid.Column="2"
-                                                Text="Claim Rewards"
-                                                FontSize="10"
-                                                CornerRadius="15"
-                                                HeightRequest="30"
-                                                BackgroundColor="#8B7E74" 
-                                                TextColor="#F0EAD2"
-                                                VerticalOptions="Center"
-                                                Clicked="OnClaimRewardClicked"
-                                                CommandParameter="{Binding .}">
+                    <ImageButton Grid.Column="0" 
+                                 Source="notification_icon.png" 
+                                 HeightRequest="28" 
+                                 WidthRequest="28"
+                                 VerticalOptions="Center" 
+                                 Clicked="OnNotificationsClicked"/>
 
-                                            <Button.Triggers>
-                                                <DataTrigger TargetType="Button"
-                                                             Binding="{Binding IsCompletedToday}"
-                                                             Value="True">
-                                                    <Setter Property="Text" Value="Claimed" />
-                                                    <Setter Property="BackgroundColor" Value="#4CAF50" />
-                                                    <Setter Property="IsEnabled" Value="False" />
-                                                </DataTrigger>
-                                            </Button.Triggers>
+                    <Label Grid.Column="1" 
+                           Text="DASHBOARD" 
+                           FontSize="22" 
+                           FontAttributes="Bold" 
+                           TextColor="{AppThemeBinding Light=#6C584D, Dark=#E8E8E8}" 
+                           HorizontalOptions="Center" 
+                           VerticalOptions="Center"/>
 
-                                        </Button>
-                                    </Grid>
-                                    <Border.GestureRecognizers>
-                                        <TapGestureRecognizer Tapped="OnTaskTapped"
-                                                              CommandParameter="{Binding .}"/>
-                                    </Border.GestureRecognizers>
-                                </Border>
-                            </DataTemplate>
-                        </CollectionView.ItemTemplate>
-                    </CollectionView>
-                </VerticalStackLayout>
-            </Border>
-
-            <Border BackgroundColor="#DDE5B6"
-                    StrokeShape="RoundRectangle 10">
-                <ScrollView 
-                            Orientation="Horizontal"
-                            BackgroundColor="#DDE5B6"
-                            HeightRequest="64">
-                    <HorizontalStackLayout 
-                                Spacing="5"
-                                Padding="10"
-                                HorizontalOptions="Center"
-                                VerticalOptions="Center">
-                        <Button 
-                                x:Name="QuestBTN"
-                                Text="Quests"
-                                BackgroundColor="#6C584D"
-                                CornerRadius="20"
-                                
-                                HeightRequest="30"
-                                FontAttributes="Bold"
-                                TextColor="#F0EAD2"
-                                Clicked="OnclickedQuest"
-                                ImageSource="quest_icon.png"
-                                ContentLayout="Left, 10"
-                                />
-
-                        <Button 
-                                x:Name="TaskBTN"
-                                Text="Tasks"
-                                BackgroundColor="#6C584D"
-                                CornerRadius="20"
-                                HeightRequest="30"
-                                FontAttributes="Bold"
-                                TextColor="#F0EAD2"
-                                Clicked="OnTasksClicked"
-                                ImageSource="task_icon.png"
-                                ContentLayout="Left, 10"
-                            />
-                        <Button
-                                x:Name="NewsBTN"
-                                Text="News"
-                                BackgroundColor="#6C584D"
-                                CornerRadius="20"
-                                HeightRequest="30"
-                                FontAttributes="Bold"
-                                TextColor="#F0EAD2"
-                                Clicked="OnclickedNews"
-                                ImageSource="news_icon.png"
-                                ContentLayout="Left, 10"
-                            />
-                        <Button
-                                x:Name="CharacterBTN"
-                                Text="Characters"
-                                BackgroundColor="#6C584D"
-                                CornerRadius="20"
-                                HeightRequest="30"
-                                FontAttributes="Bold"
-                                TextColor="#F0EAD2" 
-                                Clicked="OnclickedCharacter"
-                                ImageSource="characters_icon.png"
-                                ContentLayout="left, 10"
-                                />
-                        <Button 
-                                x:Name="InventoryBTN"
-                                Text="Inventory"
-                                BackgroundColor="#6C584D"
-                                CornerRadius="20"
-                                HeightRequest="30"
-                                FontAttributes="Bold"
-                                TextColor="#F0EAD2"
-                                Clicked="OnClickedInventory"
-                                ImageSource="inventory_icon.png"
-                                ContentLayout="Left, 10"
-                                />
-                        <Button 
-                                x:Name="ShopBTN"
-                                 Text="Shop"
-                                BackgroundColor="#6C584D"
-                                CornerRadius="20"
-                                HeightRequest="30"
-                                FontAttributes="Bold"
-                                TextColor="#F0EAD2"
-                                Clicked="OnclickedShop"
-                                ImageSource="shop_icon.png"
-                                ContentLayout="Left, 10"
-                               />
-                        
-                       
-                    </HorizontalStackLayout>
-                </ScrollView>
-            </Border>
-
-            <Border BackgroundColor="#DDE5B6"
-                    StrokeShape="RoundRectangle 20"
-                    Padding="14">
-                <VerticalStackLayout Spacing="12">
-                    <Label Text="Current Banner"
-                           FontSize="20"
-                           FontAttributes="Bold"
-                           HorizontalOptions="Center"
-                           TextColor="#6C584D"/>
-                    <Border BackgroundColor="#f5f1d6"
-                            Stroke="#efe9d0"
-                            StrokeThickness="1"
-                            StrokeShape="RoundRectangle 12"
-                            Padding="20">
-                        <Image Source="marisol_banner_wide.png"
-                               Aspect="AspectFill"
-                               HeightRequest="222"
-                               WidthRequest="318"
-                               HorizontalOptions="Fill"
-                               VerticalOptions="Fill">
-                            <Image.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="OnBannerTapped"/>
-                            </Image.GestureRecognizers>
-                        </Image>
+                    <Border Grid.Column="2" StrokeShape="Ellipse" HeightRequest="36" WidthRequest="36" BackgroundColor="#433832" VerticalOptions="Center">
+                        <ImageButton x:Name="ProfileButton" Source="profile.png" Clicked="OnProfileClicked" HeightRequest="28"/>
                     </Border>
-                </VerticalStackLayout>
-            </Border>
+                </Grid>
 
-        </VerticalStackLayout>
-    </ScrollView>
+                <Border BackgroundColor="{AppThemeBinding Light=#DDE5B6, Dark=#2F3B28}" 
+                        StrokeShape="RoundRectangle 10" 
+                        Padding="18" 
+                        StrokeThickness="0">
+
+                    <VerticalStackLayout Spacing="14">
+                        <Label Text="Tasks for Today" FontSize="20" FontAttributes="Bold" TextColor="{AppThemeBinding Light=#6C584D, Dark=White}" HorizontalOptions="Center"/>
+
+                        <CollectionView x:Name="TasksCollectionView" ItemsSource="{Binding TodayTasks}">
+                            <CollectionView.EmptyView>
+                                <Label Text="No tasks for today." TextColor="{AppThemeBinding Light=#8a7970, Dark=#9AA095}" HorizontalOptions="Center"/>
+                            </CollectionView.EmptyView>
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate x:DataType="models:UserTask">
+                                    <Border BackgroundColor="{AppThemeBinding Light=#f5f1d6, Dark=#3E4C36}" StrokeShape="RoundRectangle 12" Padding="10" Margin="0,5" StrokeThickness="0">
+                                        <Border.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="OnTaskTapped" CommandParameter="{Binding .}"/>
+                                        </Border.GestureRecognizers>
+                                        <Grid ColumnDefinitions="Auto, *, Auto" ColumnSpacing="10">
+                                            <Image Source="goldcoin_icon.png" HeightRequest="40" WidthRequest="40"/>
+                                            <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
+                                                <Label Text="{Binding TaskName}" FontSize="16" FontAttributes="Bold" TextColor="{AppThemeBinding Light=#6C584D, Dark=White}"/>
+                                                <Label Text="{Binding Reward, StringFormat='💰 {0}'}" FontSize="12" TextColor="#B8860B"/>
+                                            </VerticalStackLayout>
+                                            <Button Grid.Column="2" Text="Claim" Clicked="OnClaimRewardClicked" CommandParameter="{Binding .}" HeightRequest="30" FontSize="10" BackgroundColor="#8B7E74" TextColor="#F0EAD2"/>
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </VerticalStackLayout>
+                </Border>
+
+                <Border BackgroundColor="{AppThemeBinding Light=#DDE5B6, Dark=#2F3B28}" StrokeShape="RoundRectangle 10" StrokeThickness="0">
+                    <ScrollView Orientation="Horizontal" HeightRequest="64">
+                        <HorizontalStackLayout Spacing="5" Padding="10">
+                            <Button Text="Quests" Clicked="OnclickedQuest" BackgroundColor="#6C584D" TextColor="#F0EAD2" HeightRequest="30" CornerRadius="20"/>
+                            <Button Text="Tasks" Clicked="OnTasksClicked" BackgroundColor="#6C584D" TextColor="#F0EAD2" HeightRequest="30" CornerRadius="20"/>
+                            <Button Text="News" Clicked="OnclickedNews" BackgroundColor="#6C584D" TextColor="#F0EAD2" HeightRequest="30" CornerRadius="20"/>
+                            <Button Text="Characters" Clicked="OnclickedCharacter" BackgroundColor="#6C584D" TextColor="#F0EAD2" HeightRequest="30" CornerRadius="20"/>
+                            <Button Text="Inventory" Clicked="OnClickedInventory" BackgroundColor="#6C584D" TextColor="#F0EAD2" HeightRequest="30" CornerRadius="20"/>
+                            <Button Text="Shop" Clicked="OnclickedShop" BackgroundColor="#6C584D" TextColor="#F0EAD2" HeightRequest="30" CornerRadius="20"/>
+                            <Button Text="Community" Clicked="OnCommunityClicked" BackgroundColor="#6C584D" TextColor="#F0EAD2" HeightRequest="30" CornerRadius="20"/>
+                        </HorizontalStackLayout>
+                    </ScrollView>
+                </Border>
+
+                <Border BackgroundColor="{AppThemeBinding Light=#DDE5B6, Dark=#2F3B28}" StrokeShape="RoundRectangle 20" Padding="14" StrokeThickness="0">
+                    <VerticalStackLayout Spacing="12">
+                        <Label Text="Current Banner" FontSize="20" FontAttributes="Bold" TextColor="{AppThemeBinding Light=#6C584D, Dark=White}" HorizontalOptions="Center"/>
+                        <Border BackgroundColor="{AppThemeBinding Light=#f5f1d6, Dark=#3E4C36}" Padding="20" StrokeShape="RoundRectangle 12" StrokeThickness="0">
+                            <Image Source="marisol_banner_wide.png" Aspect="AspectFill" HeightRequest="222">
+                                <Image.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnBannerTapped"/>
+                                </Image.GestureRecognizers>
+                            </Image>
+                        </Border>
+                    </VerticalStackLayout>
+                </Border>
+
+                
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <Border StrokeShape="Ellipse" HeightRequest="70" WidthRequest="70" HorizontalOptions="End" VerticalOptions="End" Margin="20" BackgroundColor="#6C584D" Stroke="#F0EAD2" StrokeThickness="3">
+            <ImageButton x:Name="CompanionButton" Source="chat_bubble_default.png" Aspect="AspectFill" Clicked="OnCompanionChatClicked" HeightRequest="70" WidthRequest="70" CornerRadius="35"/>
+        </Border>
+
+    </Grid>
 </ContentPage>
